@@ -1,0 +1,62 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "sitewhere.fullname" . }}-jaeger
+  labels:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.infra.jaeger.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "sitewhere.name" . }}-jaeger
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "sitewhere.name" . }}-jaeger
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        sitewhere.io/role: "infraestructure"
+        sitewhere.io/name: "jaeger"
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-jaeger
+          image: "{{ .Values.infra.image.registry }}/{{ .Values.infra.jaeger.image }}"
+          imagePullPolicy: {{ .Values.infra.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.infra.jaeger.service.ports.zipkin }}
+              name: zipkin-port
+              protocol: TCP
+            - containerPort: {{ .Values.infra.jaeger.service.ports.ui }}
+              name: ui-port
+              protocol: TCP
+          env:       
+            - name: "COLLECTOR_ZIPKIN_HTTP_PORT"
+              value: "{{ .Values.infra.jaeger.service.ports.zipkin }}"
+{{ include "sitewhere.infra.imagePullSecrets" . | indent 6 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sitewhere.fullname" . }}-jaeger-svc
+  labels:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.infra.jaeger.service.type }}
+  ports:
+    - port: {{ .Values.infra.jaeger.service.ports.zipkin }}
+      targetPort: {{ .Values.infra.jaeger.service.ports.zipkin }}
+      protocol: TCP
+      name: zipkin-port
+    - port: {{ .Values.infra.jaeger.service.ports.ui }}
+      targetPort: {{ .Values.infra.jaeger.service.ports.ui }}
+      protocol: TCP
+      name: ui-port
+  selector:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-jaeger
+    app.kubernetes.io/instance: {{ .Release.Name }}

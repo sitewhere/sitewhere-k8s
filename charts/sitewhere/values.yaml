@@ -1,0 +1,360 @@
+# SiteWhere Infrastructur
+infra:
+  profile: default
+  image:
+    registry: docker.io
+    pullPolicy: IfNotPresent
+    imagePullSecrets: "-"
+  zookeeper:
+    image: wurstmeister/zookeeper
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      port: 2181
+    zoonavigator:
+      image: elkozmon/zoonavigator-web:latest
+      service:
+        type: ClusterIP
+        port: 8000
+    api:
+      image: elkozmon/zoonavigator-api:latest
+  kafka:
+    image: wurstmeister/kafka:1.0.0
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      inside:
+        port: 9092
+      outside:
+        port: 9094
+  jaeger:
+    image: jaegertracing/all-in-one
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      ports:
+        zipkin: "9411"
+        ui: "16686"
+  mongodb:
+    image: mongo:3
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      port: 27017
+  mosquitto:
+    image: eclipse-mosquitto:1.4.12
+    replicaCount: 1
+    service:
+      port: 1883
+
+services:
+  # profile: default|minimal
+  image:
+    registry: docker.io
+    repository: sitewhere
+    tag: 2.0.0
+    pullPolicy: Never
+    imagePullSecrets: "-"
+  profile: default
+  initContainers: true
+  instance_management:
+    image: service-instance-management
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  user_management:
+    image: service-user-management
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  tenant_management:
+    image: service-tenant-management
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  device_management:
+    image: service-device-management
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  event_management:
+    image: service-event-management
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  event_search:
+    image: service-event-search
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  asset_management:
+    image: service-asset-management
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  event_sources:
+    image: service-event-sources
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  inbound_processing:
+    image: service-inbound-processing
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  device_registration:
+    image: service-device-registration
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  rule_processing:
+    image: service-rule-processing
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  outbound_connectors:
+    image: service-outbound-connectors
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  batch_operations:
+    image: service-batch-operations
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  schedule_management:
+    image: service-schedule-management
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  command_delivery:
+    image: service-command-delivery
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  device_state:
+    image: service-device-state
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  streaming_media:
+    image: service-streaming-media
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  label_generation:
+    image: service-label-generation
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  web_rest:
+    image: service-web-rest
+    replicaCount: 1
+    service:
+      grpc:
+        type: ClusterIP
+        api:
+          port: 9000
+        management:
+          port: 9001
+      http:
+        type: LoadBalancer
+        port: 8080
+
+clusterDomain: cluster.local
+
+  ## Specify the nodePort value for the LoadBalancer and NodePort service types.
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+  ##
+  # nodePort:
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - chart-example.local
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+## Setting up replication
+## ref: https://github.com/bitnami/bitnami-docker-mongodb#setting-up-a-replication
+#
+replicaSet:
+  enabled: false
+  useHostnames: true
+
+  ## Name of the replica set
+  ##
+  name: rs0
+
+  ## Key used for replica set authentication
+  ##
+  # key: key
+
+  ## Number of replicas per each node type
+  ##
+  replicas:
+    secondary: 1
+    arbiter: 1
+  ## Pod Disruption Budget
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+  pdb:
+    minAvailable:
+      primary: 1
+      secondary: 1
+      arbiter: 1
+
+# Annotations to be added to MongoDB pods
+podAnnotations: {}
+
+## Configure resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+resources: {}
+# limits:
+#   cpu: 500m
+#   memory: 512Mi
+# requests:
+#   cpu: 100m
+#   memory: 256Mi
+
+## Node selector
+## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
+nodeSelector: {}
+
+## Affinity
+## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+
+## Tolerations
+## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
+## Enable persistence using Persistent Volume Claims
+## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+##
+persistence:
+  enabled: true
+  ## A manually managed Persistent Volume and Claim
+  ## Requires persistence.enabled: true
+  ## If defined, PVC must be created manually before volume will be bound
+  # existingClaim:
+
+  ## If defined, storageClassName: [rook-ceph-block|hostpath]
+  storageClass: rook-ceph-block
+  accessModes:
+    - ReadWriteOnce
+  storage: 10Gi
+  annotations: {}
+
+## Configure extra options for liveness and readiness probes
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+

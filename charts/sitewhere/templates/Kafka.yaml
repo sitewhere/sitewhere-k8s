@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "sitewhere.fullname" . }}-kafka
+  labels:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.infra.kafka.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "sitewhere.name" . }}-kafka
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "sitewhere.name" . }}-kafka
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        sitewhere.io/role: "infraestructure"
+        sitewhere.io/name: "kafka"
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-kafka
+          image: "{{ .Values.infra.image.registry }}/{{ .Values.infra.kafka.image }}"
+          imagePullPolicy: {{ .Values.infra.image.pullPolicy }}
+          ports:
+            - name: inside
+              containerPort: {{ .Values.infra.kafka.service.inside.port }}
+            - name: outside
+              containerPort: {{ .Values.infra.kafka.service.outside.port }}
+          env:
+            - name: "KAFKA_ADVERTISED_HOST_NAME"
+              value: "{{ include "sitewhere.fullname" . }}-kafka-svc"
+            - name: "KAFKA_BROKER_ID"
+              value: "999"
+            - name: "KAFKA_ZOOKEEPER_CONNECT"
+              value: "{{ include "sitewhere.fullname" . }}-zookeeper-svc:{{ .Values.infra.zookeeper.service.port }}"
+            - name: KAFKA_ADVERTISED_PORT
+              value: "9092"
+              value: "{{ .Values.infra.kafka.service.inside.port }}"
+          volumeMounts:
+            - name: {{ include "sitewhere.fullname" . }}-kafka-pv
+              mountPath: /kafka
+{{- if .Values.services.initContainers }}
+      initContainers:
+        - name: pod-dependency
+          image: ylonkar/pod-dependency-init-container:1.0
+          env:
+            - name: POD_LABELS
+              value: sitewhere.io/role=infraestructure,sitewhere.io/name=zookeeper
+            - name: MAX_RETRY
+              value: "10"
+            - name: RETRY_TIME_OUT
+              value: "5000"
+{{- end }}
+      volumes:
+        - name: {{ include "sitewhere.fullname" . }}-kafka-pv
+          persistentVolumeClaim:
+            claimName: {{ include "sitewhere.fullname" . }}-kafka-pvc
+{{ include "sitewhere.infra.imagePullSecrets" . | indent 6 }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ include "sitewhere.fullname" . }}-kafka-pv
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.persistence.storage }}
+        {{- if .Values.persistence.storageClass }}
+        storageClassName: {{ .Values.persistence.storageClass }}
+        {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sitewhere.fullname" . }}-kafka-svc
+  labels:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.infra.kafka.service.type }}
+  ports:
+    - port: {{ .Values.infra.kafka.service.inside.port }}
+      targetPort: {{ .Values.infra.kafka.service.inside.port }}
+      protocol: TCP
+      name: inside
+    - port: {{ .Values.infra.kafka.service.outside.port }}
+      targetPort: {{ .Values.infra.kafka.service.outside.port }}
+      name: outside
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-kafka
+    app.kubernetes.io/instance: {{ .Release.Name }}

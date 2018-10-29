@@ -1,0 +1,79 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "sitewhere.fullname" . }}-web-rest
+  labels:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.services.web_rest.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        sitewhere.io/role: "microservice"
+        sitewhere.io/name: "web-rest"
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-web-rest
+          image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.web_rest.image }}:{{ .Values.services.image.tag }}"
+          imagePullPolicy: {{ .Values.services.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.services.web_rest.service.grpc.api.port }}
+            - containerPort: {{ .Values.services.web_rest.service.grpc.management.port }}
+            - containerPort: {{ .Values.services.web_rest.service.http.port }}
+          env:
+{{ include "sitewhere.microserviceEnvValues" . | indent 12 }}
+{{ include "sitewhere.initContainers" . | indent 6 }}
+{{ include "sitewhere.services.imagePullSecrets" . | indent 6 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sitewhere.fullname" . }}-web-rest-grpc
+  labels:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.services.web_rest.service.grpc.type }}
+  ports:
+    - port: {{ .Values.services.web_rest.service.grpc.api.port }}
+      targetPort: {{ .Values.services.web_rest.service.grpc.api.port }}
+      protocol: TCP
+      name: grcp-api
+    - port: {{ .Values.services.web_rest.service.grpc.management.port }}
+      targetPort: {{ .Values.services.web_rest.service.grpc.management.port }}
+      protocol: TCP
+      name: grcp-mgn
+  selector:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
+    app.kubernetes.io/instance: {{ .Release.Name }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sitewhere.fullname" . }}-web-rest-http
+  labels:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.services.web_rest.service.http.type }}
+  ports:
+    - port: {{ .Values.services.web_rest.service.http.port }}
+      targetPort: {{ .Values.services.web_rest.service.http.port }}
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
+    app.kubernetes.io/instance: {{ .Release.Name }}
