@@ -1,6 +1,5 @@
 # SiteWhere Infrastructur
 infra:
-  profile: default
   image:
     registry: docker.io
     pullPolicy: IfNotPresent
