@@ -67,7 +67,7 @@ The following tables list the configurable parameters of the SiteWhere chart and
 | infra.zookeeper.zoonavigator.service.port | Zookeeper Service Port                      | 8000                             |
 | infra.zookeeper.api.image                 | Zookeeper API container image               | elkozmon/zoonavigator-api:latest |
 
-#### Zafka Configuration
+#### Kafka Configuration
 
 | Parameter                             | Description                                          | Default                          |
 | --------------------------------------| -----------------------------------------------------|----------------------------------|
@@ -100,7 +100,7 @@ The following tables list the configurable parameters of the SiteWhere chart and
 
 | Parameter                             | Description                                     | Default                          |
 | --------------------------------------| ------------------------------------------------|----------------------------------|
-| infra.mosquitto.image                 | Eclipse Mosquitto container image               | mongo:3                          |
+| infra.mosquitto.image                 | Eclipse Mosquitto container image               | eclipse-mosquitto:1.4.12         |
 | infra.mosquitto.replicaCount          | Eclipse Mosquitto Replica Count                 | 1                                |
 | infra.mosquitto.service.type          | Eclipse Mosquitto Service Type                  | ClusterIP                        |
 | infra.mosquitto.service.port          | Eclipse Mosquitto Service Port                  | 1883                             |
