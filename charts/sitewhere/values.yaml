@@ -48,13 +48,13 @@ infra:
 
 services:
   # profile: default|minimal
+  profile: default
   image:
     registry: docker.io
     repository: sitewhere
     tag: 2.0.0
     pullPolicy: Never
     imagePullSecrets: "-"
-  profile: default
   initContainers: true
   instance_management:
     image: service-instance-management

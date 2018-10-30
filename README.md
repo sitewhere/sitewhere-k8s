@@ -50,7 +50,7 @@ The following tables list the configurable parameters of the SiteWhere chart and
 
 | Parameter                        | Description                                          | Default                          |
 | ---------------------------------| -----------------------------------------------------|----------------------------------|
-| infra.image.registry             | Image repository for infrastructure container images | docker.io                        |
+| infra.image.registry             | Image registry for infrastructure container images   | docker.io                        |
 | infra.image.pullPolicy           | Image pull policy for infrastructure images          | IfNotPresent                     |
 | infra.image.imagePullSecrets     | Image pull secrets for infrastructure images         | `nil`                            |
 
@@ -104,3 +104,15 @@ The following tables list the configurable parameters of the SiteWhere chart and
 | infra.mosquitto.replicaCount          | Eclipse Mosquitto Replica Count                 | 1                                |
 | infra.mosquitto.service.type          | Eclipse Mosquitto Service Type                  | ClusterIP                        |
 | infra.mosquitto.service.port          | Eclipse Mosquitto Service Port                  | 1883                             |
+
+### Microservice Configration
+
+| Parameter                        | Description                                          | Default                          |
+| ---------------------------------| -----------------------------------------------------|----------------------------------|
+| services.profile                 | SiteWhere profile `default` or `minimal`             | `default`                        |
+| services.image.registry          | Image registry for microservices container images    | docker.io                        |
+| services.image.repository        | Image repository for microservices container images  | sitewhere                        |
+| services.image.tag               | Image tag for microservices container images         | 2.0.0                            |
+| services.image.pullPolicy        | Image pull policy for microservices images           | Never                            |
+| services.image.imagePullSecrets  | Image pull secrets for microservices images          | `nil`                            |
+| services.initContainers          | If `true`, microservices pod will wait for MongoDB.  | `true`                           |
