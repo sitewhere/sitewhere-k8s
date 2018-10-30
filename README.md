@@ -13,6 +13,7 @@ This chart will do the following:
   * Deploy [Jaeger](https://www.jaegertracing.io/)
   * Deploy [Eclipse Mosquitto](https://mosquitto.org/)
 * Deploy SiteWhere Microservices. The table bellow describes the microservices deployed base on the profile selected.
+
   | Microservice             | Defaul Profile | Minimal Profile |
   | ------------------------ | -------------- | --------------- |
   | Asset Management         | ✓              | ✓               |
@@ -34,6 +35,7 @@ This chart will do the following:
   | Rules Processing         | ✓              | ✗               |
   | Schedule Management      | ✓              | ✗               |
   | Streaming Media          | ✓              | ✗               |
+  
 * Expose Web Rest port 8080 on an external LoadBalancer
 
 ## Installing the Chart
@@ -46,24 +48,24 @@ The following tables list the configurable parameters of the SiteWhere chart and
 
 ### Infrastructure Configration
 
-| Parameter                    | Description                                          | Default               |
-| -----------------------------| -----------------------------------------------------|-----------------------|
-| infra.image.registry         | Image repository for infrastructure container images | docker.io             |
-| infra.image.pullPolicy       | Image pull policy for infrastructure images          | IfNotPresent          |
-| infra.image.imagePullSecrets | Image pull secrets for infrastructure images         | `nil`                 |
+| Parameter                        | Description                                          | Default                          |
+| ---------------------------------| -----------------------------------------------------|----------------------------------|
+| infra.image.registry             | Image repository for infrastructure container images | docker.io                        |
+| infra.image.pullPolicy           | Image pull policy for infrastructure images          | IfNotPresent                     |
+| infra.image.imagePullSecrets     | Image pull secrets for infrastructure images         | `nil`                            |
 
 #### Zookeeper Configration
 
-| Parameter                                 | Description                                          | Default                          |
-| ------------------------------------------| -----------------------------------------------------|----------------------------------|
-| infra.zookeeper.image                     | Zookeeper container image                            | wurstmeister/zookeeper           |
-| infra.zookeeper.replicaCount              | Zookeeper Replica Count                              | 1                                |
-| infra.zookeeper.service.type              | Zookeeper Service Type                               | ClusterIP                        |
-| infra.zookeeper.service.port              | Zookeeper Service Port                               | 2181                             |
-| infra.zookeeper.zoonavigator.image        | Zookeeper Navigator container image                  | elkozmon/zoonavigator-web:latest |
-| infra.zookeeper.zoonavigator.service.type | Zookeeper Navigator Service Type                     | ClusterIP                        |
-| infra.zookeeper.zoonavigator.service.port | Zookeeper Service Port                               | 8000                             |
-| infra.zookeeper.api.image                 | Zookeeper API container image                        | elkozmon/zoonavigator-api:latest |
+| Parameter                        | Description                                          | Default                          |
+| ---------------------------------| -----------------------------------------------------|----------------------------------|
+| infra.zookeeper.image            | Zookeeper container image                            | wurstmeister/zookeeper           |
+| infra.zookeeper.replicaCount     | Zookeeper Replica Count                              | 1                                |
+| infra.zookeeper.service.type     | Zookeeper Service Type                               | ClusterIP                        |
+| infra.zookeeper.service.port     | Zookeeper Service Port                               | 2181                             |
+| infra.zookeeper.zoonavigator.image | Zookeeper Navigator container image                | elkozmon/zoonavigator-web:latest |
+| infra.zookeeper.zoonavigator.service.type | Zookeeper Navigator Service Type            | ClusterIP                        |
+| infra.zookeeper.zoonavigator.service.port | Zookeeper Service Port                      | 8000                             |
+| infra.zookeeper.api.image                 | Zookeeper API container image               | elkozmon/zoonavigator-api:latest |
 
 #### Zafka Configuration
 
