@@ -18,7 +18,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "sitewhere.name" . }}-kafka
         app.kubernetes.io/instance: {{ .Release.Name }}
-        sitewhere.io/role: "infraestructure"
+        sitewhere.io/role: "infrastructure"
         sitewhere.io/name: "kafka"
     spec:
       containers:
@@ -49,7 +49,7 @@ spec:
           image: ylonkar/pod-dependency-init-container:1.0
           env:
             - name: POD_LABELS
-              value: sitewhere.io/role=infraestructure,sitewhere.io/name=zookeeper
+              value: sitewhere.io/role=infrastructure,sitewhere.io/name=zookeeper
             - name: MAX_RETRY
               value: "10"
             - name: RETRY_TIME_OUT

@@ -18,7 +18,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "sitewhere.name" . }}-mosquitto
         app.kubernetes.io/instance: {{ .Release.Name }}
-        sitewhere.io/role: "infraestructure"
+        sitewhere.io/role: "infrastructure"
         sitewhere.io/name: "mosquitto"
     spec:
       containers:
