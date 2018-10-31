@@ -24,7 +24,7 @@ Also, if you wish to run SiteWhere in a low resource cluster, use the
 minimal recipes and install this Helm Chart with the following command:
 
 ```sh
-    helm install --name sitewhere --set services.profile=minimal ./sitewhere
+helm install --name sitewhere --set services.profile=minimal ./sitewhere
 ```
 
 If you don't need Rook.io, you can skip the Rook.io install and install
@@ -53,13 +53,20 @@ kubectl create secret docker-registry sitewhere-harbor-cred \
 secret/sitewhere-harbor-cred created
 ```
 
-## Uninstall Rook
+## Removing SiteWhere Data for clean system start
 
-To uninstall Rook.io use the following command:
+In order to remove all SiteWhere data and start with a clean system, you need remove
+the Persistence Volume Claim that SiteWhere creates. To do that, run the following commands:
 
 ```sh
-helm delete --purge rook-ceph
+kubectl delete pvc/data-sitewhere-consul-server-0
+kubectl delete pvc/sitewhere-kafka-pv-sitewhere-kafka-0
+kubectl delete pvc/sitewhere-mongodb-pv-sitewhere-mongodb-0
+kubectl delete pvc/sitewhere-zookeeper-pv-sitewhere-zookeeper-0
 ```
 
-Also, that a look at this [document](https://rook.io/docs/rook/v0.8/ceph-teardown.html)
-for further instructions on how to uninstall Rook.io from Kuberntes.
+## Uninstall Rook
+
+If you wish to uninstall Rook.io follow the instructions of
+this [document](https://rook.io/docs/rook/v0.8/ceph-teardown.html)
+on how to uninstall Rook.io from Kuberntes.
