@@ -13,7 +13,7 @@ infra:
     zoonavigator:
       image: elkozmon/zoonavigator-web:latest
       service:
-        type: ClusterIP
+        type: LoadBalancer
         port: 8000
     api:
       image: elkozmon/zoonavigator-api:latest
@@ -41,10 +41,17 @@ infra:
       type: ClusterIP
       port: 27017
   mosquitto:
+    enabled: true
     image: eclipse-mosquitto:1.4.12
     replicaCount: 1
     service:
+      type: LoadBalancer
       port: 1883
+  coap:
+    enabled: false
+    service:
+      type: LoadBalancer
+      port: 5683
 
 services:
   # profile: default|minimal

@@ -133,5 +133,5 @@ Each _microservice_ has the following configuration:
 | --------------------------------------| ------------------------------------------------|----------------------------------|
 | infra.mosquitto.image                 | Eclipse Mosquitto container image               | eclipse-mosquitto:1.4.12         |
 | infra.mosquitto.replicaCount          | Eclipse Mosquitto Replica Count                 | 1                                |
-| infra.mosquitto.service.type          | Eclipse Mosquitto Service Type                  | ClusterIP                        |
+| infra.mosquitto.service.type          | Eclipse Mosquitto Service Type                  | LoadBalancer                     |
 | infra.mosquitto.service.port          | Eclipse Mosquitto Service Port                  | 1883                             |
