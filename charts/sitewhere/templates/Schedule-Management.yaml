@@ -24,11 +24,19 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}-schedule-management
+{{ if .Values.services.debug }}
+          image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.schedule_management.image }}:debug-{{ .Values.services.image.tag }}"
+{{ else }}
           image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.schedule_management.image }}:{{ .Values.services.image.tag }}"
+{{ end }}
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.services.schedule_management.service.grpc.api.port }}
             - containerPort: {{ .Values.services.schedule_management.service.grpc.management.port }}
+{{- if .Values.services.debug }}
+            - containerPort: 8001
+            - containerPort: 1118
+{{- end }}
           env:
 {{ include "sitewhere.microserviceEnvValues" . | indent 12 }}
 {{ include "sitewhere.initContainers" . | indent 6 }}
@@ -58,4 +66,30 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-schedule-management
     app.kubernetes.io/instance: {{ .Release.Name }}
+{{- if .Values.services.debug }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sitewhere.fullname" . }}-schedule-management-debug
+  labels:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: NodePort
+  ports:
+    - port: 8001
+      targetPort: 8018
+      protocol: TCP
+      name: jdwp
+    - port: 1118
+      targetPort: 1118
+      protocol: TCP
+      name: jmx
+  selector:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-schedule-management
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
 {{- end}}

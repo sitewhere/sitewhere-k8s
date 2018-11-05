@@ -32,7 +32,7 @@ This chart will do the following:
   | Device State             | ✓              | ✗               |
   | Event Search             | ✓              | ✗               |
   | Label Generation         | ✓              | ✗               |
-  | Rules Processing         | ✓              | ✗               |
+  | Rule Processing          | ✓              | ✗               |
   | Schedule Management      | ✓              | ✗               |
   | Streaming Media          | ✓              | ✗               |
   
@@ -51,6 +51,7 @@ The following tables list the configurable parameters of the SiteWhere chart and
 | Parameter                        | Description                                          | Default                          |
 | ---------------------------------| -----------------------------------------------------|----------------------------------|
 | services.profile                 | SiteWhere profile `default` or `minimal`             | `default`                        |
+| services.debug                   | Use debug images                                     | `false`                          |
 | services.image.registry          | Image registry for microservices container images    | docker.io                        |
 | services.image.repository        | Image repository for microservices container images  | sitewhere                        |
 | services.image.tag               | Image tag for microservices container images         | 2.0.0                            |
@@ -67,6 +68,30 @@ Each _microservice_ has the following configuration:
 | services._microservice_.service.type                 | Microservice Service Type                       | ClusterIP         |
 | services._microservice_.service.grpc.api.port        | Microservice gRPC API Service Port              | 9000              |
 | services._microservice_.service.grpc.management.port | Microservice gRPC Management Service Port       | 9001              |
+
+Debug image ports
+
+| Microservice             | JDWP Port      | JMX Port        |
+| ------------------------ | -------------- | --------------- |
+| Instance Managemwnt      | 8001           | 1101            |
+| User Management          | 8002           | 1102            |
+| Tenant Management        | 8003           | 1103            |
+| Device Management        | 8004           | 1104            |
+| Event Management         | 8005           | 1105            |
+| Asset Management         | 8006           | 1106            |
+| Event Sources            | 8007           | 1107            |
+| Inbound Processing       | 8008           | 1108            |
+| Label Generation         | 8009           | 1109            |
+| Web Rest                 | 8010           | 1110            |
+| Batch Operations         | 8011           | 1111            |
+| Command Delivery         | 8012           | 1112            |
+| Device Registration      | 8013           | 1113            |
+| Device State             | 8014           | 1114            |
+| Event Search             | 8015           | 1115            |
+| Outbound Connectors      | 8016           | 1116            |
+| Rule Processing          | 8017           | 1117            |
+| Schedule Management      | 8018           | 1118            |
+| Streaming Media          | 8019           | 1119            |
 
 ### Infrastructure Configration
 

@@ -24,11 +24,19 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}-rule-processing
+{{ if .Values.services.debug }}
+          image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.rule_processing.image }}:debug-{{ .Values.services.image.tag }}"
+{{ else }}
           image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.rule_processing.image }}:{{ .Values.services.image.tag }}"
+{{ end }}
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.services.rule_processing.service.grpc.api.port }}
             - containerPort: {{ .Values.services.rule_processing.service.grpc.management.port }}
+{{- if .Values.services.debug }}
+            - containerPort: 8001
+            - containerPort: 1117
+{{- end }}
           env:
 {{ include "sitewhere.microserviceEnvValues" . | indent 12 }}
 {{ include "sitewhere.initContainers" . | indent 6 }}
@@ -57,4 +65,30 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-rule-processing
     app.kubernetes.io/instance: {{ .Release.Name }}
+{{- if .Values.services.debug }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sitewhere.fullname" . }}-rule-processing-debug
+  labels:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: NodePort
+  ports:
+    - port: 8001
+      targetPort: 8017
+      protocol: TCP
+      name: jdwp
+    - port: 1117
+      targetPort: 1117
+      protocol: TCP
+      name: jmx
+  selector:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-rule-processing
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
 {{- end}}

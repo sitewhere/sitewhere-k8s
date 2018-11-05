@@ -56,6 +56,7 @@ infra:
 services:
   # profile: default|minimal
   profile: default
+  debug: false
   image:
     registry: docker.io
     repository: sitewhere

@@ -1,4 +1,4 @@
-{{- define "sitewhere.microserviceEnvValues" }}
+{{- define "sitewhere.microserviceEnvValues" -}}
 - name: "sitewhere.k8s.pod.ip"
   valueFrom:
     fieldRef:
@@ -17,4 +17,4 @@
   value: "{{ include "sitewhere.fullname" . }}-consul-server"
 - name: "sitewhere.consul.port"
   value: "8500"
-{{- end }}
+{{- end -}}
