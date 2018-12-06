@@ -1,4 +1,4 @@
-# SiteWhere Infrastructur
+# SiteWhere Infrastructure
 infra:
   image:
     registry: docker.io
