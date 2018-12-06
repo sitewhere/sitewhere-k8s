@@ -1,4 +1,4 @@
-{{- if eq .Values.services.profile "default" }}
+{{- if include "microservices.event_search.enabled" . }}
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:

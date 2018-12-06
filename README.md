@@ -63,6 +63,7 @@ Each _microservice_ has the following configuration:
 
 | Parameter                                            | Description                                     | Default           |
 | -----------------------------------------------------| ------------------------------------------------|-------------------|
+| services._microservice_.enabled                      | `true` if microservice is enabled               | `true`            |
 | services._microservice_.image                        | Microservice container images                   | _microservice_    |
 | services._microservice_.replicaCount                 | Microservice Replica Count                      | 1                 |
 | services._microservice_.service.type                 | Microservice Service Type                       | ClusterIP         |

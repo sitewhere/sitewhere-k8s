@@ -1,3 +1,4 @@
+{{- if include "microservices.tenant_management.enabled" . }}
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
@@ -90,4 +91,5 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-tenant-management
     app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
 {{- end }}
