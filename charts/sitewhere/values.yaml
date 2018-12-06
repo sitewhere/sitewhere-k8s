@@ -1,4 +1,4 @@
-# SiteWhere Infrastructur
+# SiteWhere Infrastructure
 infra:
   image:
     registry: docker.io
@@ -64,28 +64,9 @@ services:
     pullPolicy: Never
     imagePullSecrets: "-"
   initContainers: true
-  instance_management:
-    image: service-instance-management
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      grpc:
-        api:
-          port: 9000
-        management:
-          port: 9001
-  user_management:
-    image: service-user-management
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      grpc:
-        api:
-          port: 9000
-        management:
-          port: 9001
-  tenant_management:
-    image: service-tenant-management
+  asset_management:
+    enabled: true
+    image: service-asset-management
     replicaCount: 1
     service:
       type: ClusterIP
@@ -95,6 +76,7 @@ services:
         management:
           port: 9001
   device_management:
+    enabled: true
     image: service-device-management
     replicaCount: 1
     service:
@@ -105,6 +87,7 @@ services:
         management:
           port: 9001
   event_management:
+    enabled: true
     image: service-event-management
     replicaCount: 1
     service:
@@ -114,27 +97,8 @@ services:
           port: 9000
         management:
           port: 9001
-  event_search:
-    image: service-event-search
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      grpc:
-        api:
-          port: 9000
-        management:
-          port: 9001
-  asset_management:
-    image: service-asset-management
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      grpc:
-        api:
-          port: 9000
-        management:
-          port: 9001
   event_sources:
+    enabled: true
     image: service-event-sources
     replicaCount: 1
     service:
@@ -145,6 +109,7 @@ services:
         management:
           port: 9001
   inbound_processing:
+    enabled: true
     image: service-inbound-processing
     replicaCount: 1
     service:
@@ -154,18 +119,9 @@ services:
           port: 9000
         management:
           port: 9001
-  device_registration:
-    image: service-device-registration
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      grpc:
-        api:
-          port: 9000
-        management:
-          port: 9001
-  rule_processing:
-    image: service-rule-processing
+  instance_management:
+    enabled: true
+    image: service-instance-management
     replicaCount: 1
     service:
       type: ClusterIP
@@ -175,6 +131,7 @@ services:
         management:
           port: 9001
   outbound_connectors:
+    enabled: true
     image: service-outbound-connectors
     replicaCount: 1
     service:
@@ -184,8 +141,9 @@ services:
           port: 9000
         management:
           port: 9001
-  batch_operations:
-    image: service-batch-operations
+  tenant_management:
+    enabled: true
+    image: service-tenant-management
     replicaCount: 1
     service:
       type: ClusterIP
@@ -194,48 +152,9 @@ services:
           port: 9000
         management:
           port: 9001
-  schedule_management:
-    image: service-schedule-management
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      grpc:
-        api:
-          port: 9000
-        management:
-          port: 9001
-  command_delivery:
-    image: service-command-delivery
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      grpc:
-        api:
-          port: 9000
-        management:
-          port: 9001
-  device_state:
-    image: service-device-state
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      grpc:
-        api:
-          port: 9000
-        management:
-          port: 9001
-  streaming_media:
-    image: service-streaming-media
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      grpc:
-        api:
-          port: 9000
-        management:
-          port: 9001
-  label_generation:
-    image: service-label-generation
+  user_management:
+    enabled: true
+    image: service-user-management
     replicaCount: 1
     service:
       type: ClusterIP
@@ -245,6 +164,7 @@ services:
         management:
           port: 9001
   web_rest:
+    enabled: true
     image: service-web-rest
     replicaCount: 1
     service:
@@ -257,6 +177,105 @@ services:
       http:
         type: LoadBalancer
         port: 8080
+  batch_operations:
+    enabled: false
+    image: service-batch-operations
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  command_delivery:
+    enabled: false
+    image: service-command-delivery
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  device_registration:
+    enabled: false
+    image: service-device-registration
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  device_state:
+    enabled: false
+    image: service-device-state
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  event_search:
+    enabled: false
+    image: service-event-search
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  label_generation:
+    enabled: false
+    image: service-label-generation
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  rule_processing:
+    enabled: false
+    image: service-rule-processing
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  schedule_management:
+    enabled: false
+    image: service-schedule-management
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+  streaming_media:
+    enabled: false
+    image: service-streaming-media
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
 
 clusterDomain: cluster.local
 

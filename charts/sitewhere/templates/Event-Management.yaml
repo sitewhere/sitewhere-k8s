@@ -1,3 +1,4 @@
+{{- if include "microservices.event_management.enabled" . }}
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
@@ -90,4 +91,5 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-event-management
     app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
 {{- end }}
