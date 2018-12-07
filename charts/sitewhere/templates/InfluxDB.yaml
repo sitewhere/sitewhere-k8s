@@ -1,46 +1,46 @@
-{{- if include "infra.mongodb.enabled" . }}
+{{- if include "infra.influxdb.enabled" . }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-mongodb
+  name: {{ include "sitewhere.fullname" . }}-influxdb
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.infra.mongodb.replicaCount }}
+  replicas: {{ .Values.infra.influxdb.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "sitewhere.name" . }}-mongodb
+      app.kubernetes.io/name: {{ include "sitewhere.name" . }}-influxdb
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "sitewhere.name" . }}-mongodb
+        app.kubernetes.io/name: {{ include "sitewhere.name" . }}-influxdb
         app.kubernetes.io/instance: {{ .Release.Name }}
         sitewhere.io/role: "infrastructure"
-        sitewhere.io/name: "mongodb"
+        sitewhere.io/name: "influxdb"
     spec:
       containers:
-        - name: {{ .Chart.Name }}-mongodb
-          image: "{{ .Values.infra.image.registry }}/{{ .Values.infra.mongodb.image }}"
+        - name: {{ .Chart.Name }}-influxdb
+          image: "{{ .Values.infra.image.registry }}/{{ .Values.infra.influxdb.image }}"
           imagePullPolicy: {{ .Values.infra.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.infra.mongodb.service.port }}
-              name: mongodb-port
+            - containerPort: {{ .Values.infra.influxdb.service.port }}
+              name: influxdb-port
               protocol: TCP
           volumeMounts:
-            - name: {{ include "sitewhere.fullname" . }}-mongodb-pv
-              mountPath: /data/db
+            - name: {{ include "sitewhere.fullname" . }}-influxdb-pv
+              mountPath: /var/lib/influxdb
       volumes:
-        - name: {{ include "sitewhere.fullname" . }}-mongodb-pv
+        - name: {{ include "sitewhere.fullname" . }}-influxdb-pv
           persistentVolumeClaim:
-            claimName: {{ include "sitewhere.fullname" . }}-mongodb-pvc
+            claimName: {{ include "sitewhere.fullname" . }}-influxdb-pvc
 {{ include "sitewhere.infra.imagePullSecrets" . | indent 6 }}
   volumeClaimTemplates:
     - metadata:
-        name: {{ include "sitewhere.fullname" . }}-mongodb-pv
+        name: {{ include "sitewhere.fullname" . }}-influxdb-pv
       spec:
         accessModes:
           - ReadWriteOnce
@@ -54,20 +54,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-mongodb-svc
+  name: {{ include "sitewhere.fullname" . }}-influxdb-svc
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  type: {{ .Values.infra.mongodb.service.type }}
+  type: {{ .Values.infra.influxdb.service.type }}
   ports:
-    - port: {{ .Values.infra.mongodb.service.port }}
-      targetPort: {{ .Values.infra.mongodb.service.port }}
+    - port: {{ .Values.infra.influxdb.service.port }}
+      targetPort: {{ .Values.infra.influxdb.service.port }}
       protocol: TCP
-      name: mongodb-port
+      name: influxdb-port
   selector:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-mongodb
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-influxdb
     app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
