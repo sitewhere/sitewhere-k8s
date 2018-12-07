@@ -1,10 +1,12 @@
 # SiteWhere Infrastructure
 infra:
+  profile: mongodb
   image:
     registry: docker.io
     pullPolicy: IfNotPresent
     imagePullSecrets: "-"
   zookeeper:
+    enabled: true
     image: wurstmeister/zookeeper
     replicaCount: 1
     service:
@@ -18,6 +20,7 @@ infra:
     api:
       image: elkozmon/zoonavigator-api:latest
   kafka:
+    enabled: true
     image: wurstmeister/kafka:1.0.0
     replicaCount: 1
     service:
@@ -27,6 +30,7 @@ infra:
       outside:
         port: 9094
   jaeger:
+    enabled: true
     image: jaegertracing/all-in-one
     replicaCount: 1
     service:
@@ -35,11 +39,26 @@ infra:
         zipkin: "9411"
         ui: "16686"
   mongodb:
+    enabled: true
     image: mongo:3
     replicaCount: 1
     service:
       type: ClusterIP
       port: 27017
+  cassandra:
+    enabled: false
+    image: cassandra:3.11
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      port: 9042
+  influxdb:
+    enabled: false
+    image: influxdb:1.3-alpine
+    replicaCount: 1
+    service:
+      type: ClusterIP
+      port: 8086
   mosquitto:
     enabled: true
     image: eclipse-mosquitto:1.4.12

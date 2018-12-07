@@ -15,7 +15,7 @@ This chart will do the following:
 * Deploy SiteWhere Microservices. The table bellow describes the microservices deployed base on the profile selected.
 
   | Microservice             | Defaul Profile | Minimal Profile |
-  | ------------------------ | -------------- | --------------- |
+  | :----------------------- | :------------- | :-------------- |
   | Asset Management         | ✓              | ✓               |
   | Device Management        | ✓              | ✓               |
   | Event Management         | ✓              | ✓               |
@@ -49,7 +49,7 @@ The following tables list the configurable parameters of the SiteWhere chart and
 ### Microservice Configration
 
 | Parameter                        | Description                                          | Default                          |
-| ---------------------------------| -----------------------------------------------------|----------------------------------|
+| :--------------------------------| :--------------------------------------------------- | :------------------------------- |
 | services.profile                 | SiteWhere profile `default` or `minimal`             | `default`                        |
 | services.debug                   | Use debug images                                     | `false`                          |
 | services.image.registry          | Image registry for microservices container images    | docker.io                        |
@@ -62,7 +62,7 @@ The following tables list the configurable parameters of the SiteWhere chart and
 Each _microservice_ has the following configuration:
 
 | Parameter                                            | Description                                     | Default           |
-| -----------------------------------------------------| ------------------------------------------------|-------------------|
+| :----------------------------------------------------| :---------------------------------------------- | :---------------- |
 | services._microservice_.enabled                      | `true` if microservice is enabled               | `true`            |
 | services._microservice_.image                        | Microservice container images                   | _microservice_    |
 | services._microservice_.replicaCount                 | Microservice Replica Count                      | 1                 |
@@ -73,7 +73,7 @@ Each _microservice_ has the following configuration:
 Debug image ports
 
 | Microservice             | JDWP Port      | JMX Port        |
-| ------------------------ | -------------- | --------------- |
+| :----------------------- | :------------- | :-------------- |
 | Instance Managemwnt      | 8001           | 1101            |
 | User Management          | 8002           | 1102            |
 | Tenant Management        | 8003           | 1103            |
@@ -99,7 +99,8 @@ Debug image ports
 #### General Infrastructure Configuration
 
 | Parameter                        | Description                                          | Default                          |
-| ---------------------------------| -----------------------------------------------------|----------------------------------|
+| :------------------------------- | :--------------------------------------------------- | :------------------------------- |
+| infra.profile                    | Available values: `mongodb` `cassandra` `influxdb`   | `mongodb`                        |
 | infra.image.registry             | Image registry for infrastructure container images   | docker.io                        |
 | infra.image.pullPolicy           | Image pull policy for infrastructure images          | IfNotPresent                     |
 | infra.image.imagePullSecrets     | Image pull secrets for infrastructure images         | `nil`                            |
@@ -107,14 +108,14 @@ Debug image ports
 #### Infrastructure Persistence Configuration
 
 | Parameter                        | Description                                          | Default                          |
-| ---------------------------------| -----------------------------------------------------|----------------------------------|
+| :------------------------------- | :--------------------------------------------------- | :------------------------------- |
 | persistence.storageClass         | Storage Class used in Persistence Volume Claims      | rook-ceph-block                  |
 | persistence.storage              | Storage Size of Persistence Volume Claim             | 10Gi                             |
 
 #### Zookeeper Configration
 
 | Parameter                        | Description                                          | Default                          |
-| ---------------------------------| -----------------------------------------------------|----------------------------------|
+| :------------------------------- | :--------------------------------------------------- | :------------------------------- |
 | infra.zookeeper.image            | Zookeeper container image                            | wurstmeister/zookeeper           |
 | infra.zookeeper.replicaCount     | Zookeeper Replica Count                              | 1                                |
 | infra.zookeeper.service.type     | Zookeeper Service Type                               | ClusterIP                        |
@@ -126,37 +127,58 @@ Debug image ports
 
 #### Kafka Configuration
 
-| Parameter                             | Description                                          | Default                          |
-| --------------------------------------| -----------------------------------------------------|----------------------------------|
-| infra.kafka.image                     | Apache Kafka container image                         | wurstmeister/kafka:1.0.0         |
-| infra.kafka.replicaCount              | Apache Kafka Replica Count                           | 1                                |
-| infra.kafka.service.type              | Apache Kafka Service Type                            | ClusterIP                        |
-| infra.kafka.service.inside.port       | Apache Kafka Inside Service Port                     | 9092                             |
-| infra.kafka.service.outside.port      | Apache Kafka Outside Service Port                    | 9094                             |
+| Parameter                        | Description                                          | Default                          |
+| :------------------------------- | :--------------------------------------------------- | :------------------------------- |
+| infra.kafka.image                | Apache Kafka container image                         | wurstmeister/kafka:1.0.0         |
+| infra.kafka.replicaCount         | Apache Kafka Replica Count                           | 1                                |
+| infra.kafka.service.type         | Apache Kafka Service Type                            | ClusterIP                        |
+| infra.kafka.service.inside.port  | Apache Kafka Inside Service Port                     | 9092                             |
+| infra.kafka.service.outside.port | Apache Kafka Outside Service Port                    | 9094                             |
 
 #### Jaeger Configuration
 
-| Parameter                             | Description                                    | Default                          |
-| --------------------------------------| -----------------------------------------------|----------------------------------|
-| infra.jaeger.image                    | Jaeger container image                         | jaegertracing/all-in-one         |
-| infra.jaeger.replicaCount             | Jaeger Replica Count                           | 1                                |
-| infra.jaeger.service.type             | Jaeger Service Type                            | ClusterIP                        |
-| infra.jaeger.service.ports.zipkin     | Jaeger Zipkin Service Port                     | 9411                             |
-| infra.jaeger.service.ports.ui         | Jaeger UI Service Port                         | 16686                            |
+| Parameter                         | Description                                    | Default                          |
+| :-------------------------------- | :--------------------------------------------- | :------------------------------- |
+| infra.jaeger.image                | Jaeger container image                         | jaegertracing/all-in-one         |
+| infra.jaeger.replicaCount         | Jaeger Replica Count                           | 1                                |
+| infra.jaeger.service.type         | Jaeger Service Type                            | ClusterIP                        |
+| infra.jaeger.service.ports.zipkin | Jaeger Zipkin Service Port                     | 9411                             |
+| infra.jaeger.service.ports.ui     | Jaeger UI Service Port                         | 16686                            |
 
 #### MongoDB Configuration
 
-| Parameter                             | Description                                     | Default                          |
-| --------------------------------------| ------------------------------------------------|----------------------------------|
-| infra.mongodb.image                   | MongoDB container image                         | mongo:3                          |
-| infra.mongodb.replicaCount            | MongoDB Replica Count                           | 1                                |
-| infra.mongodb.service.type            | MongoDB Service Type                            | ClusterIP                        |
-| infra.mongodb.service.port            | MongoDB Service Port                            | 27017                            |
+| Parameter                        | Description                                     | Default                          |
+| :------------------------------- | :---------------------------------------------- | :------------------------------- |
+| infra.mongodb.image              | MongoDB container image                         | mongo:3                          |
+| infra.mongodb.enabled            | Enable MongoDB                                  | `true`                           |
+| infra.mongodb.replicaCount       | MongoDB Replica Count                           | 1                                |
+| infra.mongodb.service.type       | MongoDB Service Type                            | ClusterIP                        |
+| infra.mongodb.service.port       | MongoDB Service Port                            | 27017                            |
+
+#### Cassandra Configuration
+
+| Parameter                        | Description                                     | Default                          |
+| :------------------------------- | :---------------------------------------------- | :------------------------------- |
+| infra.cassandra.image            | Cassandra container image                       | cassandra:3.11                   |
+| infra.cassandra.enabled          | Enable Cassandra                                | `false`                          |
+| infra.cassandra.replicaCount     | Cassandra Replica Count                         | 1                                |
+| infra.cassandra.service.type     | Cassandra Service Type                          | ClusterIP                        |
+| infra.cassandra.service.port     | Cassandra Service Port                          | 9042                             |
+
+#### InfluxDB Configuration
+
+| Parameter                        | Description                                     | Default                          |
+| :------------------------------- | :---------------------------------------------- | :------------------------------- |
+| infra.influxdb.image             | InfluxDB container image                        | influxdb:1.3-alpine              |
+| infra.influxdb.enabled           | Enable InfluxDB                                 | `false`                          |
+| infra.influxdb.replicaCount      | InfluxDB Replica Count                          | 1                                |
+| infra.influxdb.service.type      | InfluxDB Service Type                           | ClusterIP                        |
+| infra.influxdb.service.port      | InfluxDB Service Port                           | 8086                             |
 
 #### Eclipse Mosquitto Configuration
 
 | Parameter                             | Description                                     | Default                          |
-| --------------------------------------| ------------------------------------------------|----------------------------------|
+| :------------------------------------ | :---------------------------------------------- | :------------------------------- |
 | infra.mosquitto.image                 | Eclipse Mosquitto container image               | eclipse-mosquitto:1.4.12         |
 | infra.mosquitto.replicaCount          | Eclipse Mosquitto Replica Count                 | 1                                |
 | infra.mosquitto.service.type          | Eclipse Mosquitto Service Type                  | LoadBalancer                     |
