@@ -68,5 +68,5 @@ kubectl delete pvc/sitewhere-zookeeper-pv-sitewhere-zookeeper-0
 ## Uninstall Rook
 
 If you wish to uninstall Rook.io follow the instructions of
-this [document](https://rook.io/docs/rook/v0.8/ceph-teardown.html)
+this [document](https://rook.io/docs/rook/v0.9/ceph-teardown.html)
 on how to uninstall Rook.io from Kuberntes.
