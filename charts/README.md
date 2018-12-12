@@ -39,7 +39,19 @@ helm install --name sitewhere --set persistence.storageClass=hostpath ./sitewher
 To remove sitewhere, execute the following command
 
 ```sh
-helm del --purge sitewhere
+helm del sitewhere --purge
+```
+
+## Upgrading sitewhere
+
+To upgrade the release of sitewhere, for example, for using a different
+configuration, use `helm upgrade`. 
+
+For example, to use [InfluxDB](https://www.influxdata.com/), set the 
+`infra.influxdb.enabled` configuration flag to `true` using the following command:
+
+```sh
+helm upgrade --set infra.influxdb.enabled=true sitewhere ./sitewhere
 ```
 
 ## Using private repositories
@@ -63,6 +75,8 @@ kubectl delete pvc/data-sitewhere-consul-server-0
 kubectl delete pvc/sitewhere-kafka-pv-sitewhere-kafka-0
 kubectl delete pvc/sitewhere-mongodb-pv-sitewhere-mongodb-0
 kubectl delete pvc/sitewhere-zookeeper-pv-sitewhere-zookeeper-0
+kubectl delete pvc/sitewhere-cassandra-pv-sitewhere-cassandra-0
+kubectl delete pvc/sitewhere-influxdb-pv-sitewhere-influxdb-0
 ```
 
 ## Uninstall Rook
