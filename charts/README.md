@@ -23,7 +23,7 @@ helm install --name sitewhere ./sitewhere
 Also, if you wish to run SiteWhere in a low resource cluster, use the 
 minimal recipes and install this Helm Chart with the following command:
 
-```sh
+```sh 
 helm install --name sitewhere --set services.profile=minimal ./sitewhere
 ```
 
