@@ -16,11 +16,11 @@ install:
 - helm init --client-only
 - sudo pip install yamllint=="${YAMLLINT_VERSION}"
 script:
-- |
-  helm lint ${REPO_DIR}/charts/sitewhere
-  #if [ $? != 0 ]; then
-  #  travis_terminate 1
-  #fi
+- echo "No Linting for Now!"
+#helm lint ${REPO_DIR}/charts/sitewhere
+#if [ $? != 0 ]; then
+#  travis_terminate 1
+#fi
 #- yamllint -c .yamllint.yml -s .travis.yml .yamllint.yml
 #- yamllint -c .yamllint.yml -s $(find . -type f -name "Chart.yaml")
 #- yamllint -c .yamllint.yml -s $(find . -type f -name "values.yaml")
