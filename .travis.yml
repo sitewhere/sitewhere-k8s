@@ -18,12 +18,12 @@ install:
 script:
 - |
   helm lint ${REPO_DIR}/charts/sitewhere
-  if [ $? != 0 ]; then
-    travis_terminate 1
-  fi
-- yamllint -c .yamllint.yml -s .travis.yml .yamllint.yml
-- yamllint -c .yamllint.yml -s $(find . -type f -name "Chart.yaml")
-- yamllint -c .yamllint.yml -s $(find . -type f -name "values.yaml")
+  #if [ $? != 0 ]; then
+  #  travis_terminate 1
+  #fi
+#- yamllint -c .yamllint.yml -s .travis.yml .yamllint.yml
+#- yamllint -c .yamllint.yml -s $(find . -type f -name "Chart.yaml")
+#- yamllint -c .yamllint.yml -s $(find . -type f -name "values.yaml")
 after_success:
 - |
   if [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then
