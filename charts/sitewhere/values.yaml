@@ -79,7 +79,7 @@ services:
   image:
     registry: docker.io
     repository: sitewhere
-    tag: 2.0.0
+    tag: 2.0.1
     pullPolicy: IfNotPresent
     imagePullSecrets: "-"
   initContainers: true
