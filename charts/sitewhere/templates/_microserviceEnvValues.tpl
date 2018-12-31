@@ -4,11 +4,11 @@
     fieldRef:
       fieldPath: status.podIP
 - name: "sitewhere.zookeeper.host"
-  value: "{{ include "sitewhere.fullname" . }}-zookeeper-svc"
+  value: "{{ include "sitewhere.fullname" . }}-zookeeper"
 - name: "sitewhere.tracer.server"
   value: "{{ include "sitewhere.fullname" . }}-jaeger-svc"
 - name: "sitewhere.kafka.bootstrap.servers"
-  value: "{{ include "sitewhere.fullname" . }}-kafka-svc:{{ .Values.infra.kafka.service.inside.port }}"
+  value: "{{ include "sitewhere.fullname" . }}-kafka:{{ .Values.infra.kafka.service.inside.port }}"
 - name: "mqtt.host"
   value: "{{ include "sitewhere.fullname" . }}-mosquitto-svc"
 - name: "mongodb.host"
