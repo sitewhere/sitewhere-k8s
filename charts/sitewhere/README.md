@@ -44,7 +44,6 @@ helm install --name sitewhere \
   --set persistence.storageClass=hostpath \
   --set sitewhere-infra-core.kafka.persistence.storageClass=hostpath \
   --set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=hostpath \
-  --set sitewhere-infra-core.kafka.replicas=1 \
   --set sitewhere-infra-core.kafka.zookeeper.replicaCount=1 \
   --set sitewhere-infra-core.consul.Replicas=1 \
   --set sitewhere-infra-database.mongodb-replicaset.replicas=1 \
