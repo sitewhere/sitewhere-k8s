@@ -36,6 +36,10 @@ after_success:
     # Push temporary directory to the stack
     pushd $BUILD_DIR
 
+    # Add Helm Repositories
+    helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com
+    helm repo update
+
     # Iterate over all charts are package them
     for dir in `ls ${REPO_DIR}/charts`; do
       helm dep update ${REPO_DIR}/charts/$dir

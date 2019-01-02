@@ -6,10 +6,10 @@ initContainers:
     image: ylonkar/pod-dependency-init-container:1.0
     env:
       - name: POD_LABELS
-        value: sitewhere.io/role=infrastructure,sitewhere.io/name=mongodb
+        value: app=mongodb-replicaset
       - name: MAX_RETRY
         value: "10"
       - name: RETRY_TIME_OUT
-        value: "5000"
+        value: "50000"
 {{- end -}}
 {{- end -}}

@@ -19,14 +19,4 @@
   value: "{{ include "sitewhere.fullname" . }}-consul-server"
 - name: "sitewhere.consul.port"
   value: "8500"
-{{- if include "infra.cassandra.enabled" . }}
-- name: "cassandra.contact.points"
-  value: "{{ include "sitewhere.fullname" . }}-cassandra-svc"
-{{- end }}
-{{- if include "infra.influxdb.enabled" . }}
-- name: "influxdb.host"
-  value: "{{ include "sitewhere.fullname" . }}-influxdb-svc"
-- name: "influxdb.port"
-  value: "{{ .Values.infra.influxdb.service.port }}"
-{{- end }}
 {{- end -}}
