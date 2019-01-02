@@ -18,7 +18,7 @@ Returns true if MongoDB is enabled.
 Returns true if Cassandra is enabled.
 */}}
 {{- define "infra.cassandra.enabled" -}}
-{{- if (or (eq .Values.infra.profile "cassandra") (.Values.infra.cassandra.enabled)) -}}
+{{- if (or (eq .Values.infra.profile "cassandra") (index .Values "sitewhere-infra-database" "cassandra" "enabled")) -}}
 -
 {{- end -}}
 {{- end -}}
@@ -27,7 +27,7 @@ Returns true if Cassandra is enabled.
 Returns true if InfluxDB is enabled.
 */}}
 {{- define "infra.influxdb.enabled" -}}
-{{- if (or (eq .Values.infra.profile "influxdb") (.Values.infra.influxdb.enabled)) -}}
+{{- if (or (eq .Values.infra.profile "influxdb") (index .Values "sitewhere-infra-database" "influxdb" "enabled")) -}}
 -
 {{- end -}}
 {{- end -}}
