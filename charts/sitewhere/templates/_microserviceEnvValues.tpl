@@ -14,9 +14,9 @@
 - name: "mqtt.host"
   value: "{{ include "sitewhere.fullname" . }}-mosquitto-svc"
 - name: "mongodb.host"
-  value: "{{ include "sitewhere.fullname" . }}-mongodb-svc"
+  value: "{{ include "sitewhere.fullname" . }}-sitewhere-mongodb-replicaset"
 - name: "sitewhere.consul.host"
-  value: "{{ include "sitewhere.fullname" . }}-consul-server"
+  value: "{{ include "sitewhere.fullname" . }}-consul"
 - name: "sitewhere.consul.port"
   value: "8500"
 {{- if include "infra.cassandra.enabled" . }}
