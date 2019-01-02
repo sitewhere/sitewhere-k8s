@@ -1,0 +1,19 @@
+# Default values for SiteWhere core infrastructure components.
+kafka:
+  replicas: 3
+  persistence:
+    storageClass: rook-ceph-block
+    accessModes:
+      - ReadWriteOnce
+    storage: 10Gi
+  zookeeper:
+    replicaCount: 3
+    persistence:
+      enabled: true
+      storageClass: rook-ceph-block
+      accessModes:
+        - ReadWriteOnce
+      storage: 10Gi
+consul:
+  Replicas: 3
+

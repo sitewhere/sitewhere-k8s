@@ -1,0 +1,4 @@
+dependencies:
+- name: mongodb-replicaset
+  version: 3.8.7
+  repository: https://kubernetes-charts.storage.googleapis.com

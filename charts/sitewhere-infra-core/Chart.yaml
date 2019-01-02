@@ -1,0 +1,30 @@
+apiVersion: v1
+appVersion: "2.0.1"
+description: Helm chart for SiteWhere core infrastructure components
+name: sitewhere-infra-core
+version: 0.1.0
+keywords:
+  - sitewhere
+  - internet-of-things
+  - open-source
+  - iot
+  - iot-framework
+  - iot-platform
+  - platform
+  - integration
+  - microservices
+  - device-management
+  - mqtt
+  - java
+  - arduino
+  - raspberry-pi
+  - android
+  - kafka
+  - zookeeper
+home: https://sitewhere.io/
+maintainers: 
+  - name: Derek Adams
+    email: derek.adams@sitewhere.com
+  - name: Jorge Villaverde
+    email: jorge.villaverde@sitewhere.com
+icon: http://sitewhere.io/docs/2.0.0/images/favicon.png

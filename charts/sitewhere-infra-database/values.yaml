@@ -1,0 +1,9 @@
+# Default values for SiteWhere Database infrastructure components.
+mongodb-replicaset:
+  replicas: 3
+  persistentVolume:
+    storageClass: rook-ceph-block
+    accessModes:
+      - ReadWriteOnce
+    storage: 10Gi
+
