@@ -35,3 +35,21 @@ To install the chart with the release name `sitewhere` execute:
 ```sh
 helm install --name sitewhere sitewhere/sitewhere
 ```
+
+### Install in a Developer Machine
+
+```sh
+helm install --name sitewhere \
+  --set services.profile=minimal \
+  --set persistence.storageClass=hostpath \
+  --set sitewhere-infra-core.kafka.persistence.storageClass=hostpath \
+  --set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=hostpath \
+  --set sitewhere-infra-core.kafka.replicas=1 \
+  --set sitewhere-infra-core.kafka.zookeeper.replicaCount=1 \
+  --set sitewhere-infra-core.consul.Replicas=1 \
+  sitewhere
+```
+
+```sh
+helm del sitewhere --purge
+```

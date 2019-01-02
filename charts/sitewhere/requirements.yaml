@@ -1,5 +1,4 @@
 dependencies:
-- name: kafka
-  version: 0.13.3
-  repository: http://storage.googleapis.com/kubernetes-charts-incubator
-
+- name: sitewhere-infra-core
+  version: 0.1.0
+  repository: http://127.0.0.1:8879/charts

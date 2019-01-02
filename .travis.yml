@@ -35,28 +35,37 @@ after_success:
     SHA=`git rev-parse --verify HEAD`
     # Push temporary directory to the stack
     pushd $BUILD_DIR
+
     # Iterate over all charts are package them
-    helm dep update ${REPO_DIR}/charts/sitewhere
-    helm package ${REPO_DIR}/charts/sitewhere
+    for dir in `ls ${REPO_DIR}/charts`; do
+      helm dep update ${REPO_DIR}/charts/$dir
+      helm package ${REPO_DIR}/charts/$dir
+    done
+
     # Indexing of charts
     if [ -f index.yaml ]; then
      helm repo index --url ${GH_URL} --merge index.yaml .
     else
      helm repo index --url ${GH_URL} .
     fi
+
     # Pop temporary directory from the stack
     popd
+
     # List all the contents that we will push
     ls ${BUILD_DIR}
+
     # Clone repository and empty target branch
     git clone ${TARGET_REPO_URL} out
     cd out
     git checkout ${TARGET_BR} || git checkout --orphan ${TARGET_BR}
     cd ..
     rm -rf out/helm-charts/* || exit 0
+
     # Copying contents of BUILD_DIR to out folder
     cp $BUILD_DIR/* out/helm-charts/
     cd out
+    
     # Deploy if there are some changes
     git diff --quiet
     if [ $? != 0 ]; then

@@ -11,7 +11,5 @@ helm install --name sitewhere-infra \
   --set kafka.replicas=1 \
   --set kafka.zookeeper.replicaCount=1 \
   --set consul.Replicas=1 \
-  --set mongodb-replicaset.replicas=1 \
-  --set mongodb-replicaset.persistentVolume.storageClass=hostpath \
   sitewhere-infra-core
 ```

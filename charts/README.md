@@ -7,9 +7,9 @@ To deploy SiteWhere default configuration in a Kubernetes clusters as a Helm Cha
 If you need File, Block, and Object Storage Services for your Cloud-Native Environments, install Rook.io, with the following commands:
 
 ```sh
-kubectl create -f rook/operator.yaml
-kubectl create -f rook/cluster.yaml
-kubectl create -f rook/storageclass.yaml
+kubectl create -f ../rook/operator.yaml
+kubectl create -f ../rook/cluster.yaml
+kubectl create -f ../rook/storageclass.yaml
 ```
 
 ## Start SiteWhere

@@ -5,30 +5,6 @@ infra:
     registry: docker.io
     pullPolicy: IfNotPresent
     imagePullSecrets: "-"
-  zookeeper:
-    enabled: true
-    image: wurstmeister/zookeeper
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      port: 2181
-    zoonavigator:
-      image: elkozmon/zoonavigator-web:latest
-      service:
-        type: LoadBalancer
-        port: 8000
-    api:
-      image: elkozmon/zoonavigator-api:latest
-  kafka:
-    enabled: true
-    image: wurstmeister/kafka:1.0.0
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      inside:
-        port: 9092
-      outside:
-        port: 9094
   jaeger:
     enabled: true
     image: jaegertracing/all-in-one
