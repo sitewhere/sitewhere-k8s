@@ -1,12 +1,12 @@
 dependencies:
-- name: mongodb-replicaset
+- name: mongodb
   repository: https://kubernetes-charts.storage.googleapis.com
-  version: 3.8.7
+  version: 5.0.1
 - name: cassandra
   repository: https://kubernetes-charts-incubator.storage.googleapis.com
   version: 0.10.1
 - name: influxdb
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 1.0.0
-digest: sha256:0f6342625f4b29b4184dd775a356125d2f74d8d098d39a3895e90b9160aa1aaf
-generated: 2019-01-02T08:30:44.531322-03:00
+digest: sha256:575fc08dc17c4ba186a85832e07a7e9ad5badac1d83eda32e58d2ec77240a911
+generated: 2019-01-06T14:46:10.1345282-05:00

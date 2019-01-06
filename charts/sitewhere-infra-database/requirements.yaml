@@ -1,6 +1,6 @@
 dependencies:
-- name: mongodb-replicaset
-  version: 3.8.7
+- name: mongodb
+  version: 5.0.1
   repository: https://kubernetes-charts.storage.googleapis.com
 - name: cassandra
   version: 0.10.1

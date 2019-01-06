@@ -1,7 +1,11 @@
 # Default values for SiteWhere Database infrastructure components.
-mongodb-replicaset:
-  replicas: 3
-  persistentVolume:
+mongodb:
+  replicaSet:
+    enabled: true
+    replicas:
+      secondary: 1
+      arbiter: 1
+  persistence:
     storageClass: rook-ceph-block
     accessModes:
       - ReadWriteOnce
