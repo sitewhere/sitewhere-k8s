@@ -6,7 +6,7 @@ initContainers:
     image: ylonkar/pod-dependency-init-container:1.0
     env:
       - name: POD_LABELS
-        value: app=mongodb-replicaset
+        value: app=mongodb
       - name: MAX_RETRY
         value: "10"
       - name: RETRY_TIME_OUT
