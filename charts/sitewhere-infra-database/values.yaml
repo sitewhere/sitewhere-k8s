@@ -1,0 +1,24 @@
+# Default values for SiteWhere Database infrastructure components.
+mongodb:
+  replicaSet:
+    enabled: true
+    replicas:
+      secondary: 1
+      arbiter: 1
+  persistence:
+    storageClass: rook-ceph-block
+    accessModes:
+      - ReadWriteOnce
+    storage: 10Gi
+cassandra:
+  enabled: false
+  persistence:
+    storageClass: rook-ceph-block
+    accessMode: ReadWriteOnce
+    size: 10Gi
+influxdb:
+  enabled: false
+  persistence:
+    storageClass: rook-ceph-block
+    accessMode: ReadWriteOnce
+    size: 10Gi
