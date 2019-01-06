@@ -4,13 +4,13 @@
     fieldRef:
       fieldPath: status.podIP
 - name: "sitewhere.zookeeper.host"
-  value: "{{ include "sitewhere.fullname" . }}-zookeeper"
+  value: "{{ include "sitewhere.fullname" . }}-zookeeper-headless"
 - name: "sitewhere.zookeeper.port"
   value: "{{ index .Values "sitewhere-infra-core" "kafka" "zookeeper" "ports" "client" "containerPort" }}"
 - name: "sitewhere.tracer.server"
   value: "{{ include "sitewhere.fullname" . }}-jaeger-svc"
 - name: "sitewhere.kafka.bootstrap.servers"
-  value: "{{ include "sitewhere.fullname" . }}-kafka:{{ index .Values "sitewhere-infra-core" "kafka" "headless" "port" }}"
+  value: "{{ include "sitewhere.fullname" . }}-kafka-headless:{{ index .Values "sitewhere-infra-core" "kafka" "headless" "port" }}"
 - name: "mqtt.host"
   value: "{{ include "sitewhere.fullname" . }}-mosquitto-svc"
 - name: "mongodb.host"
