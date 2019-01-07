@@ -6,7 +6,7 @@ To deploy SiteWhere default configuration in a Kubernetes clusters as a Helm Cha
 
 If you need File, Block, and Object Storage Services for your Cloud-Native Environments, install Rook.io, with the following commands:
 
-```sh
+```console
 kubectl create -f ../rook/operator.yaml
 kubectl create -f ../rook/cluster.yaml
 kubectl create -f ../rook/storageclass.yaml
@@ -16,14 +16,14 @@ kubectl create -f ../rook/storageclass.yaml
 
 To start default configuration run:
 
-```sh
+```console
 helm install --name sitewhere ./sitewhere
 ```
 
 Also, if you wish to run SiteWhere in a low resource cluster, use the 
 minimal recipes and install this Helm Chart with the following command:
 
-```sh 
+```console 
 helm install --name sitewhere --set services.profile=minimal ./sitewhere
 ```
 
@@ -32,13 +32,13 @@ SiteWhere Helm Chart setting the `persistence.storageClass` property to
 other than `rook-ceph-block`, for example to use `hostpath` Persistence
 Storage Class, use the following command:  
 
-```sh
+```console
 helm install --name sitewhere --set persistence.storageClass=hostpath ./sitewhere
 ```
 
 To remove sitewhere, execute the following command
 
-```sh
+```console
 helm del sitewhere --purge
 ```
 
@@ -50,13 +50,13 @@ configuration, use `helm upgrade`.
 For example, to use [InfluxDB](https://www.influxdata.com/), set the 
 `infra.influxdb.enabled` configuration flag to `true` using the following command:
 
-```sh
+```console
 helm upgrade --set infra.influxdb.enabled=true sitewhere ./sitewhere
 ```
 
 ## Using private repositories
 
-```sh
+```console
 kubectl create secret docker-registry sitewhere-harbor-cred \
 --docker-server=https://<docker.repository.fqdn> \
 --docker-username=sitewhere \
@@ -70,21 +70,8 @@ secret/sitewhere-harbor-cred created
 In order to remove all SiteWhere data and start with a clean system, you need remove
 the Persistence Volume Claim that SiteWhere creates. To do that, run the following commands:
 
-```sh
-kubectl delete pvc/data-sitewhere-zookeeper-0
-kubectl delete pvc/data-sitewhere-zookeeper-1
-kubectl delete pvc/data-sitewhere-zookeeper-2
-kubectl delete pvc/datadir-sitewhere-consul-0
-kubectl delete pvc/datadir-sitewhere-consul-1
-kubectl delete pvc/datadir-sitewhere-consul-2
-kubectl delete pvc/datadir-sitewhere-kafka-0
-kubectl delete pvc/datadir-sitewhere-kafka-1
-kubectl delete pvc/datadir-sitewhere-kafka-2
-kubectl delete pvc/datadir-sitewhere-mongodb-replicaset-0
-kubectl delete pvc/datadir-sitewhere-mongodb-replicaset-1
-kubectl delete pvc/datadir-sitewhere-mongodb-replicaset-2
-kubectl delete pvc/sitewhere-cassandra-pv-sitewhere-cassandra-0
-kubectl delete pvc/sitewhere-influxdb-pv-sitewhere-influxdb-0
+```console
+kubectl delete pvc -l release=sitewhere
 ```
 
 ## Uninstall Rook

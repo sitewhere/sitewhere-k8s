@@ -18,13 +18,13 @@ This chart will do the following:
 
 Before installing SiteWhere helm charts, you need to add the [SiteWhere helm repository](https://sitewhere.io/helm-charts) to your helm client.
 
-```sh
+```console
 helm repo add sitewhere https://sitewhere.io/helm-charts
 ```
 
 Then you need to update your local helm repository
 
-```sh
+```console
 helm repo update
 ```
 
@@ -32,13 +32,13 @@ helm repo update
 
 To install the chart with the release name `sitewhere` execute:
 
-```sh
+```console
 helm install --name sitewhere sitewhere/sitewhere
 ```
 
 ### Install in a Developer Machine
 
-```sh
+```console
 helm install --name sitewhere \
   --set services.profile=minimal \
   --set persistence.storageClass=hostpath \
@@ -46,11 +46,19 @@ helm install --name sitewhere \
   --set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=hostpath \
   --set sitewhere-infra-core.kafka.zookeeper.replicaCount=1 \
   --set sitewhere-infra-core.consul.Replicas=1 \
-  --set sitewhere-infra-database.mongodb-replicaset.replicas=1 \
-  --set sitewhere-infra-database.mongodb-replicaset.persistentVolume.storageClass=hostpath \
+  --set sitewhere-infra-database.mongodb.replicaSet.enabled=false \
+  --set sitewhere-infra-database.mongodb.persistence.storageClass=hostpath \
   sitewhere
 ```
 
-```sh
+### Remove Installed Helm Chart
+
+```console
 helm del sitewhere --purge
+```
+
+### Delete SiteWhere Data
+
+```console
+kubectl delete pvc -l release=sitewhere
 ```

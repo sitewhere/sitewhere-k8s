@@ -1,12 +1,16 @@
 # SiteWhere 2.0 Databases Helm Chart
 
-Running in developer machine
+## Installing on a developer machine
 
-```sh
-helm del sitewhere-database --purge
-
+```console
 helm install --name sitewhere-database \
-  --set mongodb-replicaset.replicas=1 \
-  --set mongodb-replicaset.persistentVolume.storageClass=hostpath \
+  --set mongodb.replicaSet.enabled=false \
+  --set mongodb.persistence.storageClass=hostpath \
   sitewhere-infra-database
+```
+
+## Uninstalling the Helm Chart
+
+```console
+helm del sitewhere-database --purge
 ```
