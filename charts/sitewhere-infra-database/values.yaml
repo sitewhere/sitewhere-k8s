@@ -1,5 +1,6 @@
 # Default values for SiteWhere Database infrastructure components.
 mongodb:
+  usePassword: false
   replicaSet:
     enabled: true
     replicas:
