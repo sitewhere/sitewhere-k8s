@@ -8,6 +8,8 @@ metadata:
     helm.sh/chart: {{ include "sitewhere.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+    sitewhere.io/role: "microservice"
+    sitewhere.io/name: "streaming-media"
 spec:
   replicas: {{ .Values.services.streaming_media.replicaCount }}
   selector:
