@@ -11,6 +11,9 @@ mongodb:
     accessModes:
       - ReadWriteOnce
     storage: 10Gi
+  backup:
+    enable: false
+    cron: "*/1 * * * *"
 cassandra:
   enabled: false
   persistence:
