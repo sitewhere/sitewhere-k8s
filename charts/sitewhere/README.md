@@ -62,3 +62,18 @@ helm del sitewhere --purge
 ```console
 kubectl delete pvc -l release=sitewhere
 ```
+
+## Install Kafka Manager
+
+Assuming your sitewhere install name is `sitewhere`
+
+```console
+helm install --name kafka-manager \
+  --set zkHosts=sitewhere-zookeeper:2181 stable/kafka-manager
+```
+
+Port-Forware Kafka Manager UI
+
+```console
+kubectl port-forward deployment/kafka-manager-kafka-manager 9000 9000
+```
