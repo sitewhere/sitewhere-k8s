@@ -8,14 +8,14 @@ spec:
     spec:
       containers:
       - name: sitewhere-mongodump
-        image: bitnami/mongodb
-        command: ["mongodump", "--host", "icp-mongodb", "--password",  "password", "--out", "/dump", "--verbose"]
+        image: mongo
+        command: ["mongodump", "--host", "sitewhere-mongodb", "--out", "/dump", "--verbose"]
         volumeMounts:
         - mountPath: "/dump"
           name: mongodump
       volumes:
       - name: mongodump
         persistentVolumeClaim:
-          claimName: sitewhere-mongodump
+          claimName: sitewhere-mongodump-pvc
       restartPolicy: Never
   backoffLimit: 4
