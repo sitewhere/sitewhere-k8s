@@ -8,6 +8,8 @@ metadata:
     helm.sh/chart: {{ include "sitewhere.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+    sitewhere.io/role: "microservice"
+    sitewhere.io/name: "outbound-connectors"
 spec:
   replicas: {{ .Values.services.outbound_connectors.replicaCount }}
   selector:
