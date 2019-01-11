@@ -1,4 +1,11 @@
 # SiteWhere Infrastructure
+sitewhere-infra-core:
+  kafka:
+    external:
+      enabled: true
+    zookeeper:
+      service:
+        type: NodePort
 infra:
   profile: mongodb
   image:
