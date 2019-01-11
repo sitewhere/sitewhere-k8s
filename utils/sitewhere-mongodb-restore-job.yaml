@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sitewhere-mongorestore
+spec:
+  template:
+    spec:
+      containers:
+      - name: sitewhere-mongorestore
+        image: bitnami/mongodb
+        command: ["mongorestore", "--host", "sitewhere-mongodb-primary-0", "--password",  "password", "--verbose", "/dump"]
+        volumeMounts:
+        - mountPath: "/dump"
+          name: mongodump
+      volumes:
+      - name: mongodump
+        persistentVolumeClaim:
+          claimName: sitewhere-mongodump
+      restartPolicy: Never
+  backoffLimit: 4
