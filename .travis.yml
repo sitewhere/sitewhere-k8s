@@ -36,15 +36,25 @@ after_success:
     # Push temporary directory to the stack
     pushd $BUILD_DIR
 
+    wget ${GH_URL}/index.yaml
+
     # Add Helm Repositories
     helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com
     helm repo update
 
     # Iterate over all charts are package them
-    for dir in `ls ${REPO_DIR}/charts`; do
-      helm dep update ${REPO_DIR}/charts/$dir
-      helm package ${REPO_DIR}/charts/$dir
-    done
+    #for dir in `ls ${REPO_DIR}/charts`; do
+    #  helm dep update ${REPO_DIR}/charts/$dir
+    #  helm package ${REPO_DIR}/charts/$dir
+    #done
+    helm dep update ${REPO_DIR}/charts/sitewhere-infra-core
+    helm package ${REPO_DIR}/charts/sitewhere-infra-core
+
+    helm dep update ${REPO_DIR}/charts/sitewhere-infra-database
+    helm package ${REPO_DIR}/charts/sitewhere-infra-database
+
+    helm dep update ${REPO_DIR}/charts/sitewhere
+    helm package ${REPO_DIR}/charts/sitewhere
 
     # Indexing of charts
     if [ -f index.yaml ]; then
@@ -64,7 +74,8 @@ after_success:
     cd out
     git checkout ${TARGET_BR} || git checkout --orphan ${TARGET_BR}
     cd ..
-    rm -rf out/helm-charts/* || exit 0
+    # Don erase prev versions. 
+    #rm -rf out/helm-charts/* || exit 0
 
     # Copying contents of BUILD_DIR to out folder
     cp $BUILD_DIR/* out/helm-charts/
