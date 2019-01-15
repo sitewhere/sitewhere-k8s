@@ -40,6 +40,9 @@ after_success:
 
     # Add Helm Repositories
     helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com
+    # Add SiteWhere Repository
+    helm repo add sitewhere ${GH_URL}
+    # Update Repositories
     helm repo update
 
     # Iterate over all charts are package them
