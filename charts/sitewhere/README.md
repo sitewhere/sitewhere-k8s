@@ -40,14 +40,7 @@ helm install --name sitewhere sitewhere/sitewhere
 
 ```console
 helm install --name sitewhere \
-  --set services.profile=minimal \
-  --set persistence.storageClass=hostpath \
-  --set sitewhere-infra-core.kafka.persistence.storageClass=hostpath \
-  --set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=hostpath \
-  --set sitewhere-infra-core.kafka.zookeeper.replicaCount=1 \
-  --set sitewhere-infra-core.consul.Replicas=1 \
-  --set sitewhere-infra-database.mongodb.replicaSet.enabled=false \
-  --set sitewhere-infra-database.mongodb.persistence.storageClass=hostpath \
+  -f ./sitewhere/dev-values.yaml \
   sitewhere
 ```
 
