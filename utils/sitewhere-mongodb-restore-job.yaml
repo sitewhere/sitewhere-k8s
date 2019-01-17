@@ -8,7 +8,7 @@ spec:
       containers:
       - name: sitewhere-mongorestore
         image: mongo
-        command: ["mongorestore",  "--host", "sitewhere-mongodb", "--verbose", "--drop", "/dump"]
+        command: ["mongorestore",  "--host", "sitewhere-mongodb", "--verbose", "--drop", "/dump/mongodb"]
         volumeMounts:
         - mountPath: "/dump"
           name: mongodump

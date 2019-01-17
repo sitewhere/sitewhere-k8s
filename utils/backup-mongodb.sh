@@ -4,8 +4,6 @@
 # running on a Kubernetes cluster
 # usage: backup-mongodb.sh <BACKUP_DEST_DIR>
 
-#set -e
-
 export SITEWHERE_DUMP_JOB=sitewhere-mongodump
 
 # 
@@ -69,7 +67,6 @@ function copyBackupOutsideOfK8s() {
 #
 function cleanUp() {
   kubectl delete -f ./sitewhere-mongodb-dump-job.yaml
-  #kubectl wait --timeout=2m job/$SITEWHERE_DUMP_JOB --for=delete
   echo "SiteWhere MongoDB Dump Job Delete!"
 }
 
