@@ -3,7 +3,7 @@
 # running on a Kubernetes cluster from and backup directory.
 # usage: restore-zookeeper.sh <BACKUP_DIR> <REPLICAS>
 
-export SW_K8S_HOME=`dirname "$0"`
+export SW_K8S_HOME=$(cd `dirname $0` && pwd)
 
 #
 # Creates Dummy Pods for mounting Apache Zookeeper PVC and restoring data

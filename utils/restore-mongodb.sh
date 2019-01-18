@@ -5,7 +5,7 @@
 # usage: backup-mongodb.sh <BACKUP_DEST_DIR>
 
 export SITEWHERE_RESTORE_JOB=sitewhere-mongorestore
-export SW_K8S_HOME=`dirname "$0"`
+export SW_K8S_HOME=$(cd `dirname $0` && pwd)
 
 # 
 # Create a Dump PVC for storing mongodump results 
