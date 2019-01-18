@@ -5,13 +5,14 @@
 # usage: backup-mongodb.sh <BACKUP_DEST_DIR>
 
 export SITEWHERE_RESTORE_JOB=sitewhere-mongorestore
+export SW_K8S_HOME=`dirname "$0"`
 
 # 
 # Create a Dump PVC for storing mongodump results 
 # 
 function createDumpPVC() {
   echo "Creating DUMP PVC"
-  kubectl apply -f ./sitewhere-mongodb-dump-pvc-rook.yaml
+  kubectl apply -f $SW_K8S_HOME/sitewhere-mongodb-dump-pvc-rook.yaml
   echo "Creating DUMP PVC: DONE"
 }
 
@@ -32,7 +33,7 @@ function shutdownMicroservices() {
 function copyBackupToK8s() {
   echo "Copy Backup Data into the Cluster"
 
-  kubectl apply -f ./sitewhere-mongodb-backup-pod.yaml
+  kubectl apply -f $SW_K8S_HOME/sitewhere-mongodb-backup-pod.yaml
 
   kubectl wait --timeout=2m pod/sitewhere-backup-admin-pod --for condition=ready
 
@@ -43,7 +44,7 @@ function copyBackupToK8s() {
     fi
   done
 
-  kubectl delete -f ./sitewhere-mongodb-backup-pod.yaml
+  kubectl delete -f $SW_K8S_HOME/sitewhere-mongodb-backup-pod.yaml
 
   kubectl wait --timeout=2m pod/sitewhere-backup-admin-pod --for=delete
 
@@ -64,7 +65,7 @@ function createRestoreMongoDBJob(){
     cleanUp
   fi
 
-  kubectl apply -f ./sitewhere-mongodb-restore-job.yaml
+  kubectl apply -f $SW_K8S_HOME/sitewhere-mongodb-restore-job.yaml
 
   kubectl wait --timeout=2m --for=condition=complete job/$SITEWHERE_RESTORE_JOB
   echo "Restore MongoDB Database: DONE"
@@ -74,7 +75,7 @@ function createRestoreMongoDBJob(){
 # Clean up unsued Kubernetes objects.
 #
 function cleanUp() {
-  kubectl delete -f ./sitewhere-mongodb-restore-job.yaml
+  kubectl delete -f $SW_K8S_HOME/sitewhere-mongodb-restore-job.yaml
   echo "SiteWhere MongoDB Restore Job Delete!"
 }
 

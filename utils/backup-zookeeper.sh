@@ -4,6 +4,9 @@
 # dataDir running on a Kubernetes cluster
 # usage: backup-zookeeper.sh <BACKUP_DEST_DIR> <REPLICAS>
 
+#
+# Create a back up Apache Zookeeper dataDir instance
+#
 backupZookeeper(){  
   local DEST_DIR=$2/$1
   echo "Creating backup for Zookeeper instance $1 to $DEST_DIR"
@@ -55,7 +58,5 @@ function backup_zookeeper () {
 
   echo "Creating Apache Zookeeper Backup to $backup_dir_timestamp: DONE"
 }
-
-
 
 backup_zookeeper $@

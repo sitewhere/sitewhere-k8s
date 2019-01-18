@@ -5,13 +5,14 @@
 # usage: backup-mongodb.sh <BACKUP_DEST_DIR>
 
 export SITEWHERE_DUMP_JOB=sitewhere-mongodump
+export SW_K8S_HOME=`dirname "$0"`
 
 # 
 # Create a Dump PVC for storing mongodump results 
 # 
 function createDumpPVC() {
   echo "Creating DUMP PVC"
-  kubectl apply -f ./sitewhere-mongodb-dump-pvc-rook.yaml
+  kubectl apply -f $SW_K8S_HOME/sitewhere-mongodb-dump-pvc-rook.yaml
   echo "Creating DUMP PVC: DONE"
 }
 
@@ -40,7 +41,7 @@ function createBackupMongoDBJob(){
     cleanUp
   fi
 
-  kubectl apply -f ./sitewhere-mongodb-dump-job.yaml
+  kubectl apply -f $SW_K8S_HOME/sitewhere-mongodb-dump-job.yaml
 
   kubectl wait --timeout=2m --for=condition=complete job/$SITEWHERE_DUMP_JOB
   echo "Backup MongoDB Database: DONE"
@@ -52,13 +53,13 @@ function createBackupMongoDBJob(){
 function copyBackupOutsideOfK8s() {
   echo "Copy Backup Data Outside of the Cluster"
 
-  kubectl apply -f ./sitewhere-mongodb-backup-pod.yaml
+  kubectl apply -f $SW_K8S_HOME/sitewhere-mongodb-backup-pod.yaml
 
   kubectl wait --timeout=2m --for condition=ready pod/sitewhere-backup-admin-pod
 
   kubectl cp sitewhere-backup-admin-pod:/dump/mongodb $1
 
-  kubectl delete -f ./sitewhere-mongodb-backup-pod.yaml
+  kubectl delete -f $SW_K8S_HOME/sitewhere-mongodb-backup-pod.yaml
   echo "Copy Backup Data Outside of the Cluster: DONE"
 }
 
@@ -66,7 +67,7 @@ function copyBackupOutsideOfK8s() {
 # Clean up unsued Kubernetes objects.
 #
 function cleanUp() {
-  kubectl delete -f ./sitewhere-mongodb-dump-job.yaml
+  kubectl delete -f $SW_K8S_HOME/sitewhere-mongodb-dump-job.yaml
   echo "SiteWhere MongoDB Dump Job Delete!"
 }
 

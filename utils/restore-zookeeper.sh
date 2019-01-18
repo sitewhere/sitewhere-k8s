@@ -3,6 +3,8 @@
 # running on a Kubernetes cluster from and backup directory.
 # usage: restore-zookeeper.sh <BACKUP_DIR> <REPLICAS>
 
+export SW_K8S_HOME=`dirname "$0"`
+
 #
 # Creates Dummy Pods for mounting Apache Zookeeper PVC and restoring data
 # arg: 
@@ -11,7 +13,7 @@
 function createDummyPods() {
   echo "Creating Pods for Mounting Zookeeper PVC"
 
-  kubectl apply -f ./sitewhere-zk-backup-pod.yaml
+  kubectl apply -f $SW_K8S_HOME/sitewhere-zk-backup-pod.yaml
 
   for (( r=0; r < $1; r++ ))
   do
@@ -54,7 +56,7 @@ function restorZookeeperDataDir () {
 function removeDummyPods() {
   echo "Remove Pods for Mounting Zookeeper PVC"
 
-  kubectl delete -f ./sitewhere-zk-backup-pod.yaml
+  kubectl delete -f $SW_K8S_HOME/sitewhere-zk-backup-pod.yaml
 
   for (( r=0; r < $1; r++ ))
   do
