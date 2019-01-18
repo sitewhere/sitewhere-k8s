@@ -13,6 +13,7 @@ export SW_K8S_HOME=$(cd `dirname $0` && pwd)
 function createDumpPVC() {
   echo "Creating DUMP PVC"
   kubectl apply -f $SW_K8S_HOME/sitewhere-mongodb-dump-pvc-rook.yaml
+  kubectl wait --timeout=2m pvc/sitewhere-mongodump-pvc --for condition=bound
   echo "Creating DUMP PVC: DONE"
 }
 
