@@ -1,6 +1,10 @@
 # SiteWhere Infrastructure
 sitewhere-infra-core:
   kafka:
+    configurationOverrides:
+      "num.partitions": 3
+      "default.replication.factor": 3
+      "min.insync.replicas": 2
     external:
       enabled: true
     zookeeper:
@@ -41,7 +45,7 @@ services:
   image:
     registry: docker.io
     repository: sitewhere
-    tag: 2.0.2
+    tag: 2.0.3
     pullPolicy: IfNotPresent
     imagePullSecrets: "-"
   initContainers: true
