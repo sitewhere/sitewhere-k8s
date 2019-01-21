@@ -17,14 +17,16 @@ kubectl create -f ../rook/storageclass.yaml
 To start default configuration run:
 
 ```console
-helm install --name sitewhere ./sitewhere
+helm repo add sitewhere https://sitewhere.io/helm-charts
+helm repo update
+helm install --name sitewhere sitewhere/sitewhere
 ```
 
-Also, if you wish to run SiteWhere in a low resource cluster, use the 
+Also, if you wish to run SiteWhere in a low resource cluster, use the
 minimal recipes and install this Helm Chart with the following command:
 
-```console 
-helm install --name sitewhere --set services.profile=minimal ./sitewhere
+```console
+helm install --name sitewhere --set services.profile=minimal sitewhere/sitewhere
 ```
 
 If you don't need Rook.io, you can skip the Rook.io install and install
@@ -33,7 +35,7 @@ other than `rook-ceph-block`, for example to use `hostpath` Persistence
 Storage Class, use the following command:  
 
 ```console
-helm install --name sitewhere --set persistence.storageClass=hostpath ./sitewhere
+helm install --name sitewhere --set persistence.storageClass=hostpath sitewhere/sitewhere
 ```
 
 To remove sitewhere, execute the following command
@@ -45,7 +47,7 @@ helm del sitewhere --purge
 ## Upgrading sitewhere
 
 To upgrade the release of sitewhere, for example, for using a different
-configuration, use `helm upgrade`. 
+configuration, use `helm upgrade`.
 
 For example, to use [InfluxDB](https://www.influxdata.com/), set the 
 `infra.influxdb.enabled` configuration flag to `true` using the following command:
