@@ -5,6 +5,7 @@ sitewhere-infra-core:
       "num.partitions": 3
       "default.replication.factor": 3
       "min.insync.replicas": 2
+      "leader.imbalance.check.interval.seconds": 30
     external:
       enabled: true
     zookeeper:
