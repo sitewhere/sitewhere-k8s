@@ -49,11 +49,14 @@ helm del sitewhere --purge
 To upgrade the release of sitewhere, for example, for using a different
 configuration, use `helm upgrade`.
 
-For example, to use [InfluxDB](https://www.influxdata.com/), set the 
-`infra.influxdb.enabled` configuration flag to `true` using the following command:
+For example, to use [InfluxDB](https://www.influxdata.com/), set the
+`sitewhere-infra-database.influxdb.enabled` configuration flag to `true`
+using the following command:
 
 ```console
-helm upgrade --set infra.influxdb.enabled=true sitewhere ./sitewhere
+helm upgrade --set sitewhere-infra-database.influxdb.enabled=true \
+  sitewhere \
+  sitewhere/sitewhere
 ```
 
 ## Using private repositories
