@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sitewhere-backup-admin-pod
+  labels:
+    sitewhere.io/role: "util"
+spec:
+  containers:
+  - name: backup-admin-pod
+    image: alpine
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do echo 'Waiting for backup...'; sleep 5; done"]    
+    volumeMounts:
+    - mountPath: "/dump"
+      name: mongodump
+  volumes:
+  - name: mongodump
+    persistentVolumeClaim:
+      claimName: sitewhere-mongodump-pvc

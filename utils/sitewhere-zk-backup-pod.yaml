@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sitewhere-backup-zk-pod-0
+  labels:
+    sitewhere.io/role: "util"
+spec:
+  containers:
+  - name: backup-zk-pod-0
+    image: alpine
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do echo 'Waiting for backup...'; sleep 5; done"]    
+    volumeMounts:
+    - mountPath: "/var/lib/zookeeper"
+      name: zk-dump-0
+  volumes:
+  - name: zk-dump-0
+    persistentVolumeClaim:
+      claimName: data-sitewhere-zookeeper-0
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sitewhere-backup-zk-pod-1
+  labels:
+    sitewhere.io/role: "util"
+spec:
+  containers:
+  - name: backup-zk-pod-1
+    image: alpine
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do echo 'Waiting for backup...'; sleep 5; done"]
+    volumeMounts:
+    - mountPath: "/var/lib/zookeeper"
+      name: zk-dump-1
+  volumes:
+  - name: zk-dump-1
+    persistentVolumeClaim:
+      claimName: data-sitewhere-zookeeper-1
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sitewhere-backup-zk-pod-2
+  labels:
+    sitewhere.io/role: "util"
+spec:
+  containers:
+  - name: backup-zk-pod-2
+    image: alpine
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do echo 'Waiting for backup...'; sleep 5; done"]
+    volumeMounts:
+    - mountPath: "/var/lib/zookeeper"
+      name: zk-dump-2
+  volumes:
+  - name: zk-dump-2
+    persistentVolumeClaim:
+      claimName: data-sitewhere-zookeeper-2
