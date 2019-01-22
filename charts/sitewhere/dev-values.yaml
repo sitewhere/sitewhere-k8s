@@ -2,24 +2,25 @@
 sitewhere-infra-core:
   kafka:
     replicas: 1
+    configurationOverrides:
+      "num.partitions": 1
+      "default.replication.factor": 1
+      "offsets.topic.replication.factor": 1
+      "min.insync.replicas": 1
+      "leader.imbalance.check.interval.seconds": 30
     external:
       enabled: false
-    persistence:
-      storageClass: hostpath
     zookeeper:
       replicaCount: 1
-      persistence:
-        storageClass: hostpath
       service:
         type: NodePort
   consul:
     Replicas: 1
+    
 sitewhere-infra-database:
   mongodb:
     replicaSet:
       enabled: false
-    persistence:
-      storageClass: hostpath
 
 infra:
   profile: mongodb
@@ -52,14 +53,6 @@ infra:
 services:
   # profile: default|minimal
   profile: minimal
-  debug: false
-  image:
-    registry: docker.io
-    repository: sitewhere
-    tag: 2.0.2
-    pullPolicy: IfNotPresent
-    imagePullSecrets: "-"
-  initContainers: true
   asset_management:
     enabled: true
     image: service-asset-management
@@ -281,7 +274,7 @@ persistence:
   # existingClaim:
 
   ## If defined, storageClassName: [rook-ceph-block|hostpath]
-  storageClass: hostpath
+  storageClass: rook-ceph-block
   accessModes:
     - ReadWriteOnce
   storage: 10Gi
