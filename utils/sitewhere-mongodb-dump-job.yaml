@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sitewhere-mongodump
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - name: sitewhere-mongodump
+        image: mongo
+        command: ["mongodump", "--host", "sitewhere-mongodb", "--out", "/dump/mongodb", "--verbose"]
+        volumeMounts:
+        - mountPath: "/dump"
+          name: mongodump
+      volumes:
+      - name: mongodump
+        persistentVolumeClaim:
+          claimName: sitewhere-mongodump-pvc
+      restartPolicy: Never
+  backoffLimit: 4

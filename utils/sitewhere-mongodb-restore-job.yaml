@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sitewhere-mongorestore
+spec:
+  template:
+    spec:
+      containers:
+      - name: sitewhere-mongorestore
+        image: mongo
+        command: ["mongorestore",  "--host", "sitewhere-mongodb", "--verbose", "--drop", "/dump/mongodb"]
+        volumeMounts:
+        - mountPath: "/dump"
+          name: mongodump
+      volumes:
+      - name: mongodump
+        persistentVolumeClaim:
+          claimName: sitewhere-mongodump-pvc
+      restartPolicy: Never
+  backoffLimit: 4
