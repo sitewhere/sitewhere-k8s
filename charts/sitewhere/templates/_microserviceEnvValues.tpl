@@ -21,6 +21,14 @@
   value: "{{ include "sitewhere.fullname" . }}-consul"
 - name: "sitewhere.consul.port"
   value: "8500"
+- name: "LOGGING_LEVEL_SITEWHERE"
+  value: "{{ .Values.services.logging.sitewhere.level }}"
+- name: "LOGGING_LEVEL_SITEWHERE_GRPC"
+  value: "{{ .Values.services.logging.sitewhere.grpc.level }}"
+- name: "LOGGING_LEVEL_KAFKA"
+  value: "{{ .Values.services.logging.kafka.level }}"
+- name: "LOGGING_LEVEL_ZOOKEEPER"
+  value: "{{ .Values.services.logging.zookeeper.level }}"
 {{- if include "infra.cassandra.enabled" . }}
 - name: "cassandra.contact.points"
   value: "{{ include "sitewhere.fullname" . }}-cassandra-svc"
@@ -29,6 +37,6 @@
 - name: "influxdb.host"
   value: "{{ include "sitewhere.fullname" . }}-influxdb-svc"
 - name: "influxdb.port"
-  value: "{{ .Values.infra.influxdb.service.port }}"
+  value: "{{ index .Values "sitewhere-infra-database" "influxdb" "config" "http" "bind_address" }}"
 {{- end }}
 {{- end -}}

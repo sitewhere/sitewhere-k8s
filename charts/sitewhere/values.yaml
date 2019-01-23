@@ -49,6 +49,15 @@ services:
     tag: 2.0.3
     pullPolicy: IfNotPresent
     imagePullSecrets: "-"
+  logging:
+    sitewhere:
+      level: INFO
+      grpc:
+        level: ERROR
+    kafka:
+      level: WARN
+    zookeeper:
+      level: WARN
   initContainers: true
   asset_management:
     enabled: true
