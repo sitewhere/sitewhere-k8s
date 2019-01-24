@@ -57,7 +57,7 @@ services:
     kafka:
       level: WARN
     zookeeper:
-      level: WARN
+      level: ERROR
   initContainers: true
   asset_management:
     enabled: true
