@@ -55,7 +55,7 @@ services:
       grpc:
         level: ERROR
     kafka:
-      level: WARN
+      level: ERROR
     zookeeper:
       level: ERROR
   initContainers: true
