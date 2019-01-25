@@ -1,10 +1,18 @@
 # Helm Charts for Running SiteWhere 2.0
 
-To deploy SiteWhere default configuration in a Kubernetes clusters as a Helm Chart, run the command:
+SiteWhere provides a comprehensive Helm chart which takes care of 
+orchestration of the many components that make up a SiteWhere
+instance. By configuring chart parameters, the system may be 
+easily customized for specific application requirements.
 
 ## Install Rook
 
-If you need File, Block, and Object Storage Services for your Cloud-Native Environments, install Rook.io, with the following commands:
+To support replication of persistent data across multiple
+Kubernetes nodes, SiteWhere leverages [Rook.io](https://rook.io/)
+to provide the necessary distributed infrastructure. If a k8s
+node fails, the data it persists will be available when 
+containers start on other nodes in the cluster. To install
+Rook, execute the following:
 
 ```console
 kubectl create -f ../rook/operator.yaml
@@ -12,22 +20,68 @@ kubectl create -f ../rook/cluster.yaml
 kubectl create -f ../rook/storageclass.yaml
 ```
 
+With the default chart settings, Rook is utilized by the Zookeeper, 
+Kafka, and MongoDB containers to prevent data loss in cases where 
+nodes crash unexpectedly.
+
 ## Start SiteWhere
 
-To start default configuration run:
+The Helm chart supports many different system configurations
+which may be enabled by passing parameters to the chart.
+Some of the common configurations are covered below.
+
+### Add SiteWhere Helm Repository
+
+SiteWhere provides a Helm chart repository which contains
+the primary chart as well as subordinate charts for 
+aspects such as core infrastructure and databases. To 
+add the repository, run the following commands:
 
 ```console
 helm repo add sitewhere https://sitewhere.io/helm-charts
 helm repo update
+```
+
+### Running with High Availability
+
+To start default configuration which provides a highly-available
+infrastructure, run:
+
+```console
 helm install --name sitewhere sitewhere/sitewhere
 ```
 
-Also, if you wish to run SiteWhere in a low resource cluster, use the
-minimal recipes and install this Helm Chart with the following command:
+This configuration deploys all of the SiteWhere microservices along
+with a HA infrastructure which includes:
+
+- Three-node HA Consul cluster
+- Three-node HA Zookeeper cluster
+- Three-broker Kafka cluster with HA settings
+- Three-node MongoDB replica set (primary/secondary/arbiter)
+
+This configuration has significant resource requirements and
+should either be run on multiple Kubernetes nodes or a single
+node with at least 16GB of RAM.
+
+### Running with Restricted Resources
+
+If you wish to run SiteWhere in a low resource cluster, use the `minimal` 
+profile by installing this Helm Chart with the following command:
 
 ```console
 helm install --name sitewhere --set services.profile=minimal sitewhere/sitewhere
 ```
+
+This will run only the core microservices required to for basic
+system functionality, but with HA infrastructure still in place. To
+run a non-HA system for cases such as local development, clone
+the repository and use the following configuration:
+
+```console
+helm install --name sitewhere -f ./sitewhere/dev-values.yaml ./sitewhere
+```
+
+### Running without Rook.io
 
 If you don't need Rook.io, you can skip the Rook.io install and install
 SiteWhere Helm Chart setting the `persistence.storageClass` property to
@@ -37,6 +91,8 @@ Storage Class, use the following command:
 ```console
 helm install --name sitewhere --set persistence.storageClass=hostpath sitewhere/sitewhere
 ```
+
+### Removing SiteWhere
 
 To remove sitewhere, execute the following command
 
