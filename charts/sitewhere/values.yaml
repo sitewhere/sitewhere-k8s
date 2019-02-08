@@ -7,7 +7,7 @@ sitewhere-infra-core:
       "min.insync.replicas": 2
       "leader.imbalance.check.interval.seconds": 30
     external:
-      enabled: true
+      enabled: false
     zookeeper:
       service:
         type: NodePort
