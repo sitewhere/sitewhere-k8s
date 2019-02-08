@@ -9,14 +9,14 @@ sitewhere-infra-core:
       "min.insync.replicas": 2
       "leader.imbalance.check.interval.seconds": 30
     persistence:
-      storageClass: standard
+      storageClass: rook-ceph-block
     external:
       enabled: false
     zookeeper:
       service:
         type: NodePort
       persistence:
-        storageClass: standard
+        storageClass: rook-ceph-block
 sitewhere-infra-database:
   mongodb:
     persistence:
