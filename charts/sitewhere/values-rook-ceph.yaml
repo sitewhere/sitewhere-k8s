@@ -8,11 +8,15 @@ sitewhere-infra-core:
       "default.replication.factor": 3
       "min.insync.replicas": 2
       "leader.imbalance.check.interval.seconds": 30
+    persistence:
+      storageClass: standard
     external:
       enabled: false
     zookeeper:
       service:
         type: NodePort
+      persistence:
+        storageClass: standard
 sitewhere-infra-database:
   mongodb:
     persistence:

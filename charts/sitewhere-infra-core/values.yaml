@@ -2,7 +2,7 @@
 kafka:
   replicas: 3
   persistence:
-    storageClass: rook-ceph-block
+    storageClass: standard
     accessModes:
       - ReadWriteOnce
     storage: 10Gi
@@ -10,7 +10,7 @@ kafka:
     replicaCount: 3
     persistence:
       enabled: true
-      storageClass: rook-ceph-block
+      storageClass: standard
       accessModes:
         - ReadWriteOnce
       storage: 10Gi
