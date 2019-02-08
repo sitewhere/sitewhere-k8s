@@ -40,7 +40,7 @@ helm install --name sitewhere sitewhere/sitewhere
 
 ```console
 helm install --name sitewhere \
-  -f ./sitewhere/dev-values.yaml \
+  -f ./sitewhere/values-dev.yaml \
   sitewhere
 ```
 

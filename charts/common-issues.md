@@ -19,11 +19,11 @@ kubectl -n rook-ceph-system get pod -l app=rook-ceph-agent -o jsonpath='{range .
 ### Running on MiniKube
 
 If you are running on `minikube` you can skip using `Rook.io`
-and use the `dev-values.yaml`.
+and use the `values-dev.yaml`.
 
 ```console
 helm install --name sitewhere \
--f ./sitewhere/dev-values.yaml \
+-f ./sitewhere/values-dev.yaml \
 --set sitewhere-infra-database.mongodb.persistence.storageClass=standard \
 --set sitewhere-infra-core.kafka.persistence.storageClass=standard \
 --set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=standard \
@@ -78,7 +78,7 @@ sitewhere/sitewhere
 
 ```console
 helm install --name sitewhere \
--f ./sitewhere/dev-values.yaml \
+-f ./sitewhere/values-dev.yaml \
 --set sitewhere-infra-database.mongodb.persistence.storageClass=hostpath \
 --set sitewhere-infra-core.kafka.persistence.storageClass=hostpath \
 --set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=hostpath \
