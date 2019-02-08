@@ -46,6 +46,12 @@ minimal recipes and install this Helm Chart with the following command:
 helm install --name sitewhere --set services.profile=minimal sitewhere/sitewhere
 ```
 
+You can use the `values-dev.yaml` for running on a developer machine:
+
+```console
+helm install --name sitewhere -f values-dev.yaml sitewhere/sitewhere
+```
+
 ## Deploy SiteWhere using a different storageClass
 
 If you need to use another `storageClass`, for example `<your-storage-class>`,
