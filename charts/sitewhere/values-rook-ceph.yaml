@@ -1,4 +1,6 @@
-# SiteWhere Infrastructure
+# Use this values to install SiteWhere using rook-ceph-block storageClass
+# usage: helm install --name sitewhere -f values-rook-ceph.values sitewhere/sitewhere
+
 sitewhere-infra-core:
   kafka:
     configurationOverrides:
@@ -11,6 +13,16 @@ sitewhere-infra-core:
     zookeeper:
       service:
         type: NodePort
+sitewhere-infra-database:
+  mongodb:
+    persistence:
+      storageClass: rook-ceph-block
+  cassandra:
+    persistence:
+      storageClass: rook-ceph-block
+  influxdb:
+    persistence:
+      storageClass: rook-ceph-block
 infra:
   profile: mongodb
   image:
@@ -284,7 +296,7 @@ persistence:
   # existingClaim:
 
   ## If defined, storageClassName: [rook-ceph-block|hostpath]
-  storageClass: standard
+  storageClass: rook-ceph-block
   accessModes:
     - ReadWriteOnce
   storage: 10Gi

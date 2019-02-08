@@ -47,6 +47,18 @@ helm install --name sitewhere \
 sitewhere/sitewhere
 ```
 
+### Running on GKE
+
+```console
+helm install --name sitewhere \
+--set sitewhere-infra-database.mongodb.persistence.storageClass=standard \
+--set sitewhere-infra-core.kafka.persistence.storageClass=standard \
+--set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=standard \
+--set sitewhere-infra-core.kafka.external.enabled=false \
+--set services.initContainers=false \
+sitewhere/sitewhere
+```
+
 ### Minimal evironment with `hostpath` storageClass
 
 ```console
