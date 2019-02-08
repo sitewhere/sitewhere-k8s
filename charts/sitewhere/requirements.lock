@@ -6,4 +6,4 @@ dependencies:
   repository: https://sitewhere.io/helm-charts
   version: 0.1.4
 digest: sha256:0ca20d4e65592b6ccdeeb5dbbcc1d9f76c38c2f3f4b124e2248aabd9595bb44f
-generated: 2019-01-24T22:22:18.1363961-05:00
+generated: 2019-02-08T08:07:55.554007-03:00
