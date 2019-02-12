@@ -13,7 +13,7 @@ export SW_K8S_HOME=$(cd `dirname $0` && pwd)
 function createDumpPVC() {
   echo "Creating DUMP PVC"
   kubectl apply -f $SW_K8S_HOME/sitewhere-mongodb-dump-pvc-rook.yaml
-  kubectl wait --timeout=2m pvc/sitewhere-mongodump-pvc --for condition=bound
+  kubectl wait --timeout=5m pvc/sitewhere-mongodump-pvc --for condition=bound
   echo "Creating DUMP PVC: DONE"
 }
 
@@ -36,7 +36,7 @@ function copyBackupToK8s() {
 
   kubectl apply -f $SW_K8S_HOME/sitewhere-mongodb-backup-pod.yaml
 
-  kubectl wait --timeout=2m pod/sitewhere-backup-admin-pod --for condition=ready
+  kubectl wait --timeout=5m pod/sitewhere-backup-admin-pod --for condition=ready
 
   for f in $1*; do
     if [[ -d $f ]]; then
@@ -47,7 +47,7 @@ function copyBackupToK8s() {
 
   kubectl delete -f $SW_K8S_HOME/sitewhere-mongodb-backup-pod.yaml
 
-  kubectl wait --timeout=2m pod/sitewhere-backup-admin-pod --for=delete
+  kubectl wait --timeout=5m pod/sitewhere-backup-admin-pod --for=delete
 
   echo "Copy Backup Data into the Cluster: DONE"
 }
@@ -68,7 +68,7 @@ function createRestoreMongoDBJob(){
 
   kubectl apply -f $SW_K8S_HOME/sitewhere-mongodb-restore-job.yaml
 
-  kubectl wait --timeout=2m --for=condition=complete job/$SITEWHERE_RESTORE_JOB
+  kubectl wait --timeout=5m --for=condition=complete job/$SITEWHERE_RESTORE_JOB
   echo "Restore MongoDB Database: DONE"
 }
 

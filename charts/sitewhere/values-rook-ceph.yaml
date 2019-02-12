@@ -2,6 +2,8 @@
 # usage: helm install --name sitewhere -f values-rook-ceph.values sitewhere/sitewhere
 
 sitewhere-infra-core:
+  consul:
+    StorageClass: rook-ceph-block
   kafka:
     configurationOverrides:
       "num.partitions": 3
