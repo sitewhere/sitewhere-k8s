@@ -13,7 +13,7 @@ export SW_K8S_HOME=$(cd `dirname $0` && pwd)
 function createDumpPVC() {
   echo "Creating DUMP PVC"
   kubectl apply -f $SW_K8S_HOME/sitewhere-mongodb-dump-pvc-rook.yaml
-  kubectl wait --timeout=2m pvc/sitewhere-mongodump-pvc --for condition=bound
+  kubectl wait --timeout=5m pvc/sitewhere-mongodump-pvc --for condition=bound
   echo "Creating DUMP PVC: DONE"
 }
 
@@ -44,7 +44,7 @@ function createBackupMongoDBJob(){
 
   kubectl apply -f $SW_K8S_HOME/sitewhere-mongodb-dump-job.yaml
 
-  kubectl wait --timeout=2m --for=condition=complete job/$SITEWHERE_DUMP_JOB
+  kubectl wait --timeout=5m --for=condition=complete job/$SITEWHERE_DUMP_JOB
   echo "Backup MongoDB Database: DONE"
 }
 
@@ -56,7 +56,7 @@ function copyBackupOutsideOfK8s() {
 
   kubectl apply -f $SW_K8S_HOME/sitewhere-mongodb-backup-pod.yaml
 
-  kubectl wait --timeout=2m --for condition=ready pod/sitewhere-backup-admin-pod
+  kubectl wait --timeout=5m --for condition=ready pod/sitewhere-backup-admin-pod
 
   kubectl cp sitewhere-backup-admin-pod:/dump/mongodb $1
 

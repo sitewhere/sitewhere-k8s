@@ -16,12 +16,10 @@ sitewhere-infra-core:
         type: NodePort
   consul:
     Replicas: 1
-    
 sitewhere-infra-database:
   mongodb:
     replicaSet:
       enabled: false
-
 services:
   # profile: default|minimal
   profile: minimal

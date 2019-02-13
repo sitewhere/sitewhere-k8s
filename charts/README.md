@@ -5,7 +5,24 @@ orchestration of the many components that make up a SiteWhere
 instance. By configuring chart parameters, the system may be 
 easily customized for specific application requirements.
 
-## Install Rook
+## Add SiteWhere Helm Repository
+
+Before you deploy SiteWhere using Helm, you need to add SiteWhere Helm Repository.
+
+```console
+helm repo add sitewhere https://sitewhere.io/helm-charts
+helm repo update
+```
+
+## Deploy SiteWhere using the default configuration
+
+To start default configuration run:
+
+```console
+helm install --name sitewhere sitewhere/sitewhere
+```
+
+## Deploy SiteWhere using Rook
 
 To support replication of persistent data across multiple
 Kubernetes nodes, SiteWhere leverages [Rook.io](https://rook.io/)
@@ -14,85 +31,51 @@ node fails, the data it persists will be available when
 containers start on other nodes in the cluster. To install
 Rook, execute the following:
 
+### Install Rook
+
 ```console
 kubectl create -f ../rook/operator.yaml
 kubectl create -f ../rook/cluster.yaml
 kubectl create -f ../rook/storageclass.yaml
 ```
 
-With the default chart settings, Rook is utilized by the Zookeeper, 
-Kafka, and MongoDB containers to prevent data loss in cases where 
-nodes crash unexpectedly.
-
-## Start SiteWhere
-
-The Helm chart supports many different system configurations
-which may be enabled by passing parameters to the chart.
-Some of the common configurations are covered below.
-
-### Add SiteWhere Helm Repository
-
-SiteWhere provides a Helm chart repository which contains
-the primary chart as well as subordinate charts for 
-aspects such as core infrastructure and databases. To 
-add the repository, run the following commands:
+### Install SiteWhere with Rook
 
 ```console
-helm repo add sitewhere https://sitewhere.io/helm-charts
-helm repo update
+helm install --name sitewhere -f values-rook-ceph.yaml sitewhere/sitewhere
 ```
 
-### Running with High Availability
+## Deploy SiteWhere using minimal configuration
 
-To start default configuration which provides a highly-available
-infrastructure, run:
-
-```console
-helm install --name sitewhere sitewhere/sitewhere
-```
-
-This configuration deploys all of the SiteWhere microservices along
-with a HA infrastructure which includes:
-
-- Three-node HA Consul cluster
-- Three-node HA Zookeeper cluster
-- Three-broker Kafka cluster with HA settings
-- Three-node MongoDB replica set (primary/secondary/arbiter)
-
-This configuration has significant resource requirements and
-should either be run on multiple Kubernetes nodes or a single
-node with at least 16GB of RAM.
-
-### Running with Restricted Resources
-
-If you wish to run SiteWhere in a low resource cluster, use the `minimal` 
-profile by installing this Helm Chart with the following command:
+Also, if you wish to run SiteWhere in a low resource cluster, use the
+minimal recipes and install this Helm Chart with the following command:
 
 ```console
 helm install --name sitewhere --set services.profile=minimal sitewhere/sitewhere
 ```
 
-This will run only the core microservices required to for basic
-system functionality, but with HA infrastructure still in place. To
-run a non-HA system for cases such as local development, clone
-the repository and use the following configuration:
+You can use the `values-dev.yaml` for running on a developer machine:
 
 ```console
-helm install --name sitewhere -f ./sitewhere/dev-values.yaml ./sitewhere
+helm install --name sitewhere -f values-dev.yaml sitewhere/sitewhere
 ```
 
-### Running without Rook.io
+## Deploy SiteWhere using a different storageClass
 
-If you don't need Rook.io, you can skip the Rook.io install and install
-SiteWhere Helm Chart setting the `persistence.storageClass` property to
-other than `rook-ceph-block`, for example to use `hostpath` Persistence
-Storage Class, use the following command:  
+If you need to use another `storageClass`, for example `<your-storage-class>`,
+the start SiteWhere using the following configuration:  
 
 ```console
-helm install --name sitewhere --set persistence.storageClass=hostpath sitewhere/sitewhere
+helm install --name sitewhere \
+--set sitewhere-infra-core.kafka.persistence.storageClass=<your-storage-class> \
+--set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=<your-storage-class> \
+--set sitewhere-infra-database.mongodb.persistence.storageClass=<your-storage-class> \
+--set sitewhere-infra-database.cassandra.persistence.storageClass=<your-storage-class> \
+--set sitewhere-infra-database.influxdb.persistence.storageClass=<your-storage-class> \
+sitewhere/sitewhere
 ```
 
-### Removing SiteWhere
+## Undeploy SiteWhere
 
 To remove sitewhere, execute the following command
 

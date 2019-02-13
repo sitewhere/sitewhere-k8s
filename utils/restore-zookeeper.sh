@@ -17,7 +17,7 @@ function createDummyPods() {
 
   for (( r=0; r < $1; r++ ))
   do
-    kubectl wait pod/sitewhere-backup-zk-pod-$r --for condition=ready
+    kubectl wait --timeout=5m pod/sitewhere-backup-zk-pod-$r --for condition=ready
   done
 
   echo "Creating Pods for Mounting Zookeeper PVC: DONE"
@@ -60,7 +60,7 @@ function removeDummyPods() {
 
   for (( r=0; r < $1; r++ ))
   do
-    kubectl wait pod/sitewhere-backup-zk-pod-$r --for=delete
+    kubectl wait --timeout=5m pod/sitewhere-backup-zk-pod-$r --for=delete
   done
 
   echo "Remove Pods for Mounting Zookeeper PVC: DONE"
