@@ -1,6 +1,9 @@
 # Helm Charts for Running SiteWhere 2.0
 
-To deploy SiteWhere default configuration in a Kubernetes clusters as a Helm Chart, run the command:
+SiteWhere provides a comprehensive Helm chart which takes care of 
+orchestration of the many components that make up a SiteWhere
+instance. By configuring chart parameters, the system may be 
+easily customized for specific application requirements.
 
 ## Add SiteWhere Helm Repository
 
@@ -21,7 +24,12 @@ helm install --name sitewhere sitewhere/sitewhere
 
 ## Deploy SiteWhere using Rook
 
-If you need File, Block, and Object Storage Services for your Cloud-Native Environments, install Rook.io, with the following commands:
+To support replication of persistent data across multiple
+Kubernetes nodes, SiteWhere leverages [Rook.io](https://rook.io/)
+to provide the necessary distributed infrastructure. If a k8s
+node fails, the data it persists will be available when 
+containers start on other nodes in the cluster. To install
+Rook, execute the following:
 
 ### Install Rook
 
