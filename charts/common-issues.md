@@ -59,6 +59,14 @@ helm install --name sitewhere \
 sitewhere/sitewhere
 ```
 
+### Running on Amazon EKS
+
+```console
+helm install --name sitewhere \
+-f values-eks.yaml \
+sitewhere/sitewhere
+```
+
 ### Minimal evironment with `hostpath` storageClass
 
 ```console
