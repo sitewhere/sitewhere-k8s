@@ -3,6 +3,8 @@
   valueFrom:
     fieldRef:
       fieldPath: status.podIP
+- name: "sitewhere.instance.id"
+  value: "{{ .Release.Name }}"
 - name: "sitewhere.zookeeper.host"
   value: "{{ include "sitewhere.fullname" . }}-zookeeper"
 - name: "sitewhere.zookeeper.port"
