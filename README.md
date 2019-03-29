@@ -21,7 +21,7 @@ This chart will do the following:
   | Event Management         | ✓              | ✓               |
   | Event Sources            | ✓              | ✓               |
   | Inbound Processing       | ✓              | ✓               |
-  | Instance Managemwnt      | ✓              | ✓               |
+  | Instance Management      | ✓              | ✓               |
   | Outbound Connectors      | ✓              | ✓               |
   | Tenant Management        | ✓              | ✓               |
   | User Management          | ✓              | ✓               |
