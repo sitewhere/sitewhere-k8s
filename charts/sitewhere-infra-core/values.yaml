@@ -3,7 +3,6 @@ kafka:
   enabled: true
   replicas: 3
   persistence:
-    storageClass: standard
     accessModes:
       - ReadWriteOnce
     size: 10Gi
@@ -11,11 +10,9 @@ kafka:
     replicaCount: 3
     persistence:
       enabled: true
-      storageClass: standard
       accessModes:
         - ReadWriteOnce
       storage: 10Gi
 consul:
   enabled: true
   Replicas: 3
-
