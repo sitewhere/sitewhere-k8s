@@ -7,19 +7,16 @@ mongodb:
       secondary: 1
       arbiter: 1
   persistence:
-    storageClass: standard
     accessModes:
       - ReadWriteOnce
     storage: 10Gi
 cassandra:
   enabled: false
   persistence:
-    storageClass: standard
     accessMode: ReadWriteOnce
     size: 10Gi
 influxdb:
   enabled: false
   persistence:
-    storageClass: standard
     accessMode: ReadWriteOnce
     size: 10Gi
