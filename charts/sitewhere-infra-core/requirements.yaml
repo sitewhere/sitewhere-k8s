@@ -2,8 +2,8 @@ dependencies:
 - name: consul
   version: 3.5.0
   repository: https://kubernetes-charts.storage.googleapis.com
-  condition: consul.enabled
+  condition: sitewhere-infra-core.consul.enabled, consul.enabled
 - name: kafka
   version: 0.13.1
   repository: https://kubernetes-charts-incubator.storage.googleapis.com
-  condition: kafka.enabled
+  condition: sitewhere-infra-core.kafka.enabled, kafka.enabled
