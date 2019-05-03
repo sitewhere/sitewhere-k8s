@@ -1,6 +1,11 @@
 # SiteWhere Infrastructure
 sitewhere-infra-core:
   kafka:
+    enabled: true
+    kafka_host: ""
+    kafka_port: ""
+    zookeeper_host: ""
+    zookeeper_port: ""
     configurationOverrides:
       "num.partitions": 3
       "default.replication.factor": 3
