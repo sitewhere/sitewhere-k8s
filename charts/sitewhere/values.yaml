@@ -284,7 +284,6 @@ persistence:
   # existingClaim:
 
   ## If defined, storageClassName: [rook-ceph-block|hostpath]
-  storageClass: standard
   accessModes:
     - ReadWriteOnce
   storage: 10Gi
