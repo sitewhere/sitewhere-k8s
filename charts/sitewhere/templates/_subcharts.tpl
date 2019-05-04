@@ -3,7 +3,7 @@ SiteWhere Zookeeper Hostname.
 */}}
 {{- define "sitewhere.zookeeper.host" -}}
 {{- if (index .Values "sitewhere-infra-core" "kafka" "enabled") -}}
-{{ include "sitewhere.fullname" . }}-zookeeper
+{{- include "sitewhere.zookeeper.fullname" . -}}
 {{- else -}}
 {{- index .Values "sitewhere-infra-core" "kafka" "zookeeper_host" -}}
 {{- end -}}
@@ -25,7 +25,7 @@ SiteWhere Kafka Hostname.
 */}}
 {{- define "sitewhere.kafka.host" -}}
 {{- if (index .Values "sitewhere-infra-core" "kafka" "enabled") -}}
-{{ include "sitewhere.fullname" . }}-kafka
+{{- include "sitewhere.kafka.fullname" . -}}
 {{- else -}}
 {{- index .Values "sitewhere-infra-core" "kafka" "kafka_host" -}}
 {{- end -}}
