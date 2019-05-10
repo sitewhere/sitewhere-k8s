@@ -26,11 +26,11 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}-outbound-connectors
-{{ if .Values.services.debug }}
+{{- if .Values.services.debug }}
           image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.outbound_connectors.image }}:debug-{{ .Values.services.image.tag }}"
-{{ else }}
+{{- else }}
           image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.outbound_connectors.image }}:{{ .Values.services.image.tag }}"
-{{ end }}
+{{- end }}
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.services.outbound_connectors.service.grpc.api.port }}
@@ -41,7 +41,14 @@ spec:
 {{- end }}
           env:
 {{ include "sitewhere.microserviceEnvValues" . | indent 12 }}
-{{ include "sitewhere.services.imagePullSecrets" . | indent 6 }}
+{{- include "sitewhere.services.imagePullSecrets" . | indent 6 }}
+          resources:
+            limits:
+              memory: {{ .Values.services.outbound_connectors.resources.limits.memory | default .Values.services.resources.limits.memory | quote }}
+              cpu: {{ .Values.services.outbound_connectors.resources.limits.cpu | default .Values.services.resources.limits.cpu | quote }}
+            requests:
+              memory: {{ .Values.services.outbound_connectors.resources.requests.memory | default .Values.services.resources.requests.memory | quote }}
+              cpu: {{ .Values.services.outbound_connectors.resources.requests.cpu | default .Values.services.resources.requests.cpu | quote }}
 ---
 apiVersion: v1
 kind: Service

@@ -42,7 +42,14 @@ spec:
 {{- end }}
           env:
 {{ include "sitewhere.microserviceEnvValues" . | indent 12 }}
-{{ include "sitewhere.services.imagePullSecrets" . | indent 6 }}
+{{- include "sitewhere.services.imagePullSecrets" . | indent 6 }}
+          resources:
+            limits:
+              memory: {{ .Values.services.web_rest.resources.limits.memory | default .Values.services.resources.limits.memory | quote }}
+              cpu: {{ .Values.services.web_rest.resources.limits.cpu | default .Values.services.resources.limits.cpu | quote }}
+            requests:
+              memory: {{ .Values.services.web_rest.resources.requests.memory | default .Values.services.resources.requests.memory | quote }}
+              cpu: {{ .Values.services.web_rest.resources.requests.cpu | default .Values.services.resources.requests.cpu | quote }}
 ---
 apiVersion: v1
 kind: Service

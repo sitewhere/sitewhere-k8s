@@ -43,7 +43,6 @@ infra:
     service:
       type: LoadBalancer
       port: 5683
-
 services:
   # profile: default|minimal
   profile: default
@@ -68,6 +67,13 @@ services:
     zookeeper:
       level: ERROR
   initContainers: true
+  resources:
+    limits:
+      memory: 800Mi
+      cpu: 500m
+    requests:
+      memory: 200Mi
+      cpu: 100m
   asset_management:
     enabled: true
     image: service-asset-management
@@ -79,6 +85,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   device_management:
     enabled: true
     image: service-device-management
@@ -90,6 +103,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   event_management:
     enabled: true
     image: service-event-management
@@ -101,6 +121,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   event_sources:
     enabled: true
     image: service-event-sources
@@ -112,6 +139,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   inbound_processing:
     enabled: true
     image: service-inbound-processing
@@ -123,6 +157,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   instance_management:
     enabled: true
     image: service-instance-management
@@ -134,6 +175,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   outbound_connectors:
     enabled: true
     image: service-outbound-connectors
@@ -145,6 +193,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   tenant_management:
     enabled: true
     image: service-tenant-management
@@ -156,6 +211,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   user_management:
     enabled: true
     image: service-user-management
@@ -167,6 +229,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   web_rest:
     enabled: true
     image: service-web-rest
@@ -181,6 +250,13 @@ services:
       http:
         type: LoadBalancer
         port: 8080
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   batch_operations:
     enabled: false
     image: service-batch-operations
@@ -192,6 +268,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   command_delivery:
     enabled: false
     image: service-command-delivery
@@ -203,6 +286,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   device_registration:
     enabled: false
     image: service-device-registration
@@ -214,6 +304,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   device_state:
     enabled: false
     image: service-device-state
@@ -225,6 +322,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   event_search:
     enabled: false
     image: service-event-search
@@ -236,6 +340,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   label_generation:
     enabled: false
     image: service-label-generation
@@ -247,6 +358,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   rule_processing:
     enabled: false
     image: service-rule-processing
@@ -258,6 +376,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   schedule_management:
     enabled: false
     image: service-schedule-management
@@ -269,6 +394,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
   streaming_media:
     enabled: false
     image: service-streaming-media
@@ -280,6 +412,13 @@ services:
           port: 9000
         management:
           port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
 
 persistence:
   enabled: true
