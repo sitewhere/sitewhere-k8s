@@ -47,6 +47,13 @@ services:
   # profile: default|minimal
   profile: default
   debug: false
+  health:
+    port: 9002
+    readinessProbe:
+      initialDelay: 120
+    livenessProbe:
+      initialDelaySeconds: 300
+      periodSeconds: 60
   image:
     registry: docker.io
     repository: sitewhere

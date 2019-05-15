@@ -49,6 +49,15 @@ spec:
             requests:
               memory: {{ .Values.services.label_generation.resources.requests.memory | default .Values.services.resources.requests.memory | quote }}
               cpu: {{ .Values.services.label_generation.resources.requests.cpu | default .Values.services.resources.requests.cpu | quote }}
+          readinessProbe:
+            exec:
+              command: ["/bin/grpc_health_probe", "-addr=:{{ .Values.services.health.port }}"]
+            initialDelaySeconds: {{ .Values.services.health.readinessProbe.initialDelay }}
+          livenessProbe:
+            exec:
+              command: ["/bin/grpc_health_probe", "-addr=:{{ .Values.services.health.port }}"]
+            initialDelaySeconds: {{ .Values.services.health.livenessProbe.initialDelay }}
+            periodSeconds: {{ .Values.services.health.livenessProbe.periodSeconds }}
 ---
 apiVersion: v1
 kind: Service
