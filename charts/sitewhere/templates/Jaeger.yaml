@@ -15,6 +15,8 @@ spec:
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
       labels:
         app.kubernetes.io/name: {{ include "sitewhere.name" . }}-jaeger
         app.kubernetes.io/instance: {{ .Release.Name }}
@@ -27,10 +29,10 @@ spec:
           imagePullPolicy: {{ .Values.infra.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.infra.jaeger.service.ports.zipkin }}
-              name: zipkin-port
+              name: http-zipkin
               protocol: TCP
             - containerPort: {{ .Values.infra.jaeger.service.ports.ui }}
-              name: ui-port
+              name: http-ui
               protocol: TCP
           env:       
             - name: "COLLECTOR_ZIPKIN_HTTP_PORT"
@@ -52,11 +54,11 @@ spec:
     - port: {{ .Values.infra.jaeger.service.ports.zipkin }}
       targetPort: {{ .Values.infra.jaeger.service.ports.zipkin }}
       protocol: TCP
-      name: zipkin-port
+      name: http-zipkin
     - port: {{ .Values.infra.jaeger.service.ports.ui }}
       targetPort: {{ .Values.infra.jaeger.service.ports.ui }}
       protocol: TCP
-      name: ui-port
+      name: http-ui
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-jaeger
     app.kubernetes.io/instance: {{ .Release.Name }}

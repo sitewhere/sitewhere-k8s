@@ -1,5 +1,7 @@
 # Default values for SiteWhere core infrastructure components.
 kafka:
+  podAnnotations:
+    sidecar.istio.io/inject: "false"
   enabled: true
   replicas: 3
   persistence:
@@ -7,6 +9,8 @@ kafka:
       - ReadWriteOnce
     size: 10Gi
   zookeeper:
+    podAnnotations:
+      sidecar.istio.io/inject: "false"
     replicaCount: 3
     persistence:
       enabled: true

@@ -99,7 +99,7 @@ spec:
     - port: {{ .Values.services.web_rest.service.http.port }}
       targetPort: {{ .Values.services.web_rest.service.http.port }}
       protocol: TCP
-      name: http
+      name: http-web-rest
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
     app.kubernetes.io/instance: {{ .Release.Name }}
