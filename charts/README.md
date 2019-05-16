@@ -34,6 +34,7 @@ Rook, execute the following:
 ### Install Rook
 
 ```console
+kubectl create -f ../rook/common.yaml
 kubectl create -f ../rook/operator.yaml
 kubectl create -f ../rook/cluster.yaml
 kubectl create -f ../rook/storageclass.yaml
@@ -121,5 +122,5 @@ kubectl delete pvc -l release=sitewhere
 ## Uninstall Rook
 
 If you wish to uninstall Rook.io follow the instructions of
-this [document](https://rook.io/docs/rook/v0.9/ceph-teardown.html)
+this [document](https://rook.io/docs/rook/v1.0/ceph-teardown.html)
 on how to uninstall Rook.io from Kuberntes.

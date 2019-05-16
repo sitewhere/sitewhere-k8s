@@ -3,7 +3,7 @@
 ## Prerequisites Details
 
 * Kubernetes 1.8+
-* Rook v0.9+
+* Rook v1.0+
 
 ## Chart Details
 
