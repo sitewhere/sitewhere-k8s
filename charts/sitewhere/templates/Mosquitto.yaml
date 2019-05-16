@@ -46,7 +46,7 @@ spec:
     - port: {{ .Values.infra.mosquitto.service.port }}
       targetPort: {{ .Values.infra.mosquitto.service.port }}
       protocol: TCP
-      name: mosquitto-port
+      name: tcp-mosquitto
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-mosquitto
     app.kubernetes.io/instance: {{ .Release.Name }}
