@@ -27,10 +27,10 @@ spec:
           imagePullPolicy: {{ .Values.infra.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.infra.jaeger.service.ports.zipkin }}
-              name: zipkin-port
+              name: http-zipkin
               protocol: TCP
             - containerPort: {{ .Values.infra.jaeger.service.ports.ui }}
-              name: ui-port
+              name: http-ui
               protocol: TCP
           env:       
             - name: "COLLECTOR_ZIPKIN_HTTP_PORT"

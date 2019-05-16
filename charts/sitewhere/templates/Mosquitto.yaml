@@ -27,7 +27,7 @@ spec:
           imagePullPolicy: {{ .Values.infra.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.infra.mosquitto.service.port }}
-              name: mosquitto-port
+              name: tcp-mosquitto
               protocol: TCP
 {{ include "sitewhere.infra.imagePullSecrets" . | indent 6 }}
 ---
