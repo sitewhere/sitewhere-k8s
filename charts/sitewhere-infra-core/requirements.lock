@@ -1,9 +1,6 @@
 dependencies:
-- name: consul
-  repository: https://kubernetes-charts.storage.googleapis.com
-  version: 3.5.0
 - name: kafka
   repository: https://kubernetes-charts-incubator.storage.googleapis.com
   version: 0.13.1
-digest: sha256:35d248f625f1cf216fe4f2b1cb1502617f9586765fcba1e1fff4d7ad0e582468
-generated: 2019-05-16T13:03:40.87254-03:00
+digest: sha256:9ee54379886e0a3e35f29b0e3956409a8cc4119d3784965fc94c52639b991265
+generated: 2019-05-20T20:03:51.757781-03:00

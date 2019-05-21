@@ -17,6 +17,3 @@ kafka:
       accessModes:
         - ReadWriteOnce
       storage: 10Gi
-consul:
-  enabled: true
-  Replicas: 3

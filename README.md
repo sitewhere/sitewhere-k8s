@@ -10,7 +10,6 @@ This chart will do the following:
   * Deploy [MongoDB](https://www.mongodb.com/)
   * Deploy [Apache Kafka](https://kafka.apache.org/)
   * Deploy [Apache Zookeeper](https://zookeeper.apache.org/)
-  * Deploy [Jaeger](https://www.jaegertracing.io/)
   * Deploy [Eclipse Mosquitto](https://mosquitto.org/)
 * Deploy SiteWhere Microservices. The table bellow describes the microservices deployed base on the profile selected.
 
@@ -121,16 +120,6 @@ helm install --name sitewhere \
 | infra.image.registry             | Image registry for infrastructure container images   | docker.io                        |
 | infra.image.pullPolicy           | Image pull policy for infrastructure images          | IfNotPresent                     |
 | infra.image.imagePullSecrets     | Image pull secrets for infrastructure images         | `nil`                            |
-
-#### Jaeger Configuration
-
-| Parameter                         | Description                                    | Default                          |
-| :-------------------------------- | :--------------------------------------------- | :------------------------------- |
-| infra.jaeger.image                | Jaeger container image                         | jaegertracing/all-in-one         |
-| infra.jaeger.replicaCount         | Jaeger Replica Count                           | 1                                |
-| infra.jaeger.service.type         | Jaeger Service Type                            | ClusterIP                        |
-| infra.jaeger.service.ports.zipkin | Jaeger Zipkin Service Port                     | 9411                             |
-| infra.jaeger.service.ports.ui     | Jaeger UI Service Port                         | 16686                            |
 
 #### Eclipse Mosquitto Configuration
 

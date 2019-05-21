@@ -5,8 +5,6 @@
       fieldPath: status.podIP
 - name: "sitewhere.instance.id"
   value: "{{ .Release.Name }}"
-- name: "sitewhere.tracer.server"
-  value: "{{ include "sitewhere.fullname" . }}-jaeger-svc"
 - name: "sitewhere.zookeeper.host"
   value: "{{ include "sitewhere.zookeeper.host" . }}"
 - name: "sitewhere.zookeeper.port"

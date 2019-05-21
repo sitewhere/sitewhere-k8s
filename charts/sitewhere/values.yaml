@@ -22,15 +22,6 @@ infra:
     registry: docker.io
     pullPolicy: IfNotPresent
     imagePullSecrets: "-"
-  jaeger:
-    enabled: true
-    image: jaegertracing/all-in-one
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      ports:
-        zipkin: "9411"
-        ui: "16686"
   mosquitto:
     enabled: true
     image: eclipse-mosquitto:1.4.12
