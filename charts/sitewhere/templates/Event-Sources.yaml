@@ -75,7 +75,7 @@ spec:
       targetPort: {{ .Values.services.event_sources.service.grpc.api.port }}
       protocol: TCP
       name: grcp-api
-    - port: 9000
+    - port: 9001
       targetPort: {{ .Values.services.event_sources.service.grpc.management.port }}
       protocol: TCP
       name: grcp-mgn
