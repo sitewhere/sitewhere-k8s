@@ -33,8 +33,8 @@ spec:
 {{- end }}
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.services.outbound_connectors.service.grpc.api.port }}
-            - containerPort: {{ .Values.services.outbound_connectors.service.grpc.management.port }}
+            - containerPort: 9000
+            - containerPort: 9001
 {{- if .Values.services.debug }}
             - containerPort: 8001
             - containerPort: 1116
@@ -71,11 +71,11 @@ metadata:
 spec:
   type: {{ .Values.services.outbound_connectors.service.type }}
   ports:
-    - port: {{ .Values.services.outbound_connectors.service.grpc.api.port }}
+    - port: 9000
       targetPort: {{ .Values.services.outbound_connectors.service.grpc.api.port }}
       protocol: TCP
       name: grcp-api
-    - port: {{ .Values.services.outbound_connectors.service.grpc.management.port }}
+    - port: 9001
       targetPort: {{ .Values.services.outbound_connectors.service.grpc.management.port }}
       protocol: TCP
       name: grcp-mgn
