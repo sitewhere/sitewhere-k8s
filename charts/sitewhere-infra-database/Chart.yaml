@@ -2,7 +2,7 @@ apiVersion: v1
 appVersion: "2.0.3"
 description: Helm chart for SiteWhere core Database components
 name: sitewhere-infra-database
-version: 0.1.8
+version: 0.2.0
 keywords:
   - sitewhere
   - internet-of-things
