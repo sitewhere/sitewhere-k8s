@@ -33,7 +33,6 @@ spec:
 {{- end }}
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
-            - containerPort: 9000
             - containerPort: 9001
 {{- if .Values.services.debug }}
             - containerPort: 8001
@@ -71,14 +70,10 @@ metadata:
 spec:
   type: {{ .Values.services.inbound_processing.service.type }}
   ports:
-    - port: 9000
-      targetPort: {{ .Values.services.inbound_processing.service.grpc.api.port }}
-      protocol: TCP
-      name: grcp-api
     - port: 9001
       targetPort: {{ .Values.services.inbound_processing.service.grpc.management.port }}
       protocol: TCP
-      name: grcp-mgn
+      name: grpc-management
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-inbound-processing
     app.kubernetes.io/instance: {{ .Release.Name }}

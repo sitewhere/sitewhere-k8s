@@ -39,7 +39,7 @@ services:
   profile: default
   debug: false
   health:
-    port: 9002
+    port: 9003
     readinessProbe:
       initialDelay: 120
     livenessProbe:

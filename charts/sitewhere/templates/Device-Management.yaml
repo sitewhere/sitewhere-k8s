@@ -75,11 +75,11 @@ spec:
     - port: 9000
       targetPort: {{ .Values.services.device_management.service.grpc.api.port }}
       protocol: TCP
-      name: grcp-api
+      name: grpc-api
     - port: 9001
       targetPort: {{ .Values.services.device_management.service.grpc.management.port }}
       protocol: TCP
-      name: grcp-mgn
+      name: grpc-management
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-device-management
     app.kubernetes.io/instance: {{ .Release.Name }}
