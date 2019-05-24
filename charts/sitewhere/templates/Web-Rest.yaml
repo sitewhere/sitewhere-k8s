@@ -33,7 +33,6 @@ spec:
 {{- end }}
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
-            - containerPort: 9000
             - containerPort: 9001
             - containerPort: {{ .Values.services.web_rest.service.http.port }}
 {{- if .Values.services.debug }}
@@ -72,14 +71,10 @@ metadata:
 spec:
   type: {{ .Values.services.web_rest.service.grpc.type }}
   ports:
-    - port: 9000
-      targetPort: {{ .Values.services.web_rest.service.grpc.api.port }}
-      protocol: TCP
-      name: grcp-api
     - port: 9001
       targetPort: {{ .Values.services.web_rest.service.grpc.management.port }}
       protocol: TCP
-      name: grcp-mgn
+      name: grpc-management
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
     app.kubernetes.io/instance: {{ .Release.Name }}
