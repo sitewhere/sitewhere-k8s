@@ -94,11 +94,11 @@ spec:
     - port: 8001
       targetPort: 8007
       protocol: TCP
-      name: jdwp
+      name: tcp-jdwp
     - port: 1107
       targetPort: 1107
       protocol: TCP
-      name: jmx
+      name: tcp-jmx
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-event-sources
     app.kubernetes.io/instance: {{ .Release.Name }}
