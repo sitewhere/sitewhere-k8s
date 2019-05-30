@@ -1,5 +1,7 @@
 # SiteWhere Kubernetes Orchestration
 
+[![Build Status](https://travis-ci.org/sitewhere/sitewhere-k8s.svg?branch=master)](https://travis-ci.org/sitewhere/sitewhere-k8s)
+
 SiteWhere / Kubernetes integration including Helm Charts
 
 ## Chart Details
