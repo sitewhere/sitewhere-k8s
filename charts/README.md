@@ -55,7 +55,7 @@ helm install --name sitewhere sitewhere/sitewhere
 To support replication of persistent data across multiple
 Kubernetes nodes, SiteWhere leverages [Rook.io](https://rook.io/)
 to provide the necessary distributed infrastructure. If a k8s
-node fails, the data it persists will be available when 
+node fails, the data it persists will be available when
 containers start on other nodes in the cluster. To install
 Rook, execute the following:
 
