@@ -36,7 +36,7 @@ spec:
             - containerPort: 9001
             - containerPort: {{ .Values.services.web_rest.service.http.port }}
 {{- if .Values.services.debug }}
-            - containerPort: 8001
+            - containerPort: 8010
             - containerPort: 1110
 {{- end }}
           env:
@@ -110,9 +110,9 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
-    - port: 8001
+    - port: 8010
       targetPort: 8010
       protocol: TCP
       name: tcp-jdwp

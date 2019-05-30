@@ -36,7 +36,7 @@ spec:
             - containerPort: 9000
             - containerPort: 9001
 {{- if .Values.services.debug }}
-            - containerPort: 8001
+            - containerPort: 8003
             - containerPort: 1103
 {{- end }}
           env:
@@ -95,9 +95,9 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
-    - port: 8001
+    - port: 8003
       targetPort: 8003
       protocol: TCP
       name: tcp-jdwp
