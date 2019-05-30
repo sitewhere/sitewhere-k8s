@@ -71,7 +71,6 @@ services:
       level: ERROR
     zookeeper:
       level: ERROR
-  initContainers: true
   resources:
     limits:
       memory: 800Mi

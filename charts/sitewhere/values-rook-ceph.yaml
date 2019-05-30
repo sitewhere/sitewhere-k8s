@@ -71,7 +71,6 @@ services:
       level: ERROR
     zookeeper:
       level: ERROR
-  initContainers: true
   asset_management:
     enabled: true
     image: service-asset-management
