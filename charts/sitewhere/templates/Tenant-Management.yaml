@@ -100,11 +100,11 @@ spec:
     - port: 8001
       targetPort: 8003
       protocol: TCP
-      name: jdwp
+      name: tcp-jdwp
     - port: 1103
       targetPort: 1103
       protocol: TCP
-      name: jmx
+      name: tcp-jmx
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-tenant-management
     app.kubernetes.io/instance: {{ .Release.Name }}

@@ -33,7 +33,7 @@ spec:
 {{- end }}
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
-             - containerPort: 9001
+            - containerPort: 9001
 {{- if .Values.services.debug }}
             - containerPort: 8001
             - containerPort: 1113
@@ -94,11 +94,11 @@ spec:
     - port: 8001
       targetPort: 8013
       protocol: TCP
-      name: jdwp
+      name: tcp-jdwp
     - port: 1113
       targetPort: 1113
       protocol: TCP
-      name: jmx
+      name: tcp-jmx
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-device-registration
     app.kubernetes.io/instance: {{ .Release.Name }}

@@ -99,11 +99,11 @@ spec:
     - port: 8001
       targetPort: 8019
       protocol: TCP
-      name: jdwp
+      name: tcp-jdwp
     - port: 1119
       targetPort: 1119
       protocol: TCP
-      name: jmx
+      name: tcp-jmx
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-streaming-media
     app.kubernetes.io/instance: {{ .Release.Name }}
