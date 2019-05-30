@@ -64,7 +64,7 @@ services:
       boot: 
         level: INFO
       context: 
-        level: TRACE
+        level: INFO
       security: 
         level: INFO
     kafka:
