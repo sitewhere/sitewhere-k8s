@@ -28,7 +28,6 @@ helm install --name sitewhere \
 --set sitewhere-infra-core.kafka.persistence.storageClass=standard \
 --set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=standard \
 --set sitewhere-infra-core.kafka.external.enabled=false \
---set services.initContainers=false \
 ./sitewhere
 ```
 
@@ -43,7 +42,6 @@ helm install --name sitewhere \
 --set sitewhere-infra-core.kafka.persistence.storageClass=standard \
 --set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=standard \
 --set sitewhere-infra-core.kafka.external.enabled=false \
---set services.initContainers=false \
 sitewhere/sitewhere
 ```
 
@@ -52,7 +50,6 @@ sitewhere/sitewhere
 ```console
 helm install --name sitewhere \
 --set sitewhere-infra-core.kafka.external.enabled=false \
---set services.initContainers=false \
 sitewhere/sitewhere
 ```
 
@@ -75,7 +72,6 @@ helm install --name sitewhere \
 --set sitewhere-infra-core.kafka.persistence.storageClass=hostpath \
 --set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=hostpath \
 --set sitewhere-infra-core.kafka.external.enabled=false \
---set services.initContainers=false \
 sitewhere/sitewhere
 ```
 

@@ -1,4 +1,4 @@
-{{/* Generate initContainers */}}
+{{/* Generate Image Pull Secrets */}}
 {{- define "sitewhere.services.imagePullSecrets" }}
 {{- if (and (ne (.Values.services.image.imagePullSecrets | toString) "-") .Values.services.image.imagePullSecrets) }}
 imagePullSecrets:

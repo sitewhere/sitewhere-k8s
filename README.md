@@ -53,10 +53,9 @@ The following tables list the configurable parameters of the SiteWhere chart and
 | services.debug                   | Use debug images                                     | `false`                          |
 | services.image.registry          | Image registry for microservices container images    | docker.io                        |
 | services.image.repository        | Image repository for microservices container images  | sitewhere                        |
-| services.image.tag               | Image tag for microservices container images         | `latest`                            |
+| services.image.tag               | Image tag for microservices container images         | `latest`                         |
 | services.image.pullPolicy        | Image pull policy for microservices images           | Never                            |
 | services.image.imagePullSecrets  | Image pull secrets for microservices images          | `nil`                            |
-| services.initContainers          | If `true`, microservices pod will wait for MongoDB.  | `true`                           |
 
 Each _microservice_ has the following configuration:
 
@@ -69,7 +68,11 @@ Each _microservice_ has the following configuration:
 | services._microservice_.service.grpc.api.port        | Microservice gRPC API Service Port              | 9000              |
 | services._microservice_.service.grpc.management.port | Microservice gRPC Management Service Port       | 9001              |
 
-Debug image ports
+### Debug image ports
+
+If you install SiteWhere in debug mode (using `--set services.debug=true`) each microservice will
+expose two port (JDWP Port and JMX Port) for remote debuging. The following table show
+the port that each microservice will expose, so that you can connect a remote debuger.
 
 | Microservice             | JDWP Port      | JMX Port        |
 | :----------------------- | :------------- | :-------------- |

@@ -1,9 +1,37 @@
-# Helm Charts for Running SiteWhere 2.0
+# Helm Charts for Running SiteWhere 2.1
 
 SiteWhere provides a comprehensive Helm chart which takes care of 
 orchestration of the many components that make up a SiteWhere
 instance. By configuring chart parameters, the system may be 
 easily customized for specific application requirements.
+
+## Prerequisties
+
+SiteWhere 2.1 requeries [Istio](https://istio.io/), with 
+[Automatic sidecar injection](https://istio.io/docs/setup/kubernetes/additional-setup/sidecar-injection/#automatic-sidecar-injection),
+installed on a Kubernetes cluster before you deploy an instance of SiteWhere. You can install Istio
+[with](https://istio.io/docs/setup/kubernetes/install/helm/) or [without](https://istio.io/docs/setup/kubernetes/install/kubernetes/) Helm.
+
+Make sure that the namespace where you are deploying SiteWhere has the label `istio-injection=enabled`, 
+for example for the `default` namespace use:
+
+```console
+kubectl get namespace -L istio-injection
+```
+
+```
+NAME           STATUS    AGE       ISTIO-INJECTION
+default        Active    1h        enabled
+istio-system   Active    1h
+kube-public    Active    1h
+kube-system    Active    1h
+```
+
+If not, add the label to the namespace:
+
+```console
+kubectl label namespace default istio-injection=enabled
+```
 
 ## Add SiteWhere Helm Repository
 
