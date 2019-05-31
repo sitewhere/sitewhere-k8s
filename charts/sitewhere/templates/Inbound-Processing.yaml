@@ -1,4 +1,5 @@
 {{- if include "microservices.inbound_processing.enabled" . }}
+{{$data := dict "Values" .Values.services.inbound_processing "Defaults" .Values.services }}
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
@@ -26,11 +27,7 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}-inbound-processing
-{{- if .Values.services.debug }}
-          image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.inbound_processing.image }}:debug-{{ .Values.services.image.tag }}"
-{{- else }}
-          image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.inbound_processing.image }}:{{ .Values.services.image.tag }}"
-{{- end }}
+{{- include "sitewhere.microservice.image" $data | indent 10 }}
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
             - containerPort: 9001
@@ -38,17 +35,10 @@ spec:
             - containerPort: 8008
             - containerPort: 1108
 {{- end }}
-          env:
-{{ include "sitewhere.microserviceEnvValues" . | indent 12 }}
-{{- include "sitewhere.services.imagePullSecrets" . | indent 6 }}
-          resources:
-            limits:
-              memory: {{ .Values.services.inbound_processing.resources.limits.memory | default .Values.services.resources.limits.memory | quote }}
-              cpu: {{ .Values.services.inbound_processing.resources.limits.cpu | default .Values.services.resources.limits.cpu | quote }}
-            requests:
-              memory: {{ .Values.services.inbound_processing.resources.requests.memory | default .Values.services.resources.requests.memory | quote }}
-              cpu: {{ .Values.services.inbound_processing.resources.requests.cpu | default .Values.services.resources.requests.cpu | quote }}
-{{ include "sitewhere.microserviceProbes" . | indent 10 }}
+{{include "sitewhere.microservice.envValues" . | indent 10 }}
+{{include "sitewhere.microservice.resources" $data | indent 10 }}
+{{include "sitewhere.microservice.probes" . | indent 10 }}
+{{include "sitewhere.microservice.imagePullSecrets" . | indent 6 }}
 ---
 apiVersion: v1
 kind: Service
