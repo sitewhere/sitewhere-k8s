@@ -59,7 +59,7 @@ services:
     sitewhere:
       level: INFO
       grpc:
-        level: DEBUG
+        level: INFO
     spring:
       boot: 
         level: INFO
