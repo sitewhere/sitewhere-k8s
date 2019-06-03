@@ -5,6 +5,10 @@ env:
     valueFrom:
       fieldRef:
         fieldPath: status.podIP
+  - name: "sitewhere.namespace"
+    valueFrom:
+      fieldRef:
+        fieldPath: metadata.namespace
   - name: "sitewhere.instance.id"
     value: "{{ .Release.Name }}"
   - name: "sitewhere.zookeeper.host"
