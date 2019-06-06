@@ -1,5 +1,6 @@
 # Default values for SiteWhere core infrastructure components.
 kafka:
+  podManagementPolicy: Parallel
   podAnnotations:
     sidecar.istio.io/inject: "false"
   enabled: true
