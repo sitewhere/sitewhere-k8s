@@ -108,17 +108,17 @@ the port that each microservice will expose, so that you can connect a remote de
 #### Using External Kafka and Zookeeper infrastructure
 
 In order to deploy SiteWhere using an external infrastructure of Kafka and Zookeeper,
-install SiteWhere setting `sitewhere-infra-core.kafka.enabled=false`. Also you need to
+install SiteWhere setting `sitewhere-infra-core.enabled=false`. Also you need to
 provide the location of Apache Zookeeper (`hostname` and `port`) and Apache Kafka
 Bootstrap servers location (`hostname` and `port`).
 
 ```console
 helm install --name sitewhere \
-  --set sitewhere-infra-core.kafka.enabled=false \
-  --set sitewhere-infra-core.kafka.zookeeper_host=<zk-locahost> \
-  --set sitewhere-infra-core.kafka.zookeeper_port=<zk-port> \
-  --set sitewhere-infra-core.kafka.kafka_host=<kafka-locahost> \
-  --set sitewhere-infra-core.kafka.kafka_port=<kafka-port> \
+  --set sitewhere-infra-core.enabled=false \
+  --set sitewhere-infra-core.zookeeper_host=<zk-locahost> \
+  --set sitewhere-infra-core.zookeeper_port=<zk-port> \
+  --set sitewhere-infra-core.kafka_host=<kafka-locahost> \
+  --set sitewhere-infra-core.kafka_port=<kafka-port> \
   sitewhere/sitewhere
 ```
 
