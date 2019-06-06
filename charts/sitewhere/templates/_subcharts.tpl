@@ -14,7 +14,7 @@ SiteWhere Zookeeper Port.
 */}}
 {{- define "sitewhere.zookeeper.port" -}}
 {{- if (index .Values "sitewhere-infra-core" "kafka" "enabled") -}}
-{{- index .Values "sitewhere-infra-core" "kafka" "zookeeper" "ports" "client" "containerPort" -}}
+{{- index .Values "sitewhere-infra-core" "cp-zookeeper" "clientPort" -}}
 {{- else -}}
 {{- index .Values "sitewhere-infra-core" "kafka" "zookeeper_port" -}}
 {{- end -}}
@@ -36,7 +36,7 @@ SiteWhere Kafka Port.
 */}}
 {{- define "sitewhere.kafka.port" -}}
 {{- if (index .Values "sitewhere-infra-core" "kafka" "enabled") -}}
-{{- index .Values "sitewhere-infra-core" "kafka" "headless" "port" -}}
+{{- 9092 -}}
 {{- else -}}
 {{- index .Values "sitewhere-infra-core" "kafka" "kafka_port" -}}
 {{- end -}}

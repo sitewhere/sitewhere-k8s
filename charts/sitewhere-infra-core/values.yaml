@@ -18,3 +18,18 @@ kafka:
       accessModes:
         - ReadWriteOnce
       storage: 10Gi
+
+cp-kafka:
+  prometheus:
+    jmx:
+      enabled: false
+  podManagementPolicy: Parallel
+  podAnnotations:
+    sidecar.istio.io/inject: "false"
+cp-zookeeper:
+  prometheus:
+    jmx:
+      enabled: false
+  podManagementPolicy: Parallel
+  podAnnotations:
+    sidecar.istio.io/inject: "false"

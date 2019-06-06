@@ -1,6 +1,6 @@
 dependencies:
 - name: sitewhere-infra-core
-  version: 0.2.0
+  version: 0.2.1
   repository: https://sitewhere.io/helm-charts
 - name: sitewhere-infra-database
   version: 0.2.0
