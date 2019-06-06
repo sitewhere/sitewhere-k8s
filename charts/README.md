@@ -96,8 +96,8 @@ the start SiteWhere using the following configuration:
 
 ```console
 helm install --name sitewhere \
---set sitewhere-infra-core.kafka.persistence.storageClass=<your-storage-class> \
---set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=<your-storage-class> \
+--set sitewhere-infra-core.cp-kafka.persistence.storageClass=<your-storage-class> \
+--set sitewhere-infra-core.cp-zookeeper.persistence.dataLogDirStorageClass=<your-storage-class> \
 --set sitewhere-infra-database.mongodb.persistence.storageClass=<your-storage-class> \
 --set sitewhere-infra-database.cassandra.persistence.storageClass=<your-storage-class> \
 --set sitewhere-infra-database.influxdb.persistence.storageClass=<your-storage-class> \
