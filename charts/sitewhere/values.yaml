@@ -1,21 +1,10 @@
 # SiteWhere Infrastructure
 sitewhere-infra-core:
-  kafka:
-    enabled: true
-    kafka_host: ""
-    kafka_port: ""
-    zookeeper_host: ""
-    zookeeper_port: ""
-    configurationOverrides:
-      "num.partitions": 3
-      "default.replication.factor": 3
-      "min.insync.replicas": 2
-      "leader.imbalance.check.interval.seconds": 30
-    external:
-      enabled: false
-    zookeeper:
-      service:
-        type: NodePort
+  enabled: true
+  kafka_host: ""
+  kafka_port: ""
+  zookeeper_host: ""
+  zookeeper_port: ""
 infra:
   profile: mongodb
   image:
