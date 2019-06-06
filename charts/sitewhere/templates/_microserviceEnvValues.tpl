@@ -37,6 +37,8 @@ env:
     value: "{{ .Values.services.logging.kafka.level }}"
   - name: "LOGGING_LEVEL_ZOOKEEPER"
     value: "{{ .Values.services.logging.zookeeper.level }}"
+  - name: "LOGGING_LEVEL_MONGODB"
+    value: "{{ .Values.services.logging.mongodb.level }}"
 {{- if include "infra.cassandra.enabled" . }}
   - name: "cassandra.contact.points"
     value: "{{ include "sitewhere.fullname" . }}-cassandra-svc"

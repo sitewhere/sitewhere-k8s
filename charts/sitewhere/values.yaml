@@ -71,6 +71,8 @@ services:
       level: ERROR
     zookeeper:
       level: ERROR
+    mongodb:
+      level: WARN
   resources:
     limits:
       memory: 800Mi
