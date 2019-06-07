@@ -49,6 +49,8 @@ services:
       level: INFO
       grpc:
         level: INFO
+    grpc:
+      level: ERROR
     spring:
       boot: 
         level: INFO
