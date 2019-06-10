@@ -31,6 +31,8 @@ spec:
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
             - containerPort: 9001
+            - containerPort: 9004
+            - containerPort: 9005
 {{- if .Values.services.debug }}
             - containerPort: 8001
             - containerPort: 1101
@@ -56,6 +58,14 @@ spec:
       targetPort: {{ .Values.services.instance_management.service.grpc.management.port }}
       protocol: TCP
       name: grpc-management
+    - port: 9004
+      targetPort: {{ .Values.services.instance_management.service.grpc.user_management.port }}
+      protocol: TCP
+      name: grpc-user-management
+    - port: 9005
+      targetPort: {{ .Values.services.instance_management.service.grpc.tenant_management.port }}
+      protocol: TCP
+      name: grpc-tenant-management
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-instance-management
     app.kubernetes.io/instance: {{ .Release.Name }}

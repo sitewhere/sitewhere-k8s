@@ -168,10 +168,12 @@ services:
     service:
       type: ClusterIP
       grpc:
-        api:
-          port: 9000
         management:
           port: 9001
+        user_management:
+          port: 9004
+        tenant_management:
+          port: 9005
     resources:
       limits:
         memory: 
@@ -182,42 +184,6 @@ services:
   outbound_connectors:
     enabled: true
     image: service-outbound-connectors
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      grpc:
-        api:
-          port: 9000
-        management:
-          port: 9001
-    resources:
-      limits:
-        memory: 
-        cpu: 
-      requests:
-        memory: 
-        cpu: 
-  tenant_management:
-    enabled: true
-    image: service-tenant-management
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      grpc:
-        api:
-          port: 9000
-        management:
-          port: 9001
-    resources:
-      limits:
-        memory: 
-        cpu: 
-      requests:
-        memory: 
-        cpu: 
-  user_management:
-    enabled: true
-    image: service-user-management
     replicaCount: 1
     service:
       type: ClusterIP
