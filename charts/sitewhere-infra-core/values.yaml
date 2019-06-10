@@ -33,3 +33,13 @@ cp-zookeeper:
   podManagementPolicy: Parallel
   podAnnotations:
     sidecar.istio.io/inject: "false"
+
+postgresql:
+  enabled: true
+  postgresqlUsername: syncope
+  postgresqlDatabase: syncope
+  existingSecret: syncope
+# Syncope
+syncope:
+  syncopeEnvironment:
+    dbUser: syncope
