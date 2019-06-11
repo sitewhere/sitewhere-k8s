@@ -39,6 +39,9 @@ postgresql:
   postgresqlUsername: syncope
   postgresqlDatabase: syncope
   existingSecret: syncope
+  service:
+    annotations:
+      sidecar.istio.io/inject: "false"
 # Syncope
 syncope:
   syncopeEnvironment:

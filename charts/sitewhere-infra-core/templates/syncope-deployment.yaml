@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
- name: {{ template "sitewhere-infra-core.fullname" . }}-syncope-environment-config
+ name: {{ template "sitewhere-infra-core.relasename" . }}-syncope-environment-config
 data:
  DBMS: postgresql
- DB_URL:  jdbc:postgresql://{{ include "sitewhere-infra-core.fullname" . }}-postgresql-headless:5432/syncope
+ DB_URL:  jdbc:postgresql://{{ include "sitewhere-infra-core.relasename" . }}-postgresql-headless:5432/syncope
  DB_USER: {{.Values.syncope.syncopeEnvironment.dbUser}}
  DB_POOL_MAX: "{{.Values.syncope.syncopeEnvironment.dbPoolMax}}"
  DB_POOL_MIN: "{{.Values.syncope.syncopeEnvironment.dbPoolMin}}"
@@ -13,15 +13,17 @@ data:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "sitewhere-infra-core.fullname" . }}-{{.Values.syncope.syncopeConfig.name}}
+  name: {{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeConfig.name}}
 spec:
   replicas: 1
   strategy: {}
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
       labels:
-        name: "{{ template "sitewhere-infra-core.fullname" . }}-{{.Values.syncope.syncopeConfig.name}}"
-        app.kubernetes.io/name: "{{ template "sitewhere-infra-core.fullname" . }}-{{ .Values.syncope.syncopeConfig.name }}"
+        name: "{{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeConfig.name}}"
+        app.kubernetes.io/name: "{{ template "sitewhere-infra-core.relasename" . }}-{{ .Values.syncope.syncopeConfig.name }}"
         app.kubernetes.io/instance: {{ .Release.Name }}
         sitewhere.io/role: "infrastructure"
         sitewhere.io/name: "syncope"
@@ -30,13 +32,13 @@ spec:
       - name: check-db-ready
         image: postgres:9.6.5
         command: ['sh', '-c', 
-          'until pg_isready -h {{ template "sitewhere-infra-core.fullname" . }}-postgresql-headless -p 5432; 
+          'until pg_isready -h {{ template "sitewhere-infra-core.relasename" . }}-postgresql-headless -p 5432; 
           do echo waiting for database; sleep 2; done;']
       containers:
       - name: {{.Values.syncope.syncopeConfig.name}}
         envFrom:
         - configMapRef:
-           name: {{ template "sitewhere-infra-core.fullname" . }}-syncope-environment-config
+           name: {{ template "sitewhere-infra-core.relasename" . }}-syncope-environment-config
         env:
         - name: DB_PASSWORD
           valueFrom:
@@ -53,11 +55,11 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  name: "{{ template "sitewhere-infra-core.fullname" . }}-{{.Values.syncope.syncopeConfig.name}}"
+  name: "{{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeConfig.name}}"
 spec:
   type: "{{.Values.syncope.syncopeConfig.serviceType}}"
   selector:
-    name: "{{ template "sitewhere-infra-core.fullname" . }}-{{.Values.syncope.syncopeConfig.name}}"
+    name: "{{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeConfig.name}}"
   ports:
   - port: {{.Values.syncope.syncopeConfig.containerPort}}
     name: http-api
