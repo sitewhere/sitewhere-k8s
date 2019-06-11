@@ -1,5 +1,6 @@
 # Default values for SiteWhere core infrastructure components.
 cp-kafka: 
+  enabled: true
   persistence:
     enabled: true
     size: 8Gi
@@ -12,6 +13,7 @@ cp-kafka:
     sidecar.istio.io/inject: "false"
     
 cp-zookeeper:
+  enabled: true
   persistence:
     enabled: true
     dataDirSize: 4Gi
