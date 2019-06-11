@@ -1,15 +1,17 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "sitewhere-infra-core.fullname" . }}-{{.Values.syncope.syncopeConsoleConfig.name}}
+  name: {{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeConsoleConfig.name}}
 spec:
   replicas: 1
   strategy: {}
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
       labels:
-        name: "{{ template "sitewhere-infra-core.fullname" . }}-{{.Values.syncope.syncopeConsoleConfig.name}}"
-        app.kubernetes.io/name: "{{ template "sitewhere-infra-core.fullname" . }}-{{.Values.syncope.syncopeConsoleConfig.name}}"
+        name: "{{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeConsoleConfig.name}}"
+        app.kubernetes.io/name: "{{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeConsoleConfig.name}}"
         app.kubernetes.io/instance: {{ .Release.Name }}
         sitewhere.io/role: "infrastructure"
         sitewhere.io/name: "syncope-console"
@@ -18,7 +20,7 @@ spec:
       - name: {{.Values.syncope.syncopeConsoleConfig.name}}
         envFrom:
         - configMapRef:
-           name: {{ template "sitewhere-infra-core.fullname" . }}-syncope-environment-config
+           name: {{ template "sitewhere-infra-core.relasename" . }}-syncope-environment-config
         image: "{{.Values.syncope.syncopeConsoleConfig.repository}}/{{.Values.syncope.syncopeConsoleConfig.container}}:{{.Values.syncope.syncopeConsoleConfig.tag}}"
         ports:
         - containerPort: {{.Values.syncope.syncopeConsoleConfig.containerPort}}
@@ -29,11 +31,11 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  name: "{{ template "sitewhere-infra-core.fullname" . }}-{{.Values.syncope.syncopeConsoleConfig.name}}"
+  name: "{{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeConsoleConfig.name}}"
 spec:
   type: "{{.Values.syncope.syncopeConsoleConfig.serviceType}}"
   selector:
-    name: "{{ template "sitewhere-infra-core.fullname" . }}-{{.Values.syncope.syncopeConsoleConfig.name}}"
+    name: "{{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeConsoleConfig.name}}"
   ports:
   - port: {{.Values.syncope.syncopeConsoleConfig.containerPort}}
     name: http-api
