@@ -39,8 +39,8 @@ postgresql:
   postgresqlUsername: syncope
   postgresqlDatabase: syncope
   existingSecret: syncope
-  service:
-    annotations:
+  master:
+    podAnnotations: 
       sidecar.istio.io/inject: "false"
 # Syncope
 syncope:
