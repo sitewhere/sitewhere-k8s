@@ -2,13 +2,18 @@
 # usage: helm install --name sitewhere -f values-rook-ceph.values sitewhere/sitewhere
 
 sitewhere-infra-core:
-  kafka:
+  cp-kafka:
     persistence:
       storageClass: rook-ceph-block
-    zookeeper:
-      persistence:
-        storageClass: rook-ceph-block
-sitewhere-infra-database:
+  cp-zookeeper:
+    persistence:
+      dataDirStorageClass: rook-ceph-block
+      dataLogDirStorageClass: rook-ceph-block
+  postgresql:
+    persistence:
+      storageClass: rook-ceph-block
+      
+sitewhere-infra-database: 
   mongodb:
     persistence:
       storageClass: rook-ceph-block
