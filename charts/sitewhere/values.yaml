@@ -27,6 +27,12 @@ services:
   # profile: default|minimal
   profile: default
   debug: false
+  grpc:
+    maxRetryCount: 7
+    initialBackoffSeconds: 11
+    maxBackoffSeconds: 700
+    backoffMultiplier: 1.6
+    resolveFQDN: false
   health:
     port: 9003
     readinessProbe:
