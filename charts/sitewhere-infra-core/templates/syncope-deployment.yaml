@@ -9,6 +9,9 @@ data:
  DB_POOL_MAX: "{{.Values.syncope.syncopeEnvironment.dbPoolMax}}"
  DB_POOL_MIN: "{{.Values.syncope.syncopeEnvironment.dbPoolMin}}"
  OPENJPA_REMOTE_COMMIT: sjvm
+ CORE_SCHEME: "{{.Values.syncope.syncopeEnvironment.coreScheme}}"
+ CORE_HOST: "{{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeEnvironment.coreHost}}"
+ CORE_PORT: "{{.Values.syncope.syncopeEnvironment.corePort}}"
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
