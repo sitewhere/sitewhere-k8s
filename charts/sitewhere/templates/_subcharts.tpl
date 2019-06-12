@@ -2,7 +2,7 @@
 SiteWhere Zookeeper Hostname.
 */}}
 {{- define "sitewhere.zookeeper.host" -}}
-{{- if (index .Values "sitewhere-infra-core" "kafka" "enabled") -}}
+{{- if (index .Values "sitewhere-infra-core" "cp-zookeeper" "enabled") -}}
 {{- include "sitewhere.zookeeper.fullname" . -}}
 {{- else -}}
 {{- index .Values "sitewhere-infra-core" "zookeeper_host" -}}
@@ -13,7 +13,7 @@ SiteWhere Zookeeper Hostname.
 SiteWhere Zookeeper Port.
 */}}
 {{- define "sitewhere.zookeeper.port" -}}
-{{- if (index .Values "sitewhere-infra-core" "kafka" "enabled") -}}
+{{- if (index .Values "sitewhere-infra-core" "cp-zookeeper" "enabled") -}}
 {{- index .Values "sitewhere-infra-core" "cp-zookeeper" "clientPort" -}}
 {{- else -}}
 {{- index .Values "sitewhere-infra-core" "zookeeper_port" -}}
@@ -24,7 +24,7 @@ SiteWhere Zookeeper Port.
 SiteWhere Kafka Hostname.
 */}}
 {{- define "sitewhere.kafka.host" -}}
-{{- if (index .Values "sitewhere-infra-core" "kafka" "enabled") -}}
+{{- if (index .Values "sitewhere-infra-core" "cp-kafka" "enabled") -}}
 {{- include "sitewhere.kafka.fullname" . -}}
 {{- else -}}
 {{- index .Values "sitewhere-infra-core" "kafka_host" -}}
@@ -35,7 +35,7 @@ SiteWhere Kafka Hostname.
 SiteWhere Kafka Port.
 */}}
 {{- define "sitewhere.kafka.port" -}}
-{{- if (index .Values "sitewhere-infra-core" "kafka" "enabled") -}}
+{{- if (index .Values "sitewhere-infra-core" "cp-kafka" "enabled") -}}
 {{- 9092 -}}
 {{- else -}}
 {{- index .Values "sitewhere-infra-core" "kafka_port" -}}

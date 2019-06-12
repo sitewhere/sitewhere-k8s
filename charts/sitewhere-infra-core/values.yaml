@@ -1,32 +1,23 @@
 # Default values for SiteWhere core infrastructure components.
-kafka:
-  podManagementPolicy: Parallel
-  podAnnotations:
-    sidecar.istio.io/inject: "false"
+cp-kafka: 
   enabled: true
-  replicas: 3
   persistence:
-    accessModes:
-      - ReadWriteOnce
-    size: 10Gi
-  zookeeper:
-    podAnnotations:
-      sidecar.istio.io/inject: "false"
-    replicaCount: 3
-    persistence:
-      enabled: true
-      accessModes:
-        - ReadWriteOnce
-      storage: 10Gi
-
-cp-kafka:
+    enabled: true
+    size: 8Gi
+    disksPerBroker: 1
   prometheus:
     jmx:
       enabled: false
   podManagementPolicy: Parallel
   podAnnotations:
     sidecar.istio.io/inject: "false"
+    
 cp-zookeeper:
+  enabled: true
+  persistence:
+    enabled: true
+    dataDirSize: 4Gi
+    dataLogDirSize: 4Gi
   prometheus:
     jmx:
       enabled: false
@@ -36,12 +27,16 @@ cp-zookeeper:
 
 postgresql:
   enabled: true
+  persistence:
+    enabled: true
+    size: 4Gi
   postgresqlUsername: syncope
   postgresqlDatabase: syncope
   existingSecret: syncope
   master:
     podAnnotations: 
       sidecar.istio.io/inject: "false"
+      
 # Syncope
 syncope:
   syncopeEnvironment:
