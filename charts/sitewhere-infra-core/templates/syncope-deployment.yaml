@@ -12,6 +12,23 @@ data:
  CORE_SCHEME: "{{.Values.syncope.syncopeEnvironment.coreScheme}}"
  CORE_HOST: "{{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeEnvironment.coreHost}}"
  CORE_PORT: "{{.Values.syncope.syncopeEnvironment.corePort}}"
+ security.properties: |
+  conf.directory=/etc/apache-syncope
+  adminUser=synadmin
+  adminPassword=DE088591C00CC98B36F5ADAAF7DA2B004CF7F2FE7BBB45B766B6409876E2F3DB13C7905C6AA59464
+  adminPasswordAlgorithm=SSHA256
+  anonymousUser=anonymous
+  anonymousKey=anonymousKey
+  secretKey=1abcdefghilmnopqrstuvz2!
+  jwtIssuer=ApacheSyncope
+  jwsAlgorithm=HS512
+  jwsKey=ZW7pRixehFuNUtnY5Se47IemgMryTzazPPJ9CGX5LTCmsOJpOgHAQEuPQeV9A28f
+  digester.saltIterations=1
+  digester.saltSizeBytes=8
+  digester.invertPositionOfPlainSaltInEncryptionResults=true
+  digester.invertPositionOfSaltInMessageBeforeDigesting=true
+  digester.useLenientSaltSizeCheck=true
+  passwordGenerator=org.apache.syncope.core.spring.security.DefaultPasswordGenerator
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -52,6 +69,14 @@ spec:
         ports:
         - containerPort: {{.Values.syncope.syncopeConfig.containerPort}}
         resources: {}
+        volumeMounts:
+          - name: config-volume
+            mountPath: /var/lib/tomcat8/webapps/syncope/WEB-INF/classes/security.properties
+            subPath: security.properties
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ template "sitewhere-infra-core.relasename" . }}-syncope-environment-config
       restartPolicy: Always
 status: {}
 ---
