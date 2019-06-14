@@ -71,7 +71,7 @@ spec:
         resources: {}
         volumeMounts:
           - name: config-volume
-            mountPath: /var/lib/tomcat8/webapps/syncope/WEB-INF/classes/security.properties
+            mountPath: /etc/apache-syncope/security.properties
             subPath: security.properties
       volumes:
       - name: config-volume
