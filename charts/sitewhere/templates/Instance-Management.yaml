@@ -38,6 +38,10 @@ spec:
             - containerPort: 1101
 {{- end }}
 {{include "sitewhere.microservice.envValues" . | indent 10 }}
+            - name: "sitewhere.syncope.host"
+              value: "{{ include "sitewhere.name" . }}-{{ index .Values "sitewhere-infra-core" "syncope" "syncopeEnvironment" "coreHost" }}"
+            - name: "sitewhere.syncope.port"
+              value: "{{ index .Values "sitewhere-infra-core" "syncope" "syncopeEnvironment" "corePort" }}"
 {{include "sitewhere.microservice.resources" $data | indent 10 }}
 {{include "sitewhere.microservice.probes" . | indent 10 }}
 {{include "sitewhere.microservice.imagePullSecrets" . | indent 6 }}
