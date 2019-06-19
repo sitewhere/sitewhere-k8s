@@ -78,3 +78,22 @@ syncope:
     containerPort: 8080
     memoryLimit: 512Mi
     serviceType: ClusterIP
+
+# Prometheus
+prometheus:
+  enabled: true
+  alertmanager:
+    podAnnotations:
+      sidecar.istio.io/inject: "false"
+  kubeStateMetrics:
+    podAnnotations:
+      sidecar.istio.io/inject: "false"
+  nodeExporter:
+    podAnnotations:
+      sidecar.istio.io/inject: "false"
+  server:
+    podAnnotations:
+      sidecar.istio.io/inject: "false"
+  pushgateway:
+    podAnnotations:
+      sidecar.istio.io/inject: "false"
