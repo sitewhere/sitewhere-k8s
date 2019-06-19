@@ -12,6 +12,8 @@ This chart will do the following:
   * Deploy [MongoDB](https://www.mongodb.com/)
   * Deploy [Apache Kafka](https://kafka.apache.org/)
   * Deploy [Apache Zookeeper](https://zookeeper.apache.org/)
+  * Deploy [Apache Syncope](https://syncope.apache.org/)
+  * Deploy [Prometheus](https://prometheus.io/)
   * Deploy [Eclipse Mosquitto](https://mosquitto.org/)
 * Deploy SiteWhere Microservices. The table bellow describes the microservices deployed base on the profile selected.
 
