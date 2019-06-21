@@ -37,6 +37,8 @@ env:
     value: "{{ .Values.services.logging.sitewhere.level }}"
   - name: "LOGGING_LEVEL_SITEWHERE_GRPC"
     value: "{{ .Values.services.logging.sitewhere.grpc.level }}"
+  - name: "LOGGING_LEVEL_SITEWHERE_KAFKA"
+    value: "{{ .Values.services.logging.sitewhere.kafka.level }}"
   - name: "LOGGING_LEVEL_GRPC_INTERNAL"
     value: "{{ .Values.services.logging.grpc.level }}"
   - name: "LOGGING_LEVEL_SPRING_BOOT"

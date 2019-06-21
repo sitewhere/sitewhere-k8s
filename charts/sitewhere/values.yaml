@@ -55,6 +55,8 @@ services:
       level: INFO
       grpc:
         level: INFO
+      kafka:
+        level: INFO
     grpc:
       level: ERROR
     spring:
