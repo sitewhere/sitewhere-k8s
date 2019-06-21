@@ -9,6 +9,8 @@ cp-kafka:
     jmx:
       enabled: false
   podManagementPolicy: Parallel
+  configurationOverrides:
+    "auto.create.topics.enable": false
   podAnnotations:
     sidecar.istio.io/inject: "false"
     
