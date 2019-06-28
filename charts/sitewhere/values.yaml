@@ -61,7 +61,7 @@ services:
     # `edge` for under development version of SiteWhere images or 
     # a particular version like `2.0.3`.
     # By default, target the last stable version of SiteWhere images
-    tag: latest
+    tag: 2.0.7
     pullPolicy: IfNotPresent
     imagePullSecrets: "-"
   logging:
