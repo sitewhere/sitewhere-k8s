@@ -7,6 +7,8 @@ metadata:
     helm.sh/chart: {{ include "sitewhere.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+    sitewhere.io/role: "infrastructure"
+    sitewhere.io/name: "mosquitto"
 spec:
   replicas: {{ .Values.infra.mosquitto.replicaCount }}
   selector:
