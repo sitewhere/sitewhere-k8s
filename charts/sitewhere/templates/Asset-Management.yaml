@@ -1,4 +1,5 @@
 {{- if include "microservices.asset_management.enabled" . }}
+{{$data := dict "Values" .Values.services.asset_management "Defaults" .Values.services }}
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
@@ -26,38 +27,19 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}-asset-management
-{{- if .Values.services.debug }}
-          image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.asset_management.image }}:debug-{{ .Values.services.image.tag }}"
-{{- else }}
-          image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.asset_management.image }}:{{ .Values.services.image.tag }}"
-{{- end }} 
+{{- include "sitewhere.microservice.image" $data | indent 10 }}
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.services.asset_management.service.grpc.api.port }}
-            - containerPort: {{ .Values.services.asset_management.service.grpc.management.port }}
+            - containerPort: 9000
+            - containerPort: 9001
 {{- if .Values.services.debug }}
-            - containerPort: 8001
+            - containerPort: 8006
             - containerPort: 1106
 {{- end }}
-          env:
-{{ include "sitewhere.microserviceEnvValues" . | indent 12 }}
-{{- include "sitewhere.services.imagePullSecrets" . | indent 6 }}
-          resources:
-            limits:
-              memory: {{ .Values.services.asset_management.resources.limits.memory | default .Values.services.resources.limits.memory | quote }}
-              cpu: {{ .Values.services.asset_management.resources.limits.cpu | default .Values.services.resources.limits.cpu | quote }}
-            requests:
-              memory: {{ .Values.services.asset_management.resources.requests.memory | default .Values.services.resources.requests.memory | quote }}
-              cpu: {{ .Values.services.asset_management.resources.requests.cpu | default .Values.services.resources.requests.cpu | quote }}
-          readinessProbe:
-            exec:
-              command: ["/bin/grpc_health_probe", "-addr=:{{ .Values.services.health.port }}"]
-            initialDelaySeconds: {{ .Values.services.health.readinessProbe.initialDelay }}
-          livenessProbe:
-            exec:
-              command: ["/bin/grpc_health_probe", "-addr=:{{ .Values.services.health.port }}"]
-            initialDelaySeconds: {{ .Values.services.health.livenessProbe.initialDelay }}
-            periodSeconds: {{ .Values.services.health.livenessProbe.periodSeconds }}
+{{include "sitewhere.microservice.envValues" . | indent 10 }}
+{{include "sitewhere.microservice.resources" $data | indent 10 }}
+{{include "sitewhere.microservice.probes" . | indent 10 }}
+{{include "sitewhere.microservice.imagePullSecrets" . | indent 6 }}
 ---
 apiVersion: v1
 kind: Service
@@ -72,14 +54,14 @@ spec:
   type: {{ .Values.services.asset_management.service.type }}
   clusterIP: None
   ports:
-    - port: {{ .Values.services.asset_management.service.grpc.api.port }}
+    - port: 9000
       targetPort: {{ .Values.services.asset_management.service.grpc.api.port }}
       protocol: TCP
-      name: grcp-api
-    - port: {{ .Values.services.asset_management.service.grpc.management.port }}
+      name: grpc-api
+    - port: 9001
       targetPort: {{ .Values.services.asset_management.service.grpc.management.port }}
       protocol: TCP
-      name: grcp-mgn
+      name: grpc-management
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-asset-management
     app.kubernetes.io/instance: {{ .Release.Name }}
@@ -95,16 +77,16 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
-    - port: 8001
+    - port: 8006
       targetPort: 8006
       protocol: TCP
-      name: jdwp
+      name: tcp-jdwp
     - port: 1106
       targetPort: 1106
       protocol: TCP
-      name: jmx
+      name: tcp-jmx
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-asset-management
     app.kubernetes.io/instance: {{ .Release.Name }}

@@ -44,7 +44,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "sitewhere.zookeeper.fullname" -}}
-{{- printf "%s-%s" .Release.Name "zookeeper" | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name "cp-zookeeper" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
@@ -52,13 +52,5 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "sitewhere.kafka.fullname" -}}
-{{- printf "%s-%s" .Release.Name "kafka" | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
-{{- define "sitewhere.consul.fullname" -}}
-{{- printf "%s-%s" .Release.Name "consul" | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name "cp-kafka" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}

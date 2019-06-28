@@ -1,4 +1,5 @@
 {{- if include "microservices.web_rest.enabled" . }}
+{{$data := dict "Values" .Values.services.web_rest "Defaults" .Values.services }}
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
@@ -26,39 +27,19 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}-web-rest
-{{- if .Values.services.debug }}
-          image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.web_rest.image }}:debug-{{ .Values.services.image.tag }}"
-{{- else }}
-          image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.web_rest.image }}:{{ .Values.services.image.tag }}"
-{{- end }}
+{{- include "sitewhere.microservice.image" $data | indent 10 }}
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.services.web_rest.service.grpc.api.port }}
-            - containerPort: {{ .Values.services.web_rest.service.grpc.management.port }}
+            - containerPort: 9001
             - containerPort: {{ .Values.services.web_rest.service.http.port }}
 {{- if .Values.services.debug }}
-            - containerPort: 8001
+            - containerPort: 8010
             - containerPort: 1110
 {{- end }}
-          env:
-{{ include "sitewhere.microserviceEnvValues" . | indent 12 }}
-{{- include "sitewhere.services.imagePullSecrets" . | indent 6 }}
-          resources:
-            limits:
-              memory: {{ .Values.services.web_rest.resources.limits.memory | default .Values.services.resources.limits.memory | quote }}
-              cpu: {{ .Values.services.web_rest.resources.limits.cpu | default .Values.services.resources.limits.cpu | quote }}
-            requests:
-              memory: {{ .Values.services.web_rest.resources.requests.memory | default .Values.services.resources.requests.memory | quote }}
-              cpu: {{ .Values.services.web_rest.resources.requests.cpu | default .Values.services.resources.requests.cpu | quote }}
-          readinessProbe:
-            exec:
-              command: ["/bin/grpc_health_probe", "-addr=:{{ .Values.services.health.port }}"]
-            initialDelaySeconds: {{ .Values.services.health.readinessProbe.initialDelay }}
-          livenessProbe:
-            exec:
-              command: ["/bin/grpc_health_probe", "-addr=:{{ .Values.services.health.port }}"]
-            initialDelaySeconds: {{ .Values.services.health.livenessProbe.initialDelay }}
-            periodSeconds: {{ .Values.services.health.livenessProbe.periodSeconds }}
+{{include "sitewhere.microservice.envValues" . | indent 10 }}
+{{include "sitewhere.microservice.resources" $data | indent 10 }}
+{{include "sitewhere.microservice.probes" . | indent 10 }}
+{{include "sitewhere.microservice.imagePullSecrets" . | indent 6 }}
 ---
 apiVersion: v1
 kind: Service
@@ -72,14 +53,10 @@ metadata:
 spec:
   type: {{ .Values.services.web_rest.service.grpc.type }}
   ports:
-    - port: {{ .Values.services.web_rest.service.grpc.api.port }}
-      targetPort: {{ .Values.services.web_rest.service.grpc.api.port }}
-      protocol: TCP
-      name: grcp-api
-    - port: {{ .Values.services.web_rest.service.grpc.management.port }}
+    - port: 9001
       targetPort: {{ .Values.services.web_rest.service.grpc.management.port }}
       protocol: TCP
-      name: grcp-mgn
+      name: grpc-management
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
     app.kubernetes.io/instance: {{ .Release.Name }}
@@ -99,7 +76,7 @@ spec:
     - port: {{ .Values.services.web_rest.service.http.port }}
       targetPort: {{ .Values.services.web_rest.service.http.port }}
       protocol: TCP
-      name: http
+      name: http-web-rest
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
     app.kubernetes.io/instance: {{ .Release.Name }}
@@ -115,16 +92,16 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
-    - port: 8001
+    - port: 8010
       targetPort: 8010
       protocol: TCP
-      name: jdwp
+      name: tcp-jdwp
     - port: 1110
       targetPort: 1110
       protocol: TCP
-      name: jmx
+      name: tcp-jmx
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
     app.kubernetes.io/instance: {{ .Release.Name }}

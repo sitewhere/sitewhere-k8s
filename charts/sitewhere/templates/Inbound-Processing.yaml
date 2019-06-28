@@ -1,4 +1,5 @@
 {{- if include "microservices.inbound_processing.enabled" . }}
+{{$data := dict "Values" .Values.services.inbound_processing "Defaults" .Values.services }}
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
@@ -26,38 +27,18 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}-inbound-processing
-{{- if .Values.services.debug }}
-          image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.inbound_processing.image }}:debug-{{ .Values.services.image.tag }}"
-{{- else }}
-          image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.inbound_processing.image }}:{{ .Values.services.image.tag }}"
-{{- end }}
+{{- include "sitewhere.microservice.image" $data | indent 10 }}
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.services.inbound_processing.service.grpc.api.port }}
-            - containerPort: {{ .Values.services.inbound_processing.service.grpc.management.port }}
+            - containerPort: 9001
 {{- if .Values.services.debug }}
-            - containerPort: 8001
+            - containerPort: 8008
             - containerPort: 1108
 {{- end }}
-          env:
-{{ include "sitewhere.microserviceEnvValues" . | indent 12 }}
-{{- include "sitewhere.services.imagePullSecrets" . | indent 6 }}
-          resources:
-            limits:
-              memory: {{ .Values.services.inbound_processing.resources.limits.memory | default .Values.services.resources.limits.memory | quote }}
-              cpu: {{ .Values.services.inbound_processing.resources.limits.cpu | default .Values.services.resources.limits.cpu | quote }}
-            requests:
-              memory: {{ .Values.services.inbound_processing.resources.requests.memory | default .Values.services.resources.requests.memory | quote }}
-              cpu: {{ .Values.services.inbound_processing.resources.requests.cpu | default .Values.services.resources.requests.cpu | quote }}
-          readinessProbe:
-            exec:
-              command: ["/bin/grpc_health_probe", "-addr=:{{ .Values.services.health.port }}"]
-            initialDelaySeconds: {{ .Values.services.health.readinessProbe.initialDelay }}
-          livenessProbe:
-            exec:
-              command: ["/bin/grpc_health_probe", "-addr=:{{ .Values.services.health.port }}"]
-            initialDelaySeconds: {{ .Values.services.health.livenessProbe.initialDelay }}
-            periodSeconds: {{ .Values.services.health.livenessProbe.periodSeconds }}
+{{include "sitewhere.microservice.envValues" . | indent 10 }}
+{{include "sitewhere.microservice.resources" $data | indent 10 }}
+{{include "sitewhere.microservice.probes" . | indent 10 }}
+{{include "sitewhere.microservice.imagePullSecrets" . | indent 6 }}
 ---
 apiVersion: v1
 kind: Service
@@ -71,14 +52,10 @@ metadata:
 spec:
   type: {{ .Values.services.inbound_processing.service.type }}
   ports:
-    - port: {{ .Values.services.inbound_processing.service.grpc.api.port }}
-      targetPort: {{ .Values.services.inbound_processing.service.grpc.api.port }}
-      protocol: TCP
-      name: grcp-api
-    - port: {{ .Values.services.inbound_processing.service.grpc.management.port }}
+    - port: 9001
       targetPort: {{ .Values.services.inbound_processing.service.grpc.management.port }}
       protocol: TCP
-      name: grcp-mgn
+      name: grpc-management
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-inbound-processing
     app.kubernetes.io/instance: {{ .Release.Name }}
@@ -94,16 +71,16 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
-    - port: 8001
+    - port: 8008
       targetPort: 8008
       protocol: TCP
-      name: jdwp
+      name: tcp-jdwp
     - port: 1108
       targetPort: 1108
       protocol: TCP
-      name: jmx
+      name: tcp-jmx
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-inbound-processing
     app.kubernetes.io/instance: {{ .Release.Name }}

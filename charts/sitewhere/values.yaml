@@ -1,36 +1,16 @@
 # SiteWhere Infrastructure
 sitewhere-infra-core:
-  kafka:
-    enabled: true
-    kafka_host: ""
-    kafka_port: ""
-    zookeeper_host: ""
-    zookeeper_port: ""
-    configurationOverrides:
-      "num.partitions": 3
-      "default.replication.factor": 3
-      "min.insync.replicas": 2
-      "leader.imbalance.check.interval.seconds": 30
-    external:
-      enabled: false
-    zookeeper:
-      service:
-        type: NodePort
+  enabled: true
+  kafka_host: ""
+  kafka_port: ""
+  zookeeper_host: ""
+  zookeeper_port: ""
 infra:
   profile: mongodb
   image:
     registry: docker.io
     pullPolicy: IfNotPresent
     imagePullSecrets: "-"
-  jaeger:
-    enabled: true
-    image: jaegertracing/all-in-one
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      ports:
-        zipkin: "9411"
-        ui: "16686"
   mosquitto:
     enabled: true
     image: eclipse-mosquitto:1.4.12
@@ -47,8 +27,14 @@ services:
   # profile: default|minimal
   profile: default
   debug: false
+  grpc:
+    maxRetryCount: 7
+    initialBackoffSeconds: 11
+    maxBackoffSeconds: 700
+    backoffMultiplier: 1.6
+    resolveFQDN: false
   health:
-    port: 9002
+    port: 9003
     readinessProbe:
       initialDelay: 120
     livenessProbe:
@@ -68,12 +54,24 @@ services:
     sitewhere:
       level: INFO
       grpc:
-        level: ERROR
+        level: INFO
+      kafka:
+        level: INFO
+    grpc:
+      level: ERROR
+    spring:
+      boot: 
+        level: INFO
+      context: 
+        level: INFO
+      security: 
+        level: INFO
     kafka:
       level: ERROR
     zookeeper:
       level: ERROR
-  initContainers: true
+    mongodb:
+      level: WARN
   resources:
     limits:
       memory: 800Mi
@@ -178,10 +176,12 @@ services:
     service:
       type: ClusterIP
       grpc:
-        api:
-          port: 9000
         management:
           port: 9001
+        user_management:
+          port: 9004
+        tenant_management:
+          port: 9005
     resources:
       limits:
         memory: 
@@ -192,42 +192,6 @@ services:
   outbound_connectors:
     enabled: true
     image: service-outbound-connectors
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      grpc:
-        api:
-          port: 9000
-        management:
-          port: 9001
-    resources:
-      limits:
-        memory: 
-        cpu: 
-      requests:
-        memory: 
-        cpu: 
-  tenant_management:
-    enabled: true
-    image: service-tenant-management
-    replicaCount: 1
-    service:
-      type: ClusterIP
-      grpc:
-        api:
-          port: 9000
-        management:
-          port: 9001
-    resources:
-      limits:
-        memory: 
-        cpu: 
-      requests:
-        memory: 
-        cpu: 
-  user_management:
-    enabled: true
-    image: service-user-management
     replicaCount: 1
     service:
       type: ClusterIP

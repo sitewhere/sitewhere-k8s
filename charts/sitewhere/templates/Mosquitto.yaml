@@ -7,6 +7,8 @@ metadata:
     helm.sh/chart: {{ include "sitewhere.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+    sitewhere.io/role: "infrastructure"
+    sitewhere.io/name: "mosquitto"
 spec:
   replicas: {{ .Values.infra.mosquitto.replicaCount }}
   selector:
@@ -15,6 +17,8 @@ spec:
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
       labels:
         app.kubernetes.io/name: {{ include "sitewhere.name" . }}-mosquitto
         app.kubernetes.io/instance: {{ .Release.Name }}
@@ -27,7 +31,7 @@ spec:
           imagePullPolicy: {{ .Values.infra.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.infra.mosquitto.service.port }}
-              name: mosquitto-port
+              name: tcp-mosquitto
               protocol: TCP
 {{ include "sitewhere.infra.imagePullSecrets" . | indent 6 }}
 ---
@@ -46,7 +50,7 @@ spec:
     - port: {{ .Values.infra.mosquitto.service.port }}
       targetPort: {{ .Values.infra.mosquitto.service.port }}
       protocol: TCP
-      name: mosquitto-port
+      name: tcp-mosquitto
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-mosquitto
     app.kubernetes.io/instance: {{ .Release.Name }}

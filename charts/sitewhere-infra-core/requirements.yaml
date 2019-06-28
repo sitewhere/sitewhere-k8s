@@ -1,9 +1,9 @@
 dependencies:
-- name: consul
-  version: 3.5.0
+- name: postgresql
+  version: 5.3.7
   repository: https://kubernetes-charts.storage.googleapis.com
-  condition: sitewhere-infra-core.consul.enabled, consul.enabled
-- name: kafka
-  version: 0.13.1
-  repository: https://kubernetes-charts-incubator.storage.googleapis.com
-  condition: sitewhere-infra-core.kafka.enabled, kafka.enabled
+  condition: postgresql.enabled
+- name: prometheus
+  version: 8.11.4
+  repository: https://kubernetes-charts.storage.googleapis.com
+  condition: prometheus.enabled

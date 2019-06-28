@@ -1,4 +1,5 @@
 {{- if include "microservices.label_generation.enabled" . }}
+{{$data := dict "Values" .Values.services.label_generation "Defaults" .Values.services }}
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
@@ -26,38 +27,19 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}-label-generation
-{{- if .Values.services.debug }}
-          image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.label_generation.image }}:debug-{{ .Values.services.image.tag }}"
-{{- else }}
-          image: "{{ .Values.services.image.registry }}/{{ .Values.services.image.repository }}/{{ .Values.services.label_generation.image }}:{{ .Values.services.image.tag }}"
-{{- end }}
+{{- include "sitewhere.microservice.image" $data | indent 10 }}
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.services.label_generation.service.grpc.api.port }}
-            - containerPort: {{ .Values.services.label_generation.service.grpc.management.port }}
+            - containerPort: 9000
+            - containerPort: 9001
 {{- if .Values.services.debug }}
-            - containerPort: 8001
+            - containerPort: 8009
             - containerPort: 1109
 {{- end }}
-          env:
-{{ include "sitewhere.microserviceEnvValues" . | indent 12 }}
-{{- include "sitewhere.services.imagePullSecrets" . | indent 6 }}
-          resources:
-            limits:
-              memory: {{ .Values.services.label_generation.resources.limits.memory | default .Values.services.resources.limits.memory | quote }}
-              cpu: {{ .Values.services.label_generation.resources.limits.cpu | default .Values.services.resources.limits.cpu | quote }}
-            requests:
-              memory: {{ .Values.services.label_generation.resources.requests.memory | default .Values.services.resources.requests.memory | quote }}
-              cpu: {{ .Values.services.label_generation.resources.requests.cpu | default .Values.services.resources.requests.cpu | quote }}
-          readinessProbe:
-            exec:
-              command: ["/bin/grpc_health_probe", "-addr=:{{ .Values.services.health.port }}"]
-            initialDelaySeconds: {{ .Values.services.health.readinessProbe.initialDelay }}
-          livenessProbe:
-            exec:
-              command: ["/bin/grpc_health_probe", "-addr=:{{ .Values.services.health.port }}"]
-            initialDelaySeconds: {{ .Values.services.health.livenessProbe.initialDelay }}
-            periodSeconds: {{ .Values.services.health.livenessProbe.periodSeconds }}
+{{include "sitewhere.microservice.envValues" . | indent 10 }}
+{{include "sitewhere.microservice.resources" $data | indent 10 }}
+{{include "sitewhere.microservice.probes" . | indent 10 }}
+{{include "sitewhere.microservice.imagePullSecrets" . | indent 6 }}
 ---
 apiVersion: v1
 kind: Service
@@ -71,14 +53,14 @@ metadata:
 spec:
   type: {{ .Values.services.label_generation.service.type }}
   ports:
-    - port: {{ .Values.services.label_generation.service.grpc.api.port }}
+    - port: 9000
       targetPort: {{ .Values.services.label_generation.service.grpc.api.port }}
       protocol: TCP
-      name: grcp-api
-    - port: {{ .Values.services.label_generation.service.grpc.management.port }}
+      name: grpc-api
+    - port: 9001
       targetPort: {{ .Values.services.label_generation.service.grpc.management.port }}
       protocol: TCP
-      name: grcp-mgn
+      name: grpc-management
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-label-generation
     app.kubernetes.io/instance: {{ .Release.Name }}
@@ -94,16 +76,16 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
-    - port: 8001
+    - port: 8009
       targetPort: 8009
       protocol: TCP
-      name: jdwp
+      name: tcp-jdwp
     - port: 1109
       targetPort: 1109
       protocol: TCP
-      name: jmx
+      name: tcp-jmx
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-label-generation
     app.kubernetes.io/instance: {{ .Release.Name }}

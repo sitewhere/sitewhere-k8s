@@ -25,25 +25,8 @@ and use the `values-dev.yaml`.
 helm install --name sitewhere \
 -f ./sitewhere/values-dev.yaml \
 --set sitewhere-infra-database.mongodb.persistence.storageClass=standard \
---set sitewhere-infra-core.kafka.persistence.storageClass=standard \
---set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=standard \
---set sitewhere-infra-core.kafka.external.enabled=false \
---set services.initContainers=false \
-./sitewhere
-```
-
-Alternative, you can use sitewhere Helm Repo with:
-
-```console
-helm install --name sitewhere \
---set sitewhere-infra-core.kafka.zookeeper.replicaCount=1 \
---set sitewhere-infra-core.consul.Replicas=1 \
---set sitewhere-infra-database.mongodb.replicaSet.enabled=false \
---set sitewhere-infra-database.mongodb.persistence.storageClass=standard \
---set sitewhere-infra-core.kafka.persistence.storageClass=standard \
---set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=standard \
---set sitewhere-infra-core.kafka.external.enabled=false \
---set services.initContainers=false \
+--set sitewhere-infra-core.cp-kafka.persistence.storageClass=standard \
+--set sitewhere-infra-core.cp-zookeeper.persistence.dataLogDirStorageClass=standard \
 sitewhere/sitewhere
 ```
 
@@ -51,8 +34,6 @@ sitewhere/sitewhere
 
 ```console
 helm install --name sitewhere \
---set sitewhere-infra-core.kafka.external.enabled=false \
---set services.initContainers=false \
 sitewhere/sitewhere
 ```
 
@@ -69,13 +50,10 @@ sitewhere/sitewhere
 ```console
 helm install --name sitewhere \
 --set services.profile=minimal \
---set sitewhere-infra-core.kafka.zookeeper.replicaCount=1 \
---set sitewhere-infra-core.consul.Replicas=1 \
+--set sitewhere-infra-core.cp-zookeeper.servers=1 \
 --set sitewhere-infra-database.mongodb.persistence.storageClass=hostpath \
---set sitewhere-infra-core.kafka.persistence.storageClass=hostpath \
---set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=hostpath \
---set sitewhere-infra-core.kafka.external.enabled=false \
---set services.initContainers=false \
+--set sitewhere-infra-core.cp-kafka.persistence.storageClass=hostpath \
+--set sitewhere-infra-core.cp-zookeeper.persistence.dataLogDirStorageClass=hostpath \
 sitewhere/sitewhere
 ```
 
@@ -85,7 +63,7 @@ sitewhere/sitewhere
 helm install --name sitewhere \
 -f ./sitewhere/values-dev.yaml \
 --set sitewhere-infra-database.mongodb.persistence.storageClass=hostpath \
---set sitewhere-infra-core.kafka.persistence.storageClass=hostpath \
---set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=hostpath \
-./sitewhere
+--set sitewhere-infra-core.cp-kafka.persistence.storageClass=hostpath \
+--set sitewhere-infra-core.cp-zookeeper.persistence.dataLogDirStorageClass=hostpath \
+sitewhere/sitewhere
 ```

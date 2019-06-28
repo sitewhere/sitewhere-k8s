@@ -1,9 +1,9 @@
 dependencies:
-- name: consul
+- name: postgresql
   repository: https://kubernetes-charts.storage.googleapis.com
-  version: 3.5.0
-- name: kafka
-  repository: https://kubernetes-charts-incubator.storage.googleapis.com
-  version: 0.13.1
-digest: sha256:bfb7eb9909e66366f94af117ffc6870246801b3e3f07f6a95f8544873005ce74
-generated: 2019-05-03T10:29:48.671385-03:00
+  version: 5.3.7
+- name: prometheus
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 8.11.4
+digest: sha256:8d30c36bdd17637d190a79167819d57e7f02e3ab8910cdb4d55f86ba31e16ae0
+generated: 2019-06-19T16:24:32.187309-03:00

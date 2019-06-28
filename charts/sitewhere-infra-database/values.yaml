@@ -1,5 +1,7 @@
 # Default values for SiteWhere Database infrastructure components.
 mongodb:
+  podAnnotations:
+    sidecar.istio.io/inject: "false"
   usePassword: false
   replicaSet:
     enabled: true
@@ -12,6 +14,8 @@ mongodb:
     storage: 10Gi
 cassandra:
   enabled: false
+  podAnnotations:
+    sidecar.istio.io/inject: "false"
   persistence:
     accessMode: ReadWriteOnce
     size: 10Gi

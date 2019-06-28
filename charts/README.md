@@ -1,9 +1,37 @@
-# Helm Charts for Running SiteWhere 2.0
+# Helm Charts for Running SiteWhere 2.1
 
 SiteWhere provides a comprehensive Helm chart which takes care of 
 orchestration of the many components that make up a SiteWhere
 instance. By configuring chart parameters, the system may be 
 easily customized for specific application requirements.
+
+## Prerequisties
+
+SiteWhere 2.1 requeries [Istio](https://istio.io/), with 
+[Automatic sidecar injection](https://istio.io/docs/setup/kubernetes/additional-setup/sidecar-injection/#automatic-sidecar-injection),
+installed on a Kubernetes cluster before you deploy an instance of SiteWhere. You can install Istio
+[with](https://istio.io/docs/setup/kubernetes/install/helm/) or [without](https://istio.io/docs/setup/kubernetes/install/kubernetes/) Helm.
+
+Make sure that the namespace where you are deploying SiteWhere has the label `istio-injection=enabled`, 
+for example for the `default` namespace use:
+
+```console
+kubectl get namespace -L istio-injection
+```
+
+```
+NAME           STATUS    AGE       ISTIO-INJECTION
+default        Active    1h        enabled
+istio-system   Active    1h
+kube-public    Active    1h
+kube-system    Active    1h
+```
+
+If not, add the label to the namespace:
+
+```console
+kubectl label namespace default istio-injection=enabled
+```
 
 ## Add SiteWhere Helm Repository
 
@@ -27,13 +55,14 @@ helm install --name sitewhere sitewhere/sitewhere
 To support replication of persistent data across multiple
 Kubernetes nodes, SiteWhere leverages [Rook.io](https://rook.io/)
 to provide the necessary distributed infrastructure. If a k8s
-node fails, the data it persists will be available when 
+node fails, the data it persists will be available when
 containers start on other nodes in the cluster. To install
 Rook, execute the following:
 
 ### Install Rook
 
 ```console
+kubectl create -f ../rook/common.yaml
 kubectl create -f ../rook/operator.yaml
 kubectl create -f ../rook/cluster.yaml
 kubectl create -f ../rook/storageclass.yaml
@@ -67,8 +96,8 @@ the start SiteWhere using the following configuration:
 
 ```console
 helm install --name sitewhere \
---set sitewhere-infra-core.kafka.persistence.storageClass=<your-storage-class> \
---set sitewhere-infra-core.kafka.zookeeper.persistence.storageClass=<your-storage-class> \
+--set sitewhere-infra-core.cp-kafka.persistence.storageClass=<your-storage-class> \
+--set sitewhere-infra-core.cp-zookeeper.persistence.dataLogDirStorageClass=<your-storage-class> \
 --set sitewhere-infra-database.mongodb.persistence.storageClass=<your-storage-class> \
 --set sitewhere-infra-database.cassandra.persistence.storageClass=<your-storage-class> \
 --set sitewhere-infra-database.influxdb.persistence.storageClass=<your-storage-class> \
@@ -121,5 +150,5 @@ kubectl delete pvc -l release=sitewhere
 ## Uninstall Rook
 
 If you wish to uninstall Rook.io follow the instructions of
-this [document](https://rook.io/docs/rook/v0.9/ceph-teardown.html)
+this [document](https://rook.io/docs/rook/v1.0/ceph-teardown.html)
 on how to uninstall Rook.io from Kuberntes.

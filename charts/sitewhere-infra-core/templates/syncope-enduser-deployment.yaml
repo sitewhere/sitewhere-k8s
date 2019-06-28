@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeEndUserConfig.name}}
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
+      labels:
+        name: "{{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeEndUserConfig.name}}"
+        app.kubernetes.io/name: "{{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeEndUserConfig.name}}"
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        sitewhere.io/role: "infrastructure"
+        sitewhere.io/name: "syncope-enduser"
+    spec:
+      containers:
+      - name: {{.Values.syncope.syncopeEndUserConfig.name}}
+        envFrom:
+        - configMapRef:
+           name: {{ template "sitewhere-infra-core.relasename" . }}-syncope-environment-config
+        image: "{{.Values.syncope.syncopeEndUserConfig.repository}}/{{.Values.syncope.syncopeEndUserConfig.container}}:{{.Values.syncope.syncopeEndUserConfig.tag}}"
+        ports:
+        - containerPort: {{.Values.syncope.syncopeEndUserConfig.containerPort}}
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeEndUserConfig.name}}"
+spec:
+  type: "{{.Values.syncope.syncopeEndUserConfig.serviceType}}"
+  selector:
+    name: "{{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeEndUserConfig.name}}"
+  ports:
+  - port: {{.Values.syncope.syncopeEndUserConfig.containerPort}}
+    name: http-api
