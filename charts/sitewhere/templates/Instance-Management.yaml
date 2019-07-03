@@ -24,6 +24,8 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         sitewhere.io/role: "microservice"
         sitewhere.io/name: "instance-management"
+      annotations:
+{{include "sitewhere.microservice.prometheus" . | indent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}-instance-management
@@ -33,6 +35,7 @@ spec:
             - containerPort: 9001
             - containerPort: 9004
             - containerPort: 9005
+            - containerPort: {{ .Values.services.metrics.port }}
 {{- if .Values.services.debug }}
             - containerPort: 8001
             - containerPort: 1101
@@ -70,6 +73,10 @@ spec:
       targetPort: {{ .Values.services.instance_management.service.grpc.tenant_management.port }}
       protocol: TCP
       name: grpc-tenant-management
+    - port: {{ .Values.services.metrics.port }}
+      targetPort: {{ .Values.services.metrics.port }}
+      protocol: HTTP
+      name: http-metrics
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-instance-management
     app.kubernetes.io/instance: {{ .Release.Name }}
