@@ -11,6 +11,8 @@ env:
         fieldPath: metadata.namespace
   - name: "sitewhere.instance.id"
     value: "{{ .Release.Name }}"
+  - name: "sitewhere.metrics.port"
+    value: {{ .Values.services.metrics.port | quote }}
   - name: "sitewhere.zookeeper.host"
     value: "{{ include "sitewhere.zookeeper.host" . }}"
   - name: "sitewhere.zookeeper.port"

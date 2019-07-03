@@ -24,6 +24,8 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         sitewhere.io/role: "microservice"
         sitewhere.io/name: "event-sources"
+      annotations:
+{{include "sitewhere.microservice.prometheus" . | indent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}-event-sources
@@ -31,6 +33,7 @@ spec:
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
             - containerPort: 9001
+            - containerPort: {{ .Values.services.metrics.port }}
 {{- if .Values.services.debug }}
             - containerPort: 8007
             - containerPort: 1107
@@ -56,6 +59,10 @@ spec:
       targetPort: {{ .Values.services.event_sources.service.grpc.management.port }}
       protocol: TCP
       name: grpc-management
+    - port: {{ .Values.services.metrics.port }}
+      targetPort: {{ .Values.services.metrics.port }}
+      protocol: HTTP
+      name: http-metrics
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-event-sources
     app.kubernetes.io/instance: {{ .Release.Name }}

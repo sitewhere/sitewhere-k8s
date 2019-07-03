@@ -24,6 +24,8 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         sitewhere.io/role: "microservice"
         sitewhere.io/name: "web-rest"
+      annotations:
+{{include "sitewhere.microservice.prometheus" . | indent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}-web-rest
@@ -32,6 +34,7 @@ spec:
           ports:
             - containerPort: 9001
             - containerPort: {{ .Values.services.web_rest.service.http.port }}
+            - containerPort: {{ .Values.services.metrics.port }}
 {{- if .Values.services.debug }}
             - containerPort: 8010
             - containerPort: 1110
@@ -57,6 +60,10 @@ spec:
       targetPort: {{ .Values.services.web_rest.service.grpc.management.port }}
       protocol: TCP
       name: grpc-management
+    - port: {{ .Values.services.metrics.port }}
+      targetPort: {{ .Values.services.metrics.port }}
+      protocol: HTTP
+      name: http-metrics
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
     app.kubernetes.io/instance: {{ .Release.Name }}

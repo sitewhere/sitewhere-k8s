@@ -24,6 +24,8 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         sitewhere.io/role: "microservice"
         sitewhere.io/name: "streaming-media"
+      annotations:
+{{include "sitewhere.microservice.prometheus" . | indent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}-streaming-media
@@ -32,6 +34,7 @@ spec:
           ports:
             - containerPort: 9000
             - containerPort: 9001
+            - containerPort: {{ .Values.services.metrics.port }}
 {{- if .Values.services.debug }}
             - containerPort: 8019
             - containerPort: 1119
@@ -61,6 +64,10 @@ spec:
       targetPort: {{ .Values.services.streaming_media.service.grpc.management.port }}
       protocol: TCP
       name: grpc-management
+    - port: {{ .Values.services.metrics.port }}
+      targetPort: {{ .Values.services.metrics.port }}
+      protocol: HTTP
+      name: http-metrics
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-streaming-media
     app.kubernetes.io/instance: {{ .Release.Name }}
