@@ -11,7 +11,7 @@
   To login to SiteWhere Admin Console use:
   - Username: admin
   - Password: password
-  - Protocol: http
+  - protocol: TCP
   - Server: $SERVICE_IP
   - Port: {{ .Values.services.web_rest.service.http.port }}
 {{- else if contains "ClusterIP" .Values.services.web_rest.service.http.type }}
