@@ -40,6 +40,9 @@ services:
     livenessProbe:
       initialDelaySeconds: 300
       periodSeconds: 60
+  metrics:
+    path: /metric
+    port: 9090
   image:
     registry: docker.io
     repository: sitewhere
