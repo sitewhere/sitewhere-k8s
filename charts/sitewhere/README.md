@@ -1,4 +1,4 @@
-# SiteWhere 2.0 Helm Chart
+# SiteWhere 2.1 Helm Chart
 
 ## Prerequisites Details
 
@@ -9,8 +9,8 @@
 
 This chart will do the following:
 
-* Deploy SiteWhere 2.0 infrastructure
-* Deploy SiteWhere 2.0 microservices
+* Deploy SiteWhere 2.1 infrastructure
+* Deploy SiteWhere 2.1 microservices
 
 ## Installaing the Chart
 

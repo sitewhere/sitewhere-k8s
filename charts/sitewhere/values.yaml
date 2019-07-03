@@ -219,7 +219,7 @@ services:
         management:
           port: 9001
       http:
-        type: LoadBalancer
+        type: ClusterIP
         port: 8080
     resources:
       limits:

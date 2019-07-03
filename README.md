@@ -26,8 +26,6 @@ This chart will do the following:
   | Inbound Processing       | ✓              | ✓               |
   | Instance Management      | ✓              | ✓               |
   | Outbound Connectors      | ✓              | ✓               |
-  | Tenant Management        | ✓              | ✓               |
-  | User Management          | ✓              | ✓               |
   | Web Rest                 | ✓              | ✓               |
   | Batch Operations         | ✓              | ✗               |
   | Command Delivery         | ✓              | ✗               |
@@ -39,7 +37,7 @@ This chart will do the following:
   | Schedule Management      | ✓              | ✗               |
   | Streaming Media          | ✓              | ✗               |
   
-* Expose Web Rest port 8080 on an external LoadBalancer
+* Expose Web Rest port 80 on an external Istio Ingress.
 * Expose MQTT port 1886 on an external LoadBalancer.
 
 ## Installing the Chart
@@ -86,8 +84,6 @@ the port that each microservice will expose, so that you can connect a remote de
 | Microservice             | JDWP Port        | JMX Port          |
 | :----------------------- | :--------------- | :---------------- |
 | Instance Managemwnt      | `8001`           | `1101`            |
-| User Management          | `8002`           | `1102`            |
-| Tenant Management        | `8003`           | `1103`            |
 | Device Management        | `8004`           | `1104`            |
 | Event Management         | `8005`           | `1105`            |
 | Asset Management         | `8006`           | `1106`            |
