@@ -1,6 +1,6 @@
 #/bin/bash
 # Copyright 2019, SiteWhere LLC.
-# This script creates a backup of SiteWhere 2.0 Apache Zookeeper
+# This script creates a backup of SiteWhere 2.1 Apache Zookeeper
 # dataDir running on a Kubernetes cluster
 # usage: backup-zookeeper.sh <BACKUP_DEST_DIR> <REPLICAS>
 
@@ -21,7 +21,7 @@ function backup_zookeeper () {
   if [[ $# != 2 ]]; then
     echo "Usage: backup-zookeeper.sh <BACKUP_DEST_DIR> <REPLICAS>" >&2
     echo "" >&2
-    echo "This script creates a backup of SiteWhere 2.0 Apache Zookeeper" >&2
+    echo "This script creates a backup of SiteWhere 2.1 Apache Zookeeper" >&2
     echo "dataDir running on a Kubernetes cluster" >&2
     return 1
   fi

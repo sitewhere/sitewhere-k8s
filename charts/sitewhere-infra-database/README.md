@@ -1,4 +1,4 @@
-# SiteWhere 2.0 Databases Helm Chart
+# SiteWhere 2.1 Databases Helm Chart
 
 ## Installing on a developer machine
 

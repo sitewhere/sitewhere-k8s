@@ -37,7 +37,7 @@ This chart will do the following:
   | Schedule Management      | ✓              | ✗               |
   | Streaming Media          | ✓              | ✗               |
   
-* Expose Web Rest port 8080 on an external LoadBalancer
+* Expose Web Rest port 80 on an external Istio Ingress.
 * Expose MQTT port 1886 on an external LoadBalancer.
 
 ## Installing the Chart
