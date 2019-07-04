@@ -2,7 +2,7 @@ apiVersion: v1
 appVersion: "2.1"
 description: SiteWhere 2.1 Helm chart for Kubernetes using Default configuration
 name: sitewhere
-version: 0.2.1
+version: 0.2.2
 description: SiteWhere is an industrial strength open-source application enablement platform for the Internet of Things (IoT). It provides a multi-tenant microservice-based infrastructure that includes device/asset management, data ingestion, big-data storage, and integration through a modern, scalable architecture.
 keywords:
   - sitewhere
