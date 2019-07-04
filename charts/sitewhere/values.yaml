@@ -41,7 +41,7 @@ services:
       initialDelaySeconds: 300
       periodSeconds: 60
   metrics:
-    path: /metric
+    path: /metrics
     port: 9090
   image:
     registry: docker.io
