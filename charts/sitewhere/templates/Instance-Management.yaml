@@ -32,6 +32,7 @@ spec:
 {{- include "sitewhere.microservice.image" $data | indent 10 }}
           imagePullPolicy: {{ .Values.services.image.pullPolicy }}
           ports:
+            - containerPort: 9000
             - containerPort: 9001
             - containerPort: 9004
             - containerPort: 9005
@@ -61,6 +62,10 @@ metadata:
 spec:
   type: {{ .Values.services.instance_management.service.type }}
   ports:
+    - port: 9000
+      targetPort: {{ .Values.services.instance_management.service.grpc.api.port }}
+      protocol: TCP
+      name: grpc-api
     - port: 9001
       targetPort: {{ .Values.services.instance_management.service.grpc.management.port }}
       protocol: TCP
