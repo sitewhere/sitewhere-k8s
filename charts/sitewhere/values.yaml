@@ -178,6 +178,8 @@ services:
     service:
       type: ClusterIP
       grpc:
+        api:
+          port: 9000
         management:
           port: 9001
         user_management:
