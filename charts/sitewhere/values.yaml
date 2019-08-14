@@ -36,9 +36,9 @@ services:
   health:
     port: 9003
     readinessProbe:
-      initialDelay: 120
+      initialDelay: 150
     livenessProbe:
-      initialDelaySeconds: 300
+      initialDelaySeconds: 350
       periodSeconds: 60
   metrics:
     port: 9090
