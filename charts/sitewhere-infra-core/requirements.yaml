@@ -2,4 +2,4 @@ dependencies:
 - name: postgresql
   version: 5.3.7
   repository: https://kubernetes-charts.storage.googleapis.com
-  condition: postgresql.enabled
+  condition: sitewhere-infra-core.postgresql.enabled, postgresql.enabled
