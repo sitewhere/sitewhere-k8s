@@ -32,7 +32,7 @@
         {
           "id": "enabled",
           "description": "Enable/disable",
-          "type": "boolean",
+          "type": "enabled",
           "value": "true",
           "configuration": "$.sitewhere-infra-database.cassandra.enabled"
         }
