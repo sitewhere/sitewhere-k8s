@@ -58,7 +58,7 @@
         {
           "id": "brokers",
           "description": "Number of brokers",
-          "type": "number",
+          "type": "replicas",
           "value": "3",
           "configuration": "$.sitewhere-infra-core.cp-kafka.brokers"
         }
@@ -218,119 +218,119 @@
       {
         "id": "asset_management",
         "name": "Asset Management",
-        "decription": "Delivers asset management persistence APIs",
+        "description": "Delivers asset management persistence APIs",
         "icon": "collections",
         "replicas": 1
       },
       {
         "id": "batch_operations",
         "name": "Batch Operations",
-        "decription": "Manages batch processing APIs",
+        "description": "Manages batch processing APIs",
         "icon": "view_module",
         "replicas": 1
       },
       {
         "id": "command_delivery",
         "name": "Command Delivery",
-        "decription": "Handles device command delivery operations",
+        "description": "Handles device command delivery operations",
         "icon": "call_made",
         "replicas": 1
       },
       {
         "id": "device_management",
         "name": "Device Management",
-        "decription": "Delivers device management persistence APIs",
+        "description": "Delivers device management persistence APIs",
         "icon": "developer_board",
         "replicas": 1
       },
       {
         "id": "device_registration",
         "name": "Device Registration",
-        "decription": "Handles registration of new devices",
+        "description": "Handles registration of new devices",
         "icon": "developer_board",
         "replicas": 1
       },
       {
         "id": "device_state",
         "name": "Device State",
-        "decription": "Manages recent device state (device twin)",
+        "description": "Manages recent device state (device twin)",
         "icon": "developer_board",
         "replicas": 1
       },
       {
         "id": "event_management",
         "name": "Event Management",
-        "decription": "Delivers device event management persistence APIs",
+        "description": "Delivers device event management persistence APIs",
         "icon": "ballot",
         "replicas": 1
       },
       {
         "id": "event_search",
         "name": "Event Search",
-        "decription": "Supports searching device events via external sources",
+        "description": "Supports searching device events via external sources",
         "icon": "search",
         "replicas": 1
       },
       {
         "id": "event_sources",
         "name": "Event Sources",
-        "decription": "Provides connectivity to external sources for events",
+        "description": "Provides connectivity to external sources for events",
         "icon": "inbox",
         "replicas": 1
       },
       {
         "id": "inbound_processing",
         "name": "Inbound Processing",
-        "decription": "Handles inbound processing such as event enrichment",
+        "description": "Handles inbound processing such as event enrichment",
         "icon": "settings",
         "replicas": 1
       },
       {
         "id": "instance_management",
         "name": "Instance Management",
-        "decription": "Handles instance-wide tasks such as bootstrapping",
+        "description": "Handles instance-wide tasks such as bootstrapping",
         "icon": "business",
         "replicas": 1
       },
       {
         "id": "label_generation",
         "name": "Label Generation",
-        "decription": "Creates labels/QR codes and other artifacts",
+        "description": "Creates labels/QR codes and other artifacts",
         "icon": "menu_book",
         "replicas": 1
       },
       {
         "id": "outbound_connectors",
         "name": "Outbound Connectors",
-        "decription": "Integrates event data with external systems",
+        "description": "Integrates event data with external systems",
         "icon": "forward",
         "replicas": 1
       },
       {
         "id": "rule_processing",
         "name": "Rule Processing",
-        "decription": "Performs rule processing operations",
+        "description": "Performs rule processing operations",
         "icon": "settings",
         "replicas": 1
       },
       {
         "id": "schedule_management",
         "name": "Schedule Management",
-        "decription": "Delivers schedule management persistence APIs",
+        "description": "Delivers schedule management persistence APIs",
         "icon": "date_range",
         "replicas": 1
       },
       {
         "id": "streaming_media",
         "name": "Streaming Media",
-        "decription": "Stores streamng media such as audio and video",
+        "description": "Stores streamng media such as audio and video",
         "icon": "videocam",
         "replicas": 1
       },
       {
         "id": "web_rest",
         "name": "Web/REST Gateway",
-        "decription": "API gateway for accessing services via REST",
+        "description": "API gateway for accessing services via REST",
         "icon": "code",
         "replicas": 1
       }
