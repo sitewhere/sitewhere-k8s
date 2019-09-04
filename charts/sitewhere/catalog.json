@@ -1,0 +1,351 @@
+{
+	"deployments": [
+		{
+			"id": "default",
+			"name": "Default",
+			"requiredPackages": [
+				"zk-kafka-ha",
+				"syncope",
+				"mongodb-ha"
+			],
+			"optionalPackages": [
+				"cassandra",
+				"influxdb"
+			],
+			"microservices": [
+				"asset_management",
+				"batch_operations",
+				"command_delivery",
+				"device_management",
+				"device_registration",
+				"device_state",
+				"event_management",
+				"event_search",
+				"event_sources",
+				"inbound_processing",
+				"instance_management",
+				"label_generation",
+				"outbound_connectors",
+				"schedule_management",
+				"web_rest"
+			]
+		}
+	],
+	"packages": [
+		{
+			"id": "cassandra",
+			"name": "Cassandra",
+			"attributes": [
+				{
+					"id": "enabled",
+					"description": "Enable/disable",
+					"type": "boolean",
+					"value": "true",
+					"configuration": "$.sitewhere-infra-database.cassandra.enabled"
+				}
+			]
+		},
+		{
+			"id": "influxdb",
+			"name": "InfluxDB",
+			"attributes": [
+				{
+					"id": "enabled",
+					"description": "Enable/disable",
+					"type": "enabled",
+					"value": "true",
+					"configuration": "$.sitewhere-infra-database.influxdb.enabled"
+				}
+			]
+		},
+		{
+			"id": "kafka-ha",
+			"name": "Kafka HA Configuration",
+			"attributes": [
+				{
+					"id": "brokers",
+					"description": "Number of brokers",
+					"type": "number",
+					"value": "3",
+					"configuration": "$.sitewhere-infra-core.cp-kafka.brokers"
+				}
+			]
+		},
+		{
+			"id": "mongodb-ha",
+			"name": "MongoDB HA Configuration",
+			"attributes": [
+				{
+					"id": "diskSize",
+					"description": "Disk space reserved",
+					"type": "disk",
+					"value": "10Gi",
+					"configuration": "$.sitewhere-infra-database.mongodb.persistence.storage"
+				},
+				{
+					"id": "secondaryReplicas",
+					"description": "Number of secondary instances",
+					"type": "replicas",
+					"value": "1",
+					"configuration": "$.sitewhere-infra-database.mongodb.replicaSet.replicas.secondary"
+				},
+				{
+					"id": "arbiterReplicas",
+					"description": "Number of arbiter instances",
+					"type": "replicas",
+					"value": "1",
+					"configuration": "$.sitewhere-infra-database.mongodb.replicaSet.replicas.arbiter"
+				}
+			]
+		},
+		{
+			"id": "prometheus",
+			"name": "Prometheus Metrics",
+			"attributes": [
+				{
+					"id": "enabled",
+					"description": "Enable/disable",
+					"type": "enabled",
+					"value": "true",
+					"configuration": "$.sitewhere-infra-core.prometheus.enabled"
+				}
+			]
+		},
+		{
+			"id": "syncope",
+			"name": "Apache Syncope",
+			"attributes": [
+				{
+					"id": "replicaCount",
+					"description": "Number of replicas",
+					"type": "replicas",
+					"value": "1",
+					"configuration": "$.sitewhere-infra-core.syncope.syncopeConfig.replicas"
+				}
+			],
+			"requires": [
+				"syncope-postgres"
+			]
+		},
+		{
+			"id": "syncope-postgres",
+			"name": "Syncope Postgres Instance",
+			"attributes": [
+				{
+					"id": "diskSize",
+					"description": "Disk space reserved",
+					"type": "disk",
+					"value": "4Gi",
+					"configuration": "$.sitewhere-infra-core.postgresql.persistence.size"
+				},
+				{
+					"id": "enabled",
+					"description": "Enable/disable",
+					"type": "enabled",
+					"value": "true",
+					"configuration": "$.sitewhere-infra-core.postgresql.enabled"
+				}
+			]
+		},
+		{
+			"id": "zookeeper-ha",
+			"name": "Zookeeper HA Configuration",
+			"attributes": [
+				{
+					"id": "replicaCount",
+					"description": "Number of replicas",
+					"type": "replicas",
+					"value": "3",
+					"configuration": "$.sitewhere-infra-core.cp-zookeeper.servers"
+				},
+				{
+					"id": "dataDiskSize",
+					"description": "Disk space reserved for data",
+					"type": "disk",
+					"value": "4Gi",
+					"configuration": "$.sitewhere-infra-core.cp-zookeeper.persistence.dataDirSize"
+				},
+				{
+					"id": "logDiskSize",
+					"description": "Disk space reserved for logs",
+					"type": "disk",
+					"value": "4Gi",
+					"configuration": "$.sitewhere-infra-core.cp-zookeeper.persistence.dataLogDirSize"
+				}
+			]
+		},
+		{
+			"id": "zookeeper-kafka-ha",
+			"name": "Zookeeper/Kafka HA Configuration",
+			"requires": [
+				"zookeeper-ha",
+				"kafka-ha"
+			]
+		}
+	],
+	"microservices": {
+		"logging": [
+			{
+				"id": "sitewhere",
+				"description": "SiteWhere Logging",
+				"levels": [
+					{
+						"id": "global",
+						"description": "Global SiteWhere log level",
+						"type": "loglevel",
+						"value": "INFO",
+						"configuration": "$.services.logging.sitewhere.level"
+					},
+					{
+						"id": "grpc",
+						"description": "SiteWhere gRPC interactions",
+						"type": "loglevel",
+						"value": "INFO",
+						"configuration": "$.services.logging.sitewhere.grpc.level"
+					},
+					{
+						"id": "kafka",
+						"description": "SiteWhere Kafka interactions",
+						"type": "loglevel",
+						"value": "INFO",
+						"configuration": "$.services.logging.sitewhere.kafka.level"
+					}
+				]
+			},
+			{
+				"id": "grpc",
+				"description": "gRPC Logging",
+				"levels": [
+					{
+						"id": "global",
+						"description": "Internal gRPC messaging",
+						"type": "loglevel",
+						"value": "ERROR",
+						"configuration": "$.services.logging.grpc.level"
+					}
+				]
+			}
+		],
+		"services": [
+			{
+				"id": "asset_management",
+				"name": "Asset Management",
+				"decription": "Delivers asset management persistence APIs",
+				"icon": "collections",
+				"replicas": 1
+			},
+			{
+				"id": "batch_operations",
+				"name": "Batch Operations",
+				"decription": "Manages batch processing APIs",
+				"icon": "view_module",
+				"replicas": 1
+			},
+			{
+				"id": "command_delivery",
+				"name": "Command Delivery",
+				"decription": "Handles device command delivery operations",
+				"icon": "call_made",
+				"replicas": 1
+			},
+			{
+				"id": "device_management",
+				"name": "Device Management",
+				"decription": "Delivers device management persistence APIs",
+				"icon": "developer_board",
+				"replicas": 1
+			},
+			{
+				"id": "device_registration",
+				"name": "Device Registration",
+				"decription": "Handles registration of new devices",
+				"icon": "developer_board",
+				"replicas": 1
+			},
+			{
+				"id": "device_state",
+				"name": "Device State",
+				"decription": "Manages recent device state (device twin)",
+				"icon": "developer_board",
+				"replicas": 1
+			},
+			{
+				"id": "event_management",
+				"name": "Event Management",
+				"decription": "Delivers device event management persistence APIs",
+				"icon": "ballot",
+				"replicas": 1
+			},
+			{
+				"id": "event_search",
+				"name": "Event Search",
+				"decription": "Supports searching device events via external sources",
+				"icon": "search",
+				"replicas": 1
+			},
+			{
+				"id": "event_sources",
+				"name": "Event Sources",
+				"decription": "Provides connectivity to external sources for events",
+				"icon": "inbox",
+				"replicas": 1
+			},
+			{
+				"id": "inbound_processing",
+				"name": "Inbound Processing",
+				"decription": "Handles inbound processing such as event enrichment",
+				"icon": "settings",
+				"replicas": 1
+			},
+			{
+				"id": "instance_management",
+				"name": "Instance Management",
+				"decription": "Handles instance-wide tasks such as bootstrapping",
+				"icon": "business",
+				"replicas": 1
+			},
+			{
+				"id": "label_generation",
+				"name": "Label Generation",
+				"decription": "Creates labels/QR codes and other artifacts",
+				"icon": "menu_book",
+				"replicas": 1
+			},
+			{
+				"id": "outbound_connectors",
+				"name": "Outbound Connectors",
+				"decription": "Integrates event data with external systems",
+				"icon": "forward",
+				"replicas": 1
+			},
+			{
+				"id": "rule_processing",
+				"name": "Rule Processing",
+				"decription": "Performs rule processing operations",
+				"icon": "settings",
+				"replicas": 1
+			},
+			{
+				"id": "schedule_management",
+				"name": "Schedule Management",
+				"decription": "Delivers schedule management persistence APIs",
+				"icon": "date_range",
+				"replicas": 1
+			},
+			{
+				"id": "streaming_media",
+				"name": "Streaming Media",
+				"decription": "Stores streamng media such as audio and video",
+				"icon": "videocam",
+				"replicas": 1
+			},
+			{
+				"id": "web_rest",
+				"name": "Web/REST Gateway",
+				"decription": "API gateway for accessing services via REST",
+				"icon": "code",
+				"replicas": 1
+			}
+		]
+	}
+}
