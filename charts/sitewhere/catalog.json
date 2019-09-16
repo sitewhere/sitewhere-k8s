@@ -34,7 +34,7 @@
           "description": "Enable/disable",
           "type": "enabled",
           "value": "true",
-          "configuration": "$.sitewhere-infra-database.cassandra.enabled"
+          "configuration": "sitewhere-infra-database.cassandra.enabled"
         }
       ]
     },
@@ -47,7 +47,7 @@
           "description": "Enable/disable",
           "type": "enabled",
           "value": "true",
-          "configuration": "$.sitewhere-infra-database.influxdb.enabled"
+          "configuration": "sitewhere-infra-database.influxdb.enabled"
         }
       ]
     },
@@ -60,7 +60,7 @@
           "description": "Number of brokers",
           "type": "replicas",
           "value": "3",
-          "configuration": "$.sitewhere-infra-core.cp-kafka.brokers"
+          "configuration": "sitewhere-infra-core.cp-kafka.brokers"
         }
       ]
     },
@@ -73,21 +73,21 @@
           "description": "Disk space reserved",
           "type": "disk",
           "value": "10Gi",
-          "configuration": "$.sitewhere-infra-database.mongodb.persistence.storage"
+          "configuration": "sitewhere-infra-database.mongodb.persistence.storage"
         },
         {
           "id": "secondaryReplicas",
           "description": "Number of secondary instances",
           "type": "replicas",
           "value": "1",
-          "configuration": "$.sitewhere-infra-database.mongodb.replicaSet.replicas.secondary"
+          "configuration": "sitewhere-infra-database.mongodb.replicaSet.replicas.secondary"
         },
         {
           "id": "arbiterReplicas",
           "description": "Number of arbiter instances",
           "type": "replicas",
           "value": "1",
-          "configuration": "$.sitewhere-infra-database.mongodb.replicaSet.replicas.arbiter"
+          "configuration": "sitewhere-infra-database.mongodb.replicaSet.replicas.arbiter"
         }
       ]
     },
@@ -100,7 +100,7 @@
           "description": "Enable/disable",
           "type": "enabled",
           "value": "true",
-          "configuration": "$.sitewhere-infra-core.prometheus.enabled"
+          "configuration": "sitewhere-infra-core.prometheus.enabled"
         }
       ]
     },
@@ -113,7 +113,7 @@
           "description": "Number of replicas",
           "type": "replicas",
           "value": "1",
-          "configuration": "$.sitewhere-infra-core.syncope.syncopeConfig.replicas"
+          "configuration": "sitewhere-infra-core.syncope.syncopeConfig.replicas"
         }
       ],
       "requires": ["syncope-postgres"]
@@ -127,14 +127,14 @@
           "description": "Disk space reserved",
           "type": "disk",
           "value": "4Gi",
-          "configuration": "$.sitewhere-infra-core.postgresql.persistence.size"
+          "configuration": "sitewhere-infra-core.postgresql.persistence.size"
         },
         {
           "id": "enabled",
           "description": "Enable/disable",
           "type": "enabled",
           "value": "true",
-          "configuration": "$.sitewhere-infra-core.postgresql.enabled"
+          "configuration": "sitewhere-infra-core.postgresql.enabled"
         }
       ]
     },
@@ -147,21 +147,21 @@
           "description": "Number of replicas",
           "type": "replicas",
           "value": "3",
-          "configuration": "$.sitewhere-infra-core.cp-zookeeper.servers"
+          "configuration": "sitewhere-infra-core.cp-zookeeper.servers"
         },
         {
           "id": "dataDiskSize",
           "description": "Disk space reserved for data",
           "type": "disk",
           "value": "4Gi",
-          "configuration": "$.sitewhere-infra-core.cp-zookeeper.persistence.dataDirSize"
+          "configuration": "sitewhere-infra-core.cp-zookeeper.persistence.dataDirSize"
         },
         {
           "id": "logDiskSize",
           "description": "Disk space reserved for logs",
           "type": "disk",
           "value": "4Gi",
-          "configuration": "$.sitewhere-infra-core.cp-zookeeper.persistence.dataLogDirSize"
+          "configuration": "sitewhere-infra-core.cp-zookeeper.persistence.dataLogDirSize"
         }
       ]
     },
@@ -182,21 +182,21 @@
             "description": "Global SiteWhere log level",
             "type": "loglevel",
             "value": "INFO",
-            "configuration": "$.services.logging.sitewhere.level"
+            "configuration": "services.logging.sitewhere.level"
           },
           {
             "id": "grpc",
             "description": "SiteWhere gRPC interactions",
             "type": "loglevel",
             "value": "INFO",
-            "configuration": "$.services.logging.sitewhere.grpc.level"
+            "configuration": "services.logging.sitewhere.grpc.level"
           },
           {
             "id": "kafka",
             "description": "SiteWhere Kafka interactions",
             "type": "loglevel",
             "value": "INFO",
-            "configuration": "$.services.logging.sitewhere.kafka.level"
+            "configuration": "services.logging.sitewhere.kafka.level"
           }
         ]
       },
@@ -209,7 +209,7 @@
             "description": "Internal gRPC messaging",
             "type": "loglevel",
             "value": "ERROR",
-            "configuration": "$.services.logging.grpc.level"
+            "configuration": "services.logging.grpc.level"
           }
         ]
       }
