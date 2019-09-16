@@ -8,9 +8,8 @@
 #
 # Also see other operator sample files for variations of operator.yaml:
 # - operator-openshift.yaml: Common settings for running in OpenShift
-# - operator-with-csi.yaml: Enable the ceph-csi driver
 #################################################################################################################
-
+# OLM: BEGIN OPERATOR DEPLOYMENT
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,7 +31,7 @@ spec:
       serviceAccountName: rook-ceph-system
       containers:
       - name: rook-ceph-operator
-        image: rook/ceph:v1.0.1
+        image: rook/ceph:v1.1.0
         args: ["ceph", "operator"]
         volumeMounts:
         - mountPath: /var/lib/rook
@@ -43,10 +42,10 @@ spec:
         # If the operator should only watch for cluster CRDs in the same namespace, set this to "true".
         # If this is not set to true, the operator will watch for cluster CRDs in all namespaces.
         - name: ROOK_CURRENT_NAMESPACE_ONLY
-          value: "true"
+          value: "false"
         # To disable RBAC, uncomment the following:
         # - name: RBAC_ENABLED
-        #  value: "false"
+        #   value: "false"
         # Rook Agent toleration. Will tolerate all taints with all keys.
         # Choose between NoSchedule, PreferNoSchedule and NoExecute:
         # - name: AGENT_TOLERATION
@@ -54,6 +53,18 @@ spec:
         # (Optional) Rook Agent toleration key. Set this to the key of the taint you want to tolerate
         # - name: AGENT_TOLERATION_KEY
         #   value: "<KeyOfTheTaintToTolerate>"
+        # (Optional) Rook Agent tolerations list. Put here list of taints you want to tolerate in YAML format.
+        # - name: AGENT_TOLERATIONS
+        #   value: |
+        #     - effect: NoSchedule
+        #       key: node-role.kubernetes.io/controlplane
+        #       operator: Exists
+        #     - effect: NoExecute
+        #       key: node-role.kubernetes.io/etcd
+        #       operator: Exists
+        # (Optional) Rook Agent NodeAffinity.
+        # - name: AGENT_NODE_AFFINITY
+        #   value: "role=storage-node; storage=rook,ceph"
         # (Optional) Rook Agent mount security mode. Can by `Any` or `Restricted`.
         # `Any` uses Ceph admin credentials by default/fallback.
         # For using `Restricted` you must have a Ceph secret in each namespace storage should be consumed from and
@@ -63,20 +74,32 @@ spec:
         #   value: "Any"
         # Set the path where the Rook agent can find the flex volumes
         # - name: FLEXVOLUME_DIR_PATH
-        #  value: "<PathToFlexVolumes>"
+        #   value: "<PathToFlexVolumes>"
         # Set the path where kernel modules can be found
         # - name: LIB_MODULES_DIR_PATH
-        #  value: "<PathToLibModules>"
+        #   value: "<PathToLibModules>"
         # Mount any extra directories into the agent container
         # - name: AGENT_MOUNTS
-        #  value: "somemount=/host/path:/container/path,someothermount=/host/path2:/container/path2"
+        #   value: "somemount=/host/path:/container/path,someothermount=/host/path2:/container/path2"
         # Rook Discover toleration. Will tolerate all taints with all keys.
         # Choose between NoSchedule, PreferNoSchedule and NoExecute:
         # - name: DISCOVER_TOLERATION
         #   value: "NoSchedule"
         # (Optional) Rook Discover toleration key. Set this to the key of the taint you want to tolerate
         # - name: DISCOVER_TOLERATION_KEY
-        #  value: "<KeyOfTheTaintToTolerate>"
+        #   value: "<KeyOfTheTaintToTolerate>"
+        # (Optional) Rook Discover tolerations list. Put here list of taints you want to tolerate in YAML format.
+        # - name: DISCOVER_TOLERATIONS
+        #   value: |
+        #     - effect: NoSchedule
+        #       key: node-role.kubernetes.io/controlplane
+        #       operator: Exists
+        #     - effect: NoExecute
+        #       key: node-role.kubernetes.io/etcd
+        #       operator: Exists
+        # (Optional) Discover Agent NodeAffinity.
+        # - name: DISCOVER_AGENT_NODE_AFFINITY
+        #   value: "role=storage-node; storage=rook, ceph"
         # Allow rook to create multiple file systems. Note: This is considered
         # an experimental feature in Ceph as described at
         # http://docs.ceph.com/docs/master/cephfs/experimental-features/#multiple-filesystems-within-a-ceph-cluster
@@ -116,6 +139,38 @@ spec:
         # Disable automatic orchestration when new devices are discovered
         - name: ROOK_DISABLE_DEVICE_HOTPLUG
           value: "false"
+
+        # Whether to enable the flex driver. By default it is enabled and is fully supported, but will be deprecated in some future release
+        # in favor of the CSI driver.
+        - name: ROOK_ENABLE_FLEX_DRIVER
+          value: "true"
+
+        # Whether to start the discovery daemon to watch for raw storage devices on nodes in the cluster.
+        # This daemon does not need to run if you are only going to create your OSDs based on StorageClassDeviceSets with PVCs.
+        - name: ROOK_ENABLE_DISCOVERY_DAEMON
+          value: "true"
+
+        # Enable the default version of the CSI driver. To start another version of the CSI driver, see image properties below.
+        - name: ROOK_CSI_ENABLE_CEPHFS
+          value: "true"
+        - name: ROOK_CSI_ENABLE_RBD
+          value: "true"
+        - name: ROOK_CSI_ENABLE_GRPC_METRICS
+          value: "true"
+        # The default version of CSI supported by Rook will be started. To change the version
+        # of the CSI driver to something other than what is officially supported, change
+        # these images to the desired release of the CSI driver.
+        #- name: ROOK_CSI_CEPH_IMAGE
+        #  value: "quay.io/cephcsi/cephcsi:v1.2.0"
+        #- name: ROOK_CSI_REGISTRAR_IMAGE
+        #  value: "quay.io/k8scsi/csi-node-driver-registrar:v1.1.0"
+        #- name: ROOK_CSI_PROVISIONER_IMAGE
+        #  value: "quay.io/k8scsi/csi-provisioner:v1.3.0"
+        #- name: ROOK_CSI_SNAPSHOTTER_IMAGE
+        #  value: "quay.io/k8scsi/csi-snapshotter:v1.2.0"
+        #- name: ROOK_CSI_ATTACHER_IMAGE
+        #  value: "quay.io/k8scsi/csi-attacher:v1.2.0"
+
         # The name of the node to pass with the downward API
         - name: NODE_NAME
           valueFrom:
@@ -136,3 +191,4 @@ spec:
         emptyDir: {}
       - name: default-config-dir
         emptyDir: {}
+# OLM: END OPERATOR DEPLOYMENT
