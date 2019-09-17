@@ -63,7 +63,7 @@
 		{
 			"id": "kafka-ha",
 			"name": "Kafka HA Configuration",
-			"icon": "exhange-alt",
+			"icon": "stream",
 			"attributes": [
 				{
 					"id": "brokers",
