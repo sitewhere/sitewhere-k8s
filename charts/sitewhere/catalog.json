@@ -36,13 +36,14 @@
 			"id": "cassandra",
 			"name": "Cassandra",
 			"icon": "database",
+			"enablement": "sitewhere-infra-database.cassandra.enabled",
 			"attributes": [
 				{
-					"id": "enabled",
-					"description": "Enable/disable",
-					"type": "enabled",
-					"value": "true",
-					"configuration": "sitewhere-infra-database.cassandra.enabled"
+					"id": "diskSize",
+					"description": "Disk space reserved",
+					"type": "disk",
+					"value": "10Gi",
+					"configuration": "sitewhere-infra-database.cassandra.persistence.size"
 				}
 			]
 		},
@@ -50,13 +51,14 @@
 			"id": "influxdb",
 			"name": "InfluxDB",
 			"icon": "database",
+			"enablement": "sitewhere-infra-database.influxdb.enabled",
 			"attributes": [
 				{
-					"id": "enabled",
-					"description": "Enable/disable",
-					"type": "enabled",
-					"value": "true",
-					"configuration": "sitewhere-infra-database.influxdb.enabled"
+					"id": "diskSize",
+					"description": "Disk space reserved",
+					"type": "disk",
+					"value": "10Gi",
+					"configuration": "sitewhere-infra-database.influxdb.persistence.size"
 				}
 			]
 		},
@@ -64,13 +66,25 @@
 			"id": "kafka-ha",
 			"name": "Kafka HA Configuration",
 			"icon": "stream",
+			"enablement": "sitewhere-infra-core.cp-kafka.enabled",
 			"attributes": [
 				{
 					"id": "brokers",
 					"description": "Number of brokers",
 					"type": "replicas",
+					"constraints": {
+						"min": 1,
+						"max": 10
+					},
 					"value": "3",
 					"configuration": "sitewhere-infra-core.cp-kafka.brokers"
+				},
+				{
+					"id": "diskSize",
+					"description": "Disk space reserved",
+					"type": "disk",
+					"value": "8Gi",
+					"configuration": "sitewhere-infra-core.cp-kafka.persistence.size"
 				}
 			]
 		},
@@ -90,6 +104,10 @@
 					"id": "secondaryReplicas",
 					"description": "Number of secondary instances",
 					"type": "replicas",
+					"constraints": {
+						"min": 1,
+						"max": 5
+					},
 					"value": "1",
 					"configuration": "sitewhere-infra-database.mongodb.replicaSet.replicas.secondary"
 				},
@@ -97,6 +115,10 @@
 					"id": "arbiterReplicas",
 					"description": "Number of arbiter instances",
 					"type": "replicas",
+					"constraints": {
+						"min": 1,
+						"max": 5
+					},
 					"value": "1",
 					"configuration": "sitewhere-infra-database.mongodb.replicaSet.replicas.arbiter"
 				}
@@ -106,14 +128,8 @@
 			"id": "prometheus",
 			"name": "Prometheus Metrics",
 			"icon": "chart-bar",
+			"enablement": "sitewhere-infra-core.prometheus.enabled",
 			"attributes": [
-				{
-					"id": "enabled",
-					"description": "Enable/disable",
-					"type": "enabled",
-					"value": "true",
-					"configuration": "sitewhere-infra-core.prometheus.enabled"
-				}
 			]
 		},
 		{
@@ -122,11 +138,25 @@
 			"icon": "users",
 			"attributes": [
 				{
-					"id": "replicaCount",
-					"description": "Number of replicas",
+					"id": "coreReplicas",
+					"description": "Number of replicas (Core)",
 					"type": "replicas",
 					"value": "1",
 					"configuration": "sitewhere-infra-core.syncope.syncopeConfig.replicas"
+				},
+				{
+					"id": "consoleReplicas",
+					"description": "Number of replicas (Console)",
+					"type": "replicas",
+					"value": "1",
+					"configuration": "sitewhere-infra-core.syncope.syncopeConsoleConfig.replicas"
+				},
+				{
+					"id": "enduserReplicas",
+					"description": "Number of replicas (EndUser)",
+					"type": "replicas",
+					"value": "1",
+					"configuration": "sitewhere-infra-core.syncope.syncopeEndUserConfig.replicas"
 				}
 			],
 			"requires": [
@@ -137,6 +167,7 @@
 			"id": "syncope-postgres",
 			"name": "Syncope Postgres Instance",
 			"icon": "database",
+			"enablement": "sitewhere-infra-core.postgresql.enabled",
 			"attributes": [
 				{
 					"id": "diskSize",
@@ -144,13 +175,6 @@
 					"type": "disk",
 					"value": "4Gi",
 					"configuration": "sitewhere-infra-core.postgresql.persistence.size"
-				},
-				{
-					"id": "enabled",
-					"description": "Enable/disable",
-					"type": "enabled",
-					"value": "true",
-					"configuration": "sitewhere-infra-core.postgresql.enabled"
 				}
 			]
 		},
@@ -158,6 +182,7 @@
 			"id": "zookeeper-ha",
 			"name": "Zookeeper HA Configuration",
 			"icon": "cogs",
+			"enablement": "sitewhere-infra-core.cp-zookeeper.enabled",
 			"attributes": [
 				{
 					"id": "replicaCount",
