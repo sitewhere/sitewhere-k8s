@@ -37,6 +37,7 @@
 			"name": "Cassandra",
 			"icon": "database",
 			"enablement": "sitewhere-infra-database.cassandra.enabled",
+			"enabled": false,
 			"attributes": [
 				{
 					"id": "diskSize",
@@ -52,6 +53,7 @@
 			"name": "InfluxDB",
 			"icon": "database",
 			"enablement": "sitewhere-infra-database.influxdb.enabled",
+			"enabled": false,
 			"attributes": [
 				{
 					"id": "diskSize",
@@ -67,6 +69,7 @@
 			"name": "Kafka HA Configuration",
 			"icon": "stream",
 			"enablement": "sitewhere-infra-core.cp-kafka.enabled",
+			"enabled": true,
 			"attributes": [
 				{
 					"id": "brokers",
@@ -129,6 +132,7 @@
 			"name": "Prometheus Metrics",
 			"icon": "chart-bar",
 			"enablement": "sitewhere-infra-core.prometheus.enabled",
+			"enabled": true,
 			"attributes": [
 			]
 		},
@@ -168,6 +172,7 @@
 			"name": "Syncope Postgres Instance",
 			"icon": "database",
 			"enablement": "sitewhere-infra-core.postgresql.enabled",
+			"enabled": true,
 			"attributes": [
 				{
 					"id": "diskSize",
@@ -183,6 +188,7 @@
 			"name": "Zookeeper HA Configuration",
 			"icon": "cogs",
 			"enablement": "sitewhere-infra-core.cp-zookeeper.enabled",
+			"enabled": true,
 			"attributes": [
 				{
 					"id": "replicaCount",
