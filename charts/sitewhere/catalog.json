@@ -76,7 +76,7 @@
 					"description": "Number of brokers",
 					"type": "replicas",
 					"constraints": {
-						"min": 1,
+						"min": 0,
 						"max": 10
 					},
 					"value": "3",
@@ -108,7 +108,7 @@
 					"description": "Number of secondary instances",
 					"type": "replicas",
 					"constraints": {
-						"min": 1,
+						"min": 0,
 						"max": 5
 					},
 					"value": "1",
@@ -119,7 +119,7 @@
 					"description": "Number of arbiter instances",
 					"type": "replicas",
 					"constraints": {
-						"min": 1,
+						"min": 0,
 						"max": 5
 					},
 					"value": "1",
@@ -145,6 +145,10 @@
 					"id": "coreReplicas",
 					"description": "Number of replicas (Core)",
 					"type": "replicas",
+					"constraints": {
+						"min": 0,
+						"max": 5
+					},
 					"value": "1",
 					"configuration": "sitewhere-infra-core.syncope.syncopeConfig.replicas"
 				},
@@ -152,6 +156,10 @@
 					"id": "consoleReplicas",
 					"description": "Number of replicas (Console)",
 					"type": "replicas",
+					"constraints": {
+						"min": 0,
+						"max": 5
+					},
 					"value": "1",
 					"configuration": "sitewhere-infra-core.syncope.syncopeConsoleConfig.replicas"
 				},
@@ -159,6 +167,10 @@
 					"id": "enduserReplicas",
 					"description": "Number of replicas (EndUser)",
 					"type": "replicas",
+					"constraints": {
+						"min": 0,
+						"max": 5
+					},
 					"value": "1",
 					"configuration": "sitewhere-infra-core.syncope.syncopeEndUserConfig.replicas"
 				}
@@ -194,6 +206,10 @@
 					"id": "replicaCount",
 					"description": "Number of replicas",
 					"type": "replicas",
+					"constraints": {
+						"min": 0,
+						"max": 5
+					},
 					"value": "3",
 					"configuration": "sitewhere-infra-core.cp-zookeeper.servers"
 				},
