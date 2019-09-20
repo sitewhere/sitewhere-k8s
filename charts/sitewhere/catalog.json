@@ -6,7 +6,8 @@
 			"requiredPackages": [
 				"zookeeper-kafka-ha",
 				"syncope",
-				"mongodb-ha"
+				"mongodb-ha",
+				"mosquitto"
 			],
 			"optionalPackages": [
 				"cassandra",
@@ -35,6 +36,7 @@
 		{
 			"id": "cassandra",
 			"name": "Cassandra",
+			"description": "Apache Cassandra instance.",
 			"icon": "database",
 			"enablement": "sitewhere-infra-database.cassandra.enabled",
 			"enabled": false,
@@ -51,6 +53,7 @@
 		{
 			"id": "influxdb",
 			"name": "InfluxDB",
+			"description": "InfluxDB instance.",
 			"icon": "database",
 			"enablement": "sitewhere-infra-database.influxdb.enabled",
 			"enabled": false,
@@ -67,6 +70,7 @@
 		{
 			"id": "kafka-ha",
 			"name": "Kafka HA Configuration",
+			"description": "Highly available Kafka cluster.",
 			"icon": "stream",
 			"enablement": "sitewhere-infra-core.cp-kafka.enabled",
 			"enabled": true,
@@ -94,6 +98,7 @@
 		{
 			"id": "mongodb-ha",
 			"name": "MongoDB HA Configuration",
+			"description": "Highly available MongoDB ReplicaSet.",
 			"icon": "database",
 			"attributes": [
 				{
@@ -128,8 +133,30 @@
 			]
 		},
 		{
+			"id": "mosquitto",
+			"name": "Mosquitto (MQTT)",
+			"description": "Mosquitto MQTT broker.",
+			"icon": "random",
+			"enablement": "infra.mosquitto.enabled",
+			"enabled": true,
+			"attributes": [
+				{
+					"id": "replicaCount",
+					"description": "Number of replicas",
+					"type": "replicas",
+					"constraints": {
+						"min": 0,
+						"max": 5
+					},
+					"value": "1",
+					"configuration": "infra.mosquitto.replicaCount"
+				}
+			]
+		},
+		{
 			"id": "prometheus",
 			"name": "Prometheus Metrics",
+			"description": "Prometheus metrics instance.",
 			"icon": "chart-bar",
 			"enablement": "sitewhere-infra-core.prometheus.enabled",
 			"enabled": true,
@@ -139,6 +166,7 @@
 		{
 			"id": "syncope",
 			"name": "Apache Syncope",
+			"description": "Apache Syncope identity management instance.",
 			"icon": "users",
 			"attributes": [
 				{
@@ -182,6 +210,7 @@
 		{
 			"id": "syncope-postgres",
 			"name": "Syncope Postgres Instance",
+			"description": "Postgres instance used by Apache Syncope.",
 			"icon": "database",
 			"enablement": "sitewhere-infra-core.postgresql.enabled",
 			"enabled": true,
@@ -192,12 +221,27 @@
 					"type": "disk",
 					"value": "4Gi",
 					"configuration": "sitewhere-infra-core.postgresql.persistence.size"
+				},
+				{
+					"id": "postgresqlUsername",
+					"description": "Database username",
+					"type": "string",
+					"value": "syncope",
+					"configuration": "sitewhere-infra-core.postgresql.postgresqlUsername"
+				},
+				{
+					"id": "postgresqlDatabase",
+					"description": "Database name",
+					"type": "string",
+					"value": "syncope",
+					"configuration": "sitewhere-infra-core.postgresql.postgresqlDatabase"
 				}
 			]
 		},
 		{
 			"id": "zookeeper-ha",
 			"name": "Zookeeper HA Configuration",
+			"description": "Highly available Apache Zookeeper cluster.",
 			"icon": "cogs",
 			"enablement": "sitewhere-infra-core.cp-zookeeper.enabled",
 			"enabled": true,
@@ -232,6 +276,7 @@
 		{
 			"id": "zookeeper-kafka-ha",
 			"name": "Zookeeper/Kafka HA Configuration",
+			"description": "Highly available Apache Zookeeper/Kafka infrastructure.",
 			"icon": "cogs",
 			"requires": [
 				"zookeeper-ha",
@@ -273,11 +318,77 @@
 				"description": "gRPC Logging",
 				"levels": [
 					{
-						"id": "global",
+						"id": "grpc",
 						"description": "Internal gRPC messaging",
 						"type": "loglevel",
 						"value": "ERROR",
 						"configuration": "services.logging.grpc.level"
+					}
+				]
+			},
+			{
+				"id": "spring",
+				"description": "Spring Framework",
+				"levels": [
+					{
+						"id": "boot",
+						"description": "Spring Boot",
+						"type": "loglevel",
+						"value": "INFO",
+						"configuration": "services.logging.spring.boot.level"
+					},
+					{
+						"id": "context",
+						"description": "Spring context management",
+						"type": "loglevel",
+						"value": "INFO",
+						"configuration": "services.logging.spring.context.level"
+					},
+					{
+						"id": "security",
+						"description": "Spring security",
+						"type": "loglevel",
+						"value": "INFO",
+						"configuration": "services.logging.spring.security.level"
+					}
+				]
+			},
+			{
+				"id": "kafka",
+				"description": "Apache Kafka",
+				"levels": [
+					{
+						"id": "kafka",
+						"description": "Kafka internal",
+						"type": "loglevel",
+						"value": "ERROR",
+						"configuration": "services.logging.kafka.level"
+					}
+				]
+			},
+			{
+				"id": "zookeeper",
+				"description": "Apache Zookeeper",
+				"levels": [
+					{
+						"id": "zookeeper",
+						"description": "Zookeeper internal",
+						"type": "loglevel",
+						"value": "ERROR",
+						"configuration": "services.logging.zookeeper.level"
+					}
+				]
+			},
+			{
+				"id": "mongodb",
+				"description": "MongoDB",
+				"levels": [
+					{
+						"id": "mongodb",
+						"description": "Zookeeper internal",
+						"type": "loglevel",
+						"value": "WARN",
+						"configuration": "services.logging.mongodb.level"
 					}
 				]
 			}
@@ -287,120 +398,137 @@
 				"id": "asset_management",
 				"name": "Asset Management",
 				"description": "Delivers asset management persistence APIs",
-				"icon": "collections",
-				"replicas": 1
+				"icon": "tag",
+				"replicas": 1,
+				"enabled": true
 			},
 			{
 				"id": "batch_operations",
 				"name": "Batch Operations",
 				"description": "Manages batch processing APIs",
-				"icon": "view_module",
-				"replicas": 1
+				"icon": "list-alt",
+				"replicas": 1,
+				"enabled": true
 			},
 			{
 				"id": "command_delivery",
 				"name": "Command Delivery",
 				"description": "Handles device command delivery operations",
-				"icon": "call_made",
-				"replicas": 1
+				"icon": "sitemap",
+				"replicas": 1,
+				"enabled": true
 			},
 			{
 				"id": "device_management",
 				"name": "Device Management",
 				"description": "Delivers device management persistence APIs",
-				"icon": "developer_board",
-				"replicas": 1
+				"icon": "microchip",
+				"replicas": 1,
+				"enabled": true
 			},
 			{
 				"id": "device_registration",
 				"name": "Device Registration",
 				"description": "Handles registration of new devices",
-				"icon": "developer_board",
-				"replicas": 1
+				"icon": "user-plus",
+				"replicas": 1,
+				"enabled": true
 			},
 			{
 				"id": "device_state",
 				"name": "Device State",
 				"description": "Manages recent device state (device twin)",
-				"icon": "developer_board",
-				"replicas": 1
+				"icon": "question-circle",
+				"replicas": 1,
+				"enabled": true
 			},
 			{
 				"id": "event_management",
 				"name": "Event Management",
 				"description": "Delivers device event management persistence APIs",
-				"icon": "ballot",
-				"replicas": 1
+				"icon": "exchange-alt",
+				"replicas": 1,
+				"enabled": true
 			},
 			{
 				"id": "event_search",
 				"name": "Event Search",
 				"description": "Supports searching device events via external sources",
 				"icon": "search",
-				"replicas": 1
+				"replicas": 0,
+				"enabled": false
 			},
 			{
 				"id": "event_sources",
 				"name": "Event Sources",
 				"description": "Provides connectivity to external sources for events",
-				"icon": "inbox",
-				"replicas": 1
+				"icon": "sign-in-alt",
+				"replicas": 1,
+				"enabled": true
 			},
 			{
 				"id": "inbound_processing",
 				"name": "Inbound Processing",
 				"description": "Handles inbound processing such as event enrichment",
-				"icon": "settings",
-				"replicas": 1
+				"icon": "cogs",
+				"replicas": 1,
+				"enabled": true
 			},
 			{
 				"id": "instance_management",
 				"name": "Instance Management",
 				"description": "Handles instance-wide tasks such as bootstrapping",
-				"icon": "business",
-				"replicas": 1
+				"icon": "globe",
+				"replicas": 1,
+				"enabled": true
 			},
 			{
 				"id": "label_generation",
 				"name": "Label Generation",
 				"description": "Creates labels/QR codes and other artifacts",
-				"icon": "menu_book",
-				"replicas": 1
+				"icon": "qrcode",
+				"replicas": 1,
+				"enabled": true
 			},
 			{
 				"id": "outbound_connectors",
 				"name": "Outbound Connectors",
 				"description": "Integrates event data with external systems",
-				"icon": "forward",
-				"replicas": 1
+				"icon": "sign-out-alt",
+				"replicas": 1,
+				"enabled": true
 			},
 			{
 				"id": "rule_processing",
 				"name": "Rule Processing",
 				"description": "Performs rule processing operations",
-				"icon": "settings",
-				"replicas": 1
+				"icon": "code-branch",
+				"replicas": 0,
+				"enabled": false
 			},
 			{
 				"id": "schedule_management",
 				"name": "Schedule Management",
 				"description": "Delivers schedule management persistence APIs",
-				"icon": "date_range",
-				"replicas": 1
+				"icon": "calendar-alt",
+				"replicas": 1,
+				"enabled": true
 			},
 			{
 				"id": "streaming_media",
 				"name": "Streaming Media",
 				"description": "Stores streamng media such as audio and video",
-				"icon": "videocam",
-				"replicas": 1
+				"icon": "video",
+				"replicas": 0,
+				"enabled": false
 			},
 			{
 				"id": "web_rest",
 				"name": "Web/REST Gateway",
 				"description": "API gateway for accessing services via REST",
-				"icon": "code",
-				"replicas": 1
+				"icon": "globe",
+				"replicas": 1,
+				"enabled": true
 			}
 		]
 	}
