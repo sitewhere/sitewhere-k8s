@@ -1,25 +1,35 @@
 # SiteWhere Infrastructure
 sitewhere-infra-core:
-  kafka:
-    replicas: 1
+  cp-kafka:
     configurationOverrides:
-      "num.partitions": 1
+      "offsets.topic.replication.factor": "1"
       "default.replication.factor": 1
-      "offsets.topic.replication.factor": 1
       "min.insync.replicas": 1
-      "leader.imbalance.check.interval.seconds": 30
+      "confluent.metrics.reporter.topic.partitions": 12
+      "confluent.metrics.reporter.topic.replicas": 1
+    brokers: 1
     external:
       enabled: false
-    zookeeper:
-      replicaCount: 1
-      service:
-        type: NodePort
-  consul:
-    Replicas: 1
+  cp-zookeeper:
+    servers: 1
+    replicaCount: 1
+    service:
+      type: NodePort
+
 sitewhere-infra-database:
   mongodb:
     replicaSet:
       enabled: false
+    image:
+      pullPolicy: IfNotPresent
+
+infra:
+  mongodb:
+    replicaset: ""
+
 services:
   # profile: default|minimal
   profile: minimal
+  debug: true
+  kafka:
+    defaultTopicReplicationFactor: 1  #set default 1 for minimal
