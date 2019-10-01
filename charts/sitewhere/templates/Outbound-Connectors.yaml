@@ -1,6 +1,6 @@
 {{- if include "microservices.outbound_connectors.enabled" . }}
 {{$data := dict "Values" .Values.services.outbound_connectors "Defaults" .Values.services }}
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "sitewhere.fullname" . }}-outbound-connectors

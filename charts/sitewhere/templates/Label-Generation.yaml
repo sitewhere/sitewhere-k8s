@@ -1,6 +1,6 @@
 {{- if include "microservices.label_generation.enabled" . }}
 {{$data := dict "Values" .Values.services.label_generation "Defaults" .Values.services }}
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "sitewhere.fullname" . }}-label-generation

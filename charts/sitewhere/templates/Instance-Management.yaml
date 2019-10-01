@@ -1,6 +1,6 @@
 {{- if include "microservices.instance_management.enabled" . }}
 {{$data := dict "Values" .Values.services.instance_management "Defaults" .Values.services }}
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "sitewhere.fullname" . }}-instance-management

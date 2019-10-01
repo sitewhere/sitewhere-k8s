@@ -1,6 +1,6 @@
 {{- if include "microservices.command_delivery.enabled" . }}
 {{$data := dict "Values" .Values.services.command_delivery "Defaults" .Values.services }}
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "sitewhere.fullname" . }}-command-delivery
