@@ -1,6 +1,6 @@
 {{- if include "microservices.event_search.enabled" . }}
 {{$data := dict "Values" .Values.services.event_search "Defaults" .Values.services }}
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "sitewhere.fullname" . }}-event-search
