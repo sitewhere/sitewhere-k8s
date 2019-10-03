@@ -12,7 +12,7 @@ infra:
     pullPolicy: IfNotPresent
     imagePullSecrets: "-"
   mongodb:
-    replicaset: "rs1"
+    replicaset: "rs0"
   mosquitto:
     enabled: true
     image: eclipse-mosquitto:1.4.12
