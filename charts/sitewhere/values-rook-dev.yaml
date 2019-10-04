@@ -10,11 +10,19 @@ sitewhere-infra-core:
     brokers: 1
     external:
       enabled: false
+    persistence:
+      storageClass: rook-ceph-block
   cp-zookeeper:
     servers: 1
     replicaCount: 1
     service:
       type: NodePort
+    persistence:
+      dataDirStorageClass: rook-ceph-block
+      dataLogDirStorageClass: rook-ceph-block
+  postgresql:
+    persistence:
+      storageClass: rook-ceph-block
 
 sitewhere-infra-database:
   mongodb:
@@ -22,6 +30,8 @@ sitewhere-infra-database:
       enabled: false
     image:
       pullPolicy: IfNotPresent
+    persistence:
+      storageClass: rook-ceph-block
 
 infra:
   mongodb:
@@ -30,6 +40,6 @@ infra:
 services:
   # profile: default|minimal
   profile: minimal
-  debug: true
+  debug: false
   kafka:
     defaultTopicReplicationFactor: 1  #set default 1 for minimal

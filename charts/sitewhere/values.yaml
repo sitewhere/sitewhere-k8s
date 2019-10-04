@@ -11,6 +11,8 @@ infra:
     registry: docker.io
     pullPolicy: IfNotPresent
     imagePullSecrets: "-"
+  mongodb:
+    replicaset: "rs0"
   mosquitto:
     enabled: true
     image: eclipse-mosquitto:1.4.12
@@ -27,6 +29,8 @@ services:
   # profile: default|minimal
   profile: default
   debug: false
+  kafka:
+    defaultTopicReplicationFactor: 3  #set default 1 for minimal
   grpc:
     maxRetryCount: 7
     initialBackoffSeconds: 11
