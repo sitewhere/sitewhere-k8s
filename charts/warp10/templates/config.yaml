@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ template "wrap10.name" . }}"
+  labels:
+    app.kubernetes.io/name: {{ include "wrap10.name" . }}
+    helm.sh/chart: "{{ template "wrap10.chart" . }}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+data:
+  wrap10.conf: |+

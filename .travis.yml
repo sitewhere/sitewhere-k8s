@@ -50,6 +50,9 @@ after_success:
     #  helm dep update ${REPO_DIR}/charts/$dir
     #  helm package ${REPO_DIR}/charts/$dir
     #done
+    helm dep update ${REPO_DIR}/charts/wrap10
+    helm package ${REPO_DIR}/charts/wrap10
+
     helm dep update ${REPO_DIR}/charts/sitewhere-infra-core
     helm package ${REPO_DIR}/charts/sitewhere-infra-core
 
