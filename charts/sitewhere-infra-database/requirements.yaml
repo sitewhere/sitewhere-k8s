@@ -7,6 +7,6 @@ dependencies:
   repository: https://kubernetes-charts-incubator.storage.googleapis.com
   condition: sitewhere-infra-database.cassandra.enabled, cassandra.enabled
 - name: influxdb
-  version: 1.0.0
+  version: 1.4.1
   repository: https://kubernetes-charts.storage.googleapis.com
   condition: sitewhere-infra-database.influxdb.enabled, influxdb.enabled
