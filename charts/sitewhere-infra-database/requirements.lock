@@ -7,6 +7,6 @@ dependencies:
   version: 0.10.1
 - name: influxdb
   repository: https://kubernetes-charts.storage.googleapis.com
-  version: 1.0.0
-digest: sha256:14089640a64be8eb1abd31e378c9a6ff606f7b52b6a7d85b57106f3c9329f6d7
-generated: 2019-05-16T13:02:53.57116-03:00
+  version: 1.4.1
+digest: sha256:bca826855e15091cddc3ab7d2c3bd6ebec49408e347df8f5770d1a275adad902
+generated: 2019-10-10T07:49:55.121451-03:00
