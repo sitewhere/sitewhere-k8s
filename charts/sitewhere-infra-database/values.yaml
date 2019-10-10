@@ -21,6 +21,8 @@ cassandra:
     size: 10Gi
 influxdb:
   enabled: false
+  podAnnotations:
+    sidecar.istio.io/inject: "false"
   persistence:
     accessMode: ReadWriteOnce
     size: 10Gi
