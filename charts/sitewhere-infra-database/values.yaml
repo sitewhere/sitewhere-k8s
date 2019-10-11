@@ -26,3 +26,11 @@ influxdb:
   persistence:
     accessMode: ReadWriteOnce
     size: 10Gi
+# Warp 10 Time Series Database
+warp10:
+  enabled: false
+  podAnnotations:
+    sidecar.istio.io/inject: "false"
+  persistence:
+    accessMode: ReadWriteOnce
+    size: 10Gi
