@@ -1,101 +1,47 @@
 {{- if include "microservices.device_management.enabled" . }}
 {{$data := dict "Values" .Values.services.device_management "Defaults" .Values.services }}
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: sitewhere.io/v1alpha3
+kind: SiteWhereMicroservice
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-device-management
-  labels:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
-    helm.sh/chart: {{ include "sitewhere.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    sitewhere.io/role: "microservice"
-    sitewhere.io/name: "device-management"
+  name: device-management-microservice
 spec:
   replicas: {{ .Values.services.device_management.replicaCount }}
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: {{ include "sitewhere.name" . }}-device-management
-      app.kubernetes.io/instance: {{ .Release.Name }}
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: {{ include "sitewhere.name" . }}-device-management
-        app.kubernetes.io/instance: {{ .Release.Name }}
-        sitewhere.io/role: "microservice"
-        sitewhere.io/name: "device-management"
-      annotations:
-{{include "sitewhere.microservice.prometheus" . | indent 8 }}
-    spec:
-      containers:
-        - name: {{ .Chart.Name }}-device-management
-{{- include "sitewhere.microservice.image" $data | indent 10 }}
-          imagePullPolicy: {{ .Values.services.image.pullPolicy }}
-          ports:
-            - containerPort: 9000
-            - containerPort: 9001
-            - containerPort: {{ .Values.services.metrics.port }}
-{{- if .Values.services.debug }}
-            - containerPort: 8004
-            - containerPort: 1104
-{{- end }}
-{{include "sitewhere.microservice.envValues" . | indent 10 }}
-{{include "sitewhere.microservice.resources" $data | indent 10 }}
-{{include "sitewhere.microservice.probes" . | indent 10 }}
-{{include "sitewhere.microservice.imagePullSecrets" . | indent 6 }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "sitewhere.fullname" . }}-device-management-svc
-  labels:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
-    helm.sh/chart: {{ include "sitewhere.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-spec:
-  type: {{ .Values.services.device_management.service.type }}
-  clusterIP: None
-  ports:
-    - port: 9000
-      targetPort: {{ .Values.services.device_management.service.grpc.api.port }}
-      protocol: TCP
-      name: grpc-api
-    - port: 9001
-      targetPort: {{ .Values.services.device_management.service.grpc.management.port }}
-      protocol: TCP
-      name: grpc-management
-    - port: {{ .Values.services.metrics.port }}
-      targetPort: {{ .Values.services.metrics.port }}
-      protocol: TCP
-      name: http-metrics
-  selector:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-device-management
-    app.kubernetes.io/instance: {{ .Release.Name }}
-{{- if .Values.services.debug }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "sitewhere.fullname" . }}-device-management-debug
-  labels:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
-    helm.sh/chart: {{ include "sitewhere.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 8004
-      targetPort: 8004
-      protocol: TCP
-      name: tcp-jdwp
-    - port: 1104
-      targetPort: 1104
-      protocol: TCP
-      name: tcp-jmx
-  selector:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-device-management
-    app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
+  instanceName: {{ include "sitewhere.name" . }}
+  functionalArea: device-management
+  helm:
+    chartName: {{ include "sitewhere.chart" . }}
+    releaseName: {{ include "sitewhere.name" . }}
+    releaseService: Tiller
+  podSpec:
+    imageRegistry: {{ .Values.services.image.registry }}
+    imageRepository: {{ .Values.services.image.repository }}
+    imageTag: {{ .Values.services.image.tag }}
+    imagePullPolicy: {{ .Values.services.image.pullPolicy }}
+    ports:
+      - containerPort: 9000
+      - containerPort: 9001
+      - containerPort: {{ .Values.services.metrics.port }}
+{{include "sitewhere.microservice.envValues" . | indent 4 }}
+{{include "sitewhere.microservice.resources" $data | indent 4 }}
+{{include "sitewhere.microservice.probes" . | indent 4 }}
+{{include "sitewhere.microservice.imagePullSecrets" . | indent 4 }}
+  serviceSpec:
+    type: LoadBalancer
+    ports:
+      - port: 9000
+        targetPort: {{ .Values.services.device_management.service.grpc.api.port }}
+        protocol: TCP
+        name: grpc-api
+      - port: 9001
+        targetPort: {{ .Values.services.device_management.service.grpc.management.port }}
+        protocol: TCP
+        name: grpc-management
+      - port: {{ .Values.services.metrics.port }}
+        targetPort: {{ .Values.services.metrics.port }}
+        protocol: TCP
+        name: http-metrics
+  debug:
+    enabled: false
+    jdwpPort: 8004
+    jmxPort: 1104
 {{- end }}

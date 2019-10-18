@@ -1,100 +1,47 @@
 {{- if include "microservices.streaming_media.enabled" . }}
 {{$data := dict "Values" .Values.services.streaming_media "Defaults" .Values.services }}
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: sitewhere.io/v1alpha3
+kind: SiteWhereMicroservice
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-streaming-media
-  labels:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
-    helm.sh/chart: {{ include "sitewhere.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    sitewhere.io/role: "microservice"
-    sitewhere.io/name: "streaming-media"
+  name: streaming-media-microservice
 spec:
   replicas: {{ .Values.services.streaming_media.replicaCount }}
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: {{ include "sitewhere.name" . }}-streaming-media
-      app.kubernetes.io/instance: {{ .Release.Name }}
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: {{ include "sitewhere.name" . }}-streaming-media
-        app.kubernetes.io/instance: {{ .Release.Name }}
-        sitewhere.io/role: "microservice"
-        sitewhere.io/name: "streaming-media"
-      annotations:
-{{include "sitewhere.microservice.prometheus" . | indent 8 }}
-    spec:
-      containers:
-        - name: {{ .Chart.Name }}-streaming-media
-{{- include "sitewhere.microservice.image" $data | indent 10 }}
-          imagePullPolicy: {{ .Values.services.image.pullPolicy }}
-          ports:
-            - containerPort: 9000
-            - containerPort: 9001
-            - containerPort: {{ .Values.services.metrics.port }}
-{{- if .Values.services.debug }}
-            - containerPort: 8019
-            - containerPort: 1119
-{{- end }}
-{{include "sitewhere.microservice.envValues" . | indent 10 }}
-{{include "sitewhere.microservice.resources" $data | indent 10 }}
-{{include "sitewhere.microservice.probes" . | indent 10 }}
-{{include "sitewhere.microservice.imagePullSecrets" . | indent 6 }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "sitewhere.fullname" . }}-streaming-media-svc
-  labels:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
-    helm.sh/chart: {{ include "sitewhere.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-spec:
-  type: {{ .Values.services.streaming_media.service.type }}
-  ports:
-    - port: 9000
-      targetPort: {{ .Values.services.streaming_media.service.grpc.api.port }}
-      protocol: TCP
-      name: grpc-api
-    - port: 9001
-      targetPort: {{ .Values.services.streaming_media.service.grpc.management.port }}
-      protocol: TCP
-      name: grpc-management
-    - port: {{ .Values.services.metrics.port }}
-      targetPort: {{ .Values.services.metrics.port }}
-      protocol: TCP
-      name: http-metrics
-  selector:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-streaming-media
-    app.kubernetes.io/instance: {{ .Release.Name }}
-{{- if .Values.services.debug }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "sitewhere.fullname" . }}-streaming-media-debug
-  labels:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
-    helm.sh/chart: {{ include "sitewhere.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 8019
-      targetPort: 8019
-      protocol: TCP
-      name: tcp-jdwp
-    - port: 1119
-      targetPort: 1119
-      protocol: TCP
-      name: tcp-jmx
-  selector:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-streaming-media
-    app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
+  instanceName: {{ include "sitewhere.name" . }}
+  functionalArea: streaming-media
+  helm:
+    chartName: {{ include "sitewhere.chart" . }}
+    releaseName: {{ include "sitewhere.name" . }}
+    releaseService: Tiller
+  podSpec:
+    imageRegistry: {{ .Values.services.image.registry }}
+    imageRepository: {{ .Values.services.image.repository }}
+    imageTag: {{ .Values.services.image.tag }}
+    imagePullPolicy: {{ .Values.services.image.pullPolicy }}
+    ports:
+      - containerPort: 9000
+      - containerPort: 9001
+      - containerPort: {{ .Values.services.metrics.port }}
+{{include "sitewhere.microservice.envValues" . | indent 4 }}
+{{include "sitewhere.microservice.resources" $data | indent 4 }}
+{{include "sitewhere.microservice.probes" . | indent 4 }}
+{{include "sitewhere.microservice.imagePullSecrets" . | indent 4 }}
+  serviceSpec:
+    type: LoadBalancer
+    ports:
+      - port: 9000
+        targetPort: {{ .Values.services.streaming_media.service.grpc.api.port }}
+        protocol: TCP
+        name: grpc-api
+      - port: 9001
+        targetPort: {{ .Values.services.streaming_media.service.grpc.management.port }}
+        protocol: TCP
+        name: grpc-management
+      - port: {{ .Values.services.metrics.port }}
+        targetPort: {{ .Values.services.metrics.port }}
+        protocol: TCP
+        name: http-metrics
+  debug:
+    enabled: false
+    jdwpPort: 8019
+    jmxPort: 1119
 {{- end}}
