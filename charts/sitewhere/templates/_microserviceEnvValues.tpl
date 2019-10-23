@@ -44,7 +44,7 @@ env:
   - name: "tenantsdb.password"
     valueFrom:
       secretKeyRef:
-        name: {{ template "oasis.fullname" . }}-tenantsdb
+        name: {{ template "sitewhere.name" . }}-tenantsdb
         key: postgresql-password
   - name: "LOGGING_LEVEL_SITEWHERE"
     value: "{{ .Values.services.logging.sitewhere.level }}"
