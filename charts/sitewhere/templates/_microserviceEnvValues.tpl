@@ -42,10 +42,10 @@ env:
   - name: "tenantsdb.username"
     value: "{{ index .Values "sitewhere-infra-database" "tenantsdb" "postgresqlUsername" }}"
   - name: "tenantsdb.password"
-    secret:
-      secretName: {{ include "sitewhere.name" . }}-tenantsdb
-      items:
-      - key: postgresql-password
+    valueFrom:
+      secretKeyRef:
+        name: {{ template "oasis.fullname" . }}-tenantsdb
+        key: postgresql-password
   - name: "LOGGING_LEVEL_SITEWHERE"
     value: "{{ .Values.services.logging.sitewhere.level }}"
   - name: "LOGGING_LEVEL_SITEWHERE_GRPC"
