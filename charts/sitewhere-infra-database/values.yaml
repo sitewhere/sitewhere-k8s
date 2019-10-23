@@ -34,7 +34,7 @@ warp10:
   persistence:
     accessMode: ReadWriteOnce
     size: 10Gi
-# Warp 10 Time Series Database
+# Postgres Database
 tenantsdb:
   enabled: true
   master:
