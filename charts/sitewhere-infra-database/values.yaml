@@ -37,8 +37,9 @@ warp10:
 # Warp 10 Time Series Database
 tenantsdb:
   enabled: true
-  podAnnotations:
-    sidecar.istio.io/inject: "false"
+  master:
+    podAnnotations:
+      sidecar.istio.io/inject: "false"
   persistence:
     enabled: true
     accessMode: ReadWriteOnce
