@@ -34,3 +34,15 @@ warp10:
   persistence:
     accessMode: ReadWriteOnce
     size: 10Gi
+# Warp 10 Time Series Database
+tenantsdb:
+  enabled: true
+  podAnnotations:
+    sidecar.istio.io/inject: "false"
+  persistence:
+    enabled: true
+    accessMode: ReadWriteOnce
+    size: 10Gi
+  postgresqlUsername: sitewhere
+  postgresqlDatabase: tenantsdb
+
