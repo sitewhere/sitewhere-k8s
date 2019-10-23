@@ -188,8 +188,9 @@ services:
           port: 9001
         user_management:
           port: 9004
-        tenant_management:
-          port: 9005
+      http:
+        type: ClusterIP
+        port: 8080
     resources:
       limits:
         memory: 
@@ -208,27 +209,6 @@ services:
           port: 9000
         management:
           port: 9001
-    resources:
-      limits:
-        memory: 
-        cpu: 
-      requests:
-        memory: 
-        cpu: 
-  web_rest:
-    enabled: true
-    image: service-web-rest
-    replicaCount: 1
-    service:
-      grpc:
-        type: ClusterIP
-        api:
-          port: 9000
-        management:
-          port: 9001
-      http:
-        type: ClusterIP
-        port: 8080
     resources:
       limits:
         memory: 
