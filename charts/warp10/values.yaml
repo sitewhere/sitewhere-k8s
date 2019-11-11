@@ -26,7 +26,7 @@ service:
   # annotations: {}
   type: ClusterIP
   ## Add IP Cluster
-  # clusterIP: ""
+  clusterIP: None
   ## Add external IPs that route to one or more cluster nodes
   # externalIPs: []
   ## Specify LoadBalancer IP (only allow on some cloud provider)
