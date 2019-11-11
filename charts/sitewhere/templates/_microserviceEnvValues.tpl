@@ -37,6 +37,15 @@ env:
     value: "{{ include "sitewhere.mongodb.fullname" . }}"
   - name: "mongodb.replicaset"
     value: "{{ .Values.infra.mongodb.replicaset }}"
+  - name: "tenantsdb.url"
+    value: "jdbc:postgresql://{{ include "sitewhere.name" . }}-tenantsdb-headless.{{ .Release.Namespace }}.svc.cluster.local/tenantsdb"
+  - name: "tenantsdb.username"
+    value: "{{ index .Values "sitewhere-infra-database" "tenantsdb" "postgresqlUsername" }}"
+  - name: "tenantsdb.password"
+    valueFrom:
+      secretKeyRef:
+        name: {{ template "sitewhere.name" . }}-tenantsdb
+        key: postgresql-password
   - name: "LOGGING_LEVEL_SITEWHERE"
     value: "{{ .Values.services.logging.sitewhere.level }}"
   - name: "LOGGING_LEVEL_SITEWHERE_GRPC"
