@@ -8,5 +8,8 @@ dependencies:
 - name: influxdb
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 1.4.1
-digest: sha256:bca826855e15091cddc3ab7d2c3bd6ebec49408e347df8f5770d1a275adad902
-generated: 2019-10-10T07:49:55.121451-03:00
+- name: warp10
+  repository: https://sitewhere.io/helm-charts
+  version: 0.1.1
+digest: sha256:9a258bc076bf620e286e4c02ee598358ff6c3c608cca1a0e835b19c635d2bb00
+generated: 2019-11-11T10:23:37.705824-03:00
