@@ -57,7 +57,7 @@ spec:
           claimName: {{ .Values.persistence.name }}
         {{- else }}
         persistentVolumeClaim:
-          claimName: {{ template "wrap10.fullname" . }}
+          claimName: "{{- if not (empty .Values.persistence.name) }}{{ .Values.persistence.name }}{{- else }}{{ template "wrap10.name" . }}{{- end }}"
         {{- end }}
       {{- else }}
         emptyDir: {}
