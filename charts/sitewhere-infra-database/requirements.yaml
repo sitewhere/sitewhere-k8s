@@ -11,7 +11,7 @@ dependencies:
   repository: https://kubernetes-charts.storage.googleapis.com
   condition: sitewhere-infra-database.influxdb.enabled, influxdb.enabled
 - name: warp10
-  version: 0.1.1
+  version: 0.1.2
   repository: https://sitewhere.io/helm-charts
   condition: sitewhere-infra-database.warp10.enabled, warp10.enabled
 - name: postgresql
