@@ -40,4 +40,6 @@ spec:
     targetPort: {{ .Values.config.studio.bind_address }}
   {{- end }}
   selector:
-    app.kubernetes.io/name: "{{ template "wrap10.name" . }}"
+    app.kubernetes.io/name: {{ include "wrap10.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+
