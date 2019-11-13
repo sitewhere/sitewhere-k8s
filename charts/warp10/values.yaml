@@ -2,7 +2,7 @@
 ## ref: https://hub.docker.com/r/warp10io/warp10/tags/
 image:
   repository: "warp10io/warp10"
-  tag: "2.2.0"
+  tag: "2.2.0-sitewhere"
   pullPolicy: IfNotPresent
   ## If specified, use these secrets to access the images
   # pullSecrets:
