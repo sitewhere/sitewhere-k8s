@@ -6,6 +6,6 @@ Warp 10 is a platform designed to collect, store and analyze sensor and Time Ser
 
 ```console
 cd docker
-docker build -t warp10io/warp10:2.2.0-sitewhere .
+docker build -t sitewhere/warp10:2.2.0-sitewhere .
 cd ..
 ```
