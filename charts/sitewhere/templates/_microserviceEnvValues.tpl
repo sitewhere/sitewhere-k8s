@@ -46,6 +46,8 @@ env:
       secretKeyRef:
         name: {{ template "sitewhere.name" . }}-tenantsdb
         key: postgresql-password
+  - name: "warp10.url"
+    value: "http://warp10.{{ .Release.Namespace }}.svc.cluster.local:8080/api/v0"
   - name: "LOGGING_LEVEL_SITEWHERE"
     value: "{{ .Values.services.logging.sitewhere.level }}"
   - name: "LOGGING_LEVEL_SITEWHERE_GRPC"
