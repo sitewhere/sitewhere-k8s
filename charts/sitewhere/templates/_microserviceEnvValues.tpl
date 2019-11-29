@@ -74,7 +74,7 @@ env:
 {{- end }}
 {{- if include "infra.influxdb.enabled" . }}
   - name: "influxdb.host"
-    value: "{{ include "sitewhere.fullname" . }}-influxdb-svc"
+    value: "{{ include "sitewhere.fullname" . }}-influxdb"
   - name: "influxdb.port"
     value: "{{ index .Values "sitewhere-infra-database" "influxdb" "config" "http" "bind_address" }}"
 {{- end }}
