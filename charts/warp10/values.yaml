@@ -8,6 +8,13 @@ image:
   # pullSecrets:
   #   - registry-secret
 
+# Number of Brokers
+brokers: 1
+
+## The StatefulSet Update Strategy which Kafka will use when changes are applied: OnDelete or RollingUpdate
+## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+updateStrategy: RollingUpdate
+
 ## Customize livenessProbe and readinessProbe
 ## ref: https://docs.influxdata.com/influxdb/v1.7/tools/api/#ping-http-endpoint
 ##
@@ -52,6 +59,7 @@ persistence:
   # storageClass: "-"
   accessMode: ReadWriteOnce
   size: 8Gi
+  disksPerBroker: 1
 
 ## Create default user through Kubernetes job
 ## Defaults indicated below

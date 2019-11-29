@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: "{{ template "wrap10.name" . }}"
+  name: "{{ template "wrap10.fullname" . }}"
   labels:
     app.kubernetes.io/name: "{{ template "wrap10.name" . }}"
     helm.sh/chart: "{{ template "wrap10.chart" . }}"
@@ -23,6 +23,6 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: {{ template "wrap10.name" . }}
+          serviceName: {{ template "wrap10.fullname" . }}
           servicePort: 8080
 {{- end -}}
