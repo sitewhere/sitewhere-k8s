@@ -4,6 +4,6 @@ dependencies:
   version: 0.2.4
 - name: sitewhere-infra-database
   repository: https://sitewhere.io/helm-charts
-  version: 0.2.3
-digest: sha256:38d14f79100a6d90dba653786ee1c8d1cc2cb63564672ce87b06ae7068068a38
-generated: 2019-11-11T10:45:26.755278-03:00
+  version: 0.2.7
+digest: sha256:852b771882e79671e2b060df6cce1bea8402b1e499ec570bca6cd28fe61b3a71
+generated: 2019-11-29T10:16:06.304741-03:00
