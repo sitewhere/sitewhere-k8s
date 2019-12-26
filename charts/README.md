@@ -137,6 +137,18 @@ kubectl create secret docker-registry sitewhere-harbor-cred \
 secret/sitewhere-harbor-cred created
 ```
 
+## Install SiteWhere using Warp10 Time Series Database
+
+To enable [Warp10](https://www.warp10.io/) Time Series Database as part of SiteWhere
+infrastructure, set `true` to `sitewhere-infra-database.warp10.enabled` when you install
+or upgrade SiteWhere, for example:
+
+```console
+helm install --name sitewhere \
+  --set sitewhere-infra-database.warp10.enabled=true \
+  sitewhere/sitewhere
+```
+
 ## Removing SiteWhere Data for clean system start
 
 In order to remove all SiteWhere data and start with a clean system, you need remove
