@@ -8,6 +8,8 @@ spec:
   replicas: {{ .Values.services.asset_management.replicaCount }}
   instanceName: {{ include "sitewhere.name" . }}
   functionalArea: asset-management
+  configuration:
+    name: "Asset Management"
   helm:
     chartName: {{ include "sitewhere.chart" . }}
     releaseName: {{ include "sitewhere.name" . }}

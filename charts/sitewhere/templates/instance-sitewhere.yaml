@@ -5,3 +5,5 @@ metadata:
 spec:
   instanceNamespace: sitewhere
   configurationTemplate: instance-config-default
+  datasetTemplate: instance-dataset-default
+  
