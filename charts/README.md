@@ -1,13 +1,51 @@
-# Helm Charts for Running SiteWhere 2.1
+# Helm Charts for Deploying SiteWhere 3.0
+SiteWhere provides two Helm charts which support deployment of both the infrastructure required
+to run SiteWhere and the microservices which take care of the actual processing. The infrastructure
+chart is generally deployed once when a cluster is first created and only changed when components in
+the infrastructure need to be scaled or reconfigured. The chart for microservices is executed once
+per instance deployed and may be deleted without shutting down the infrastructure chart.
 
-SiteWhere provides a comprehensive Helm chart which takes care of 
-orchestration of the many components that make up a SiteWhere
-instance. By configuring chart parameters, the system may be 
-easily customized for specific application requirements.
+## Prerequisites
+There are a few components which must be installed before deploying SiteWhere via Helm.
 
-## Prerequisties
+### SiteWhere Operator
+SiteWhere 3.0 includes a Kubernetes operator/controller which operates on Custom Resource Definitions (CRDs)
+which provide metadata about the desired state of a SiteWhere instance. To install the SiteWhere operator,
+clone the repository using the following command:
 
-SiteWhere 2.1 requeries [Istio](https://istio.io/), with 
+```console
+git clone https://github.com/sitewhere/sitewhere-k8s-operator.git
+```
+
+#### Install SiteWhere Custom Resource Definitions
+Before the operator may be used, the SiteWhere custom resource definitions must be installed. Install the
+CRDs via Helm using the following command:
+
+```console
+helm install --name sitewhere-crds installer/crds/.
+```
+
+#### Install Default Instance and Tenant Templates
+In order to bootstrap an instance, default instance and tenant templates must
+be installed. These templates determine the default system configuration and
+may be customized before/after installation. The command below will install the 
+default templates:
+
+```console
+helm install --name sitewhere-templates installer/templates/.
+```
+
+#### Install SiteWhere Operator
+The SiteWhere operator is an orchestrator which uses the CRDs and templates to realize 
+SiteWhere instances at runtime. The operator translates SiteWhere CRDs into Kubernetes
+resources and monitors the runtime in order to match the desired state. Install the operator
+via Helm as shown below:
+
+```console
+helm install --name sitewhere-operator installer/operator/.
+```
+### Istio Service Mesh
+SiteWhere 3.0 requires [Istio](https://istio.io/), with 
 [Automatic sidecar injection](https://istio.io/docs/setup/kubernetes/additional-setup/sidecar-injection/#automatic-sidecar-injection),
 installed on a Kubernetes cluster before you deploy an instance of SiteWhere. You can install Istio
 [with](https://istio.io/docs/setup/kubernetes/install/helm/) or [without](https://istio.io/docs/setup/kubernetes/install/kubernetes/) Helm.
@@ -41,13 +79,39 @@ Before you deploy SiteWhere using Helm, you need to add SiteWhere Helm Repositor
 helm repo add sitewhere https://sitewhere.io/helm-charts
 helm repo update
 ```
+You can also clone the SiteWhere Helm charts by executing:
 
-## Deploy SiteWhere using the default configuration
+```console
+git clone https://github.com/sitewhere/sitewhere-k8s.git
+```
 
-To start default configuration run:
+## Deploy SiteWhere Infrastructure Components
+
+To start the infrastructure components with default settings, execute the following:
+
+```console
+helm install --name sitewhere sitewhere/sitewhere-infrastructure
+```
+or from a cloned repository execute:
+
+```console
+cd sitewhere-k8s/charts/sitewhere-infrastructure
+helm install --name sitewhere-infrastructure .
+```
+
+## Deploy SiteWhere Microservices
+
+Once the infrastructure components have started, the SiteWhere microservices
+may be deployed by executing:
 
 ```console
 helm install --name sitewhere sitewhere/sitewhere
+```
+or from a cloned repository execute:
+
+```console
+cd sitewhere-k8s/charts/sitewhere
+helm install --name sitewhere .
 ```
 
 ## Deploy SiteWhere using Rook
