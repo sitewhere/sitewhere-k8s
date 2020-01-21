@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sitewhere-{{.Values.syncope.syncopeConsoleConfig.name}}
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
+      labels:
+        name: "sitewhere-{{.Values.syncope.syncopeConsoleConfig.name}}"
+        app.kubernetes.io/name: "sitewhere-{{.Values.syncope.syncopeConsoleConfig.name}}"
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        sitewhere.io/role: "infrastructure"
+        sitewhere.io/name: "syncope-console"
+    spec:
+      containers:
+      - name: {{.Values.syncope.syncopeConsoleConfig.name}}
+        envFrom:
+        - configMapRef:
+           name: sitewhere-syncope-environment-config
+        image: "{{.Values.syncope.syncopeConsoleConfig.repository}}/{{.Values.syncope.syncopeConsoleConfig.container}}:{{.Values.syncope.syncopeConsoleConfig.tag}}"
+        ports:
+        - containerPort: {{.Values.syncope.syncopeConsoleConfig.containerPort}}
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "sitewhere-{{.Values.syncope.syncopeConsoleConfig.name}}"
+spec:
+  type: "{{.Values.syncope.syncopeConsoleConfig.serviceType}}"
+  selector:
+    name: "sitewhere-{{.Values.syncope.syncopeConsoleConfig.name}}"
+  ports:
+  - port: {{.Values.syncope.syncopeConsoleConfig.containerPort}}
+    name: http-api

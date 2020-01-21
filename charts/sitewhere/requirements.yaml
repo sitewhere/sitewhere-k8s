@@ -1,8 +1,0 @@
-dependencies:
-- name: sitewhere-infra-core
-  version: 0.2.4
-  repository: https://sitewhere.io/helm-charts
-  condition: sitewhere-infra-core.enabled
-- name: sitewhere-infra-database
-  version: 0.2.8
-  repository: https://sitewhere.io/helm-charts

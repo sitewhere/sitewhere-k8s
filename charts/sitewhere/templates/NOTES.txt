@@ -1,8 +1,0 @@
-1. Get SiteWhere application URL by running these commands:
-export ISTIO_INGRESS_IP=$(kubectl get svc --namespace istio-system istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-To login to SiteWhere Admin Console use:
-- Username: admin
-- Password: password
-- protocol: http
-- Server: $ISTIO_INGRESS_IP
-- Port: 80

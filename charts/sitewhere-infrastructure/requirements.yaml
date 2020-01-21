@@ -1,0 +1,13 @@
+dependencies:
+- name: postgresql
+  version: 8.1.0
+  repository: https://kubernetes-charts.storage.googleapis.com
+  condition: 
+- name: mosquitto
+  version: 0.1.6
+  repository: https://smizy.github.io/charts
+  condition: 
+- name: redis-ha
+  version: 4.3.3
+  repository: https://kubernetes-charts.storage.googleapis.com
+  condition: 

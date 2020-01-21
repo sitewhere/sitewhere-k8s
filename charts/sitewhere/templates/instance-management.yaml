@@ -1,0 +1,103 @@
+apiVersion: sitewhere.io/v1alpha3
+kind: SiteWhereMicroservice
+metadata:
+  name: instance-management-microservice
+  labels:
+    sitewhere.io/instance: sitewhere
+    sitewhere.io/functional-area: instance-management
+spec:
+  replicas: 1
+  configuration:
+    example: 234
+  helm:
+    chartName: sitewhere
+    releaseName: sitewhere
+    releaseService: Tiller
+  podSpec:
+    imageRegistry: docker.io
+    imageRepository: sitewhere
+    imageTag: 3.0.0.alpha1
+    imagePullPolicy: IfNotPresent
+    ports:
+      - containerPort: 8080
+      - containerPort: 9000
+      - containerPort: 9090
+    env:
+{{include "sitewhere.microservice.environment" . | indent 4 }}
+      - name: "sitewhere.config.syncope.host"
+        value: "sitewhere-syncope"
+      - name: "sitewhere.config.syncope.port"
+        value: "8080"
+  serviceSpec:
+    type: LoadBalancer
+    ports:
+      - port: 8080
+        targetPort: 8080
+        protocol: TCP
+        name: http-rest
+      - port: 9000
+        targetPort: 9000
+        protocol: TCP
+        name: grpc-api
+      - port: 9090
+        targetPort: 9090
+        protocol: TCP
+        name: http-metrics
+  debug:
+    enabled: false
+    jdwpPort: 8001
+    jmxPort: 1101
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sitewhere-rest-http
+  labels:
+    app.kubernetes.io/name: sitewhere
+    helm.sh/chart: sitewhere
+    app.kubernetes.io/instance: sitewhere
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http-rest
+  selector:
+    sitewhere.io/instance: sitewhere
+    sitewhere.io/functional-area: instance-management
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: sitewhere-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http-rest
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: sitewhere-rest
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - sitewhere-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 8080
+        host: sitewhere-rest-http
