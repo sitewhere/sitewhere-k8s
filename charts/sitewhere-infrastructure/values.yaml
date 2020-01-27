@@ -1,11 +1,13 @@
 # PostgreSQL
 postgresql:
+  image:
+    debug: true
   fullnameOverride: sitewhere-postgresql
   enabled: true
   persistence:
-    storageClass: rook-ceph-block
     enabled: true
-    size: 1Gi
+    storageClass: rook-ceph-block
+    size: 500Mi
   postgresqlUsername: syncope
   postgresqlDatabase: syncope
   existingSecret: syncope
@@ -20,14 +22,18 @@ postgresql:
 mosquitto:
   persistence:
     storageClass: rook-ceph-block
+    size: 500Mi
 
 # Redis HA
 redis-ha:
   replicas: 3
   hardAntiAffinity: false
+  redis:
+    masterGroupName: "sitewhere"
   persistentVolume:
     enabled: true
     storageClass: rook-ceph-block
+    size: 500Mi
   
 # Syncope
 syncope:

@@ -1,0 +1,41 @@
+apiVersion: sitewhere.io/v1alpha3
+kind: SiteWhereMicroservice
+metadata:
+  name: batch-operations-microservice
+  labels:
+    sitewhere.io/instance: sitewhere
+    sitewhere.io/functional-area: batch-operations
+spec:
+  replicas: 1
+  multitenant: true
+  configuration:
+    test: 123
+  helm:
+    chartName: sitewhere
+    releaseName: sitewhere
+    releaseService: Tiller
+  podSpec:
+    imageRegistry: docker.io
+    imageRepository: sitewhere
+    imageTag: 3.0.0.alpha1
+    imagePullPolicy: IfNotPresent
+    ports:
+      - containerPort: 9000
+      - containerPort: 9090
+    env:
+{{include "sitewhere.microservice.environment" . | indent 4 }}
+  serviceSpec:
+    type: LoadBalancer
+    ports:
+      - port: 9000
+        targetPort: 9000
+        protocol: TCP
+        name: grpc-api
+      - port: 9090
+        targetPort: 9090
+        protocol: TCP
+        name: http-metrics
+  debug:
+    enabled: false
+    jdwpPort: 8011
+    jmxPort: 1111 
