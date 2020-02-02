@@ -23,6 +23,8 @@ mosquitto:
   persistence:
     storageClass: rook-ceph-block
     size: 500Mi
+  service:
+    type: LoadBalancer
 
 # Redis HA
 redis-ha:

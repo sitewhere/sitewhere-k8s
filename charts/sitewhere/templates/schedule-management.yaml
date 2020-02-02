@@ -1,14 +1,15 @@
 apiVersion: sitewhere.io/v1alpha3
 kind: SiteWhereMicroservice
 metadata:
-  name: event-sources-microservice
+  name: schedule-management-microservice
   labels:
     sitewhere.io/instance: sitewhere
-    sitewhere.io/functional-area: event-sources
+    sitewhere.io/functional-area: schedule-management
 spec:
   replicas: 1
   multitenant: true
-  configuration: {}
+  configuration:
+    test: 123
   helm:
     chartName: sitewhere
     releaseName: sitewhere
@@ -36,5 +37,5 @@ spec:
         name: http-metrics
   debug:
     enabled: false
-    jdwpPort: 8008
-    jmxPort: 1108
+    jdwpPort: 8018
+    jmxPort: 1118 

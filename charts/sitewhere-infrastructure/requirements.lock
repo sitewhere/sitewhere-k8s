@@ -2,11 +2,8 @@ dependencies:
 - name: postgresql
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 8.1.0
-- name: mosquitto
-  repository: https://smizy.github.io/charts
-  version: 0.1.6
 - name: redis-ha
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 4.3.3
-digest: sha256:1d1a47c1b70554611f1d9a2d9c41b4452b6711dbf9af28fb06bc3b2a8634f0b8
-generated: 2020-01-21T11:53:14.6987671-05:00
+digest: sha256:0505dddef548e3c8132f7409e5693323665d3c076d847d440204e1007d15ccaf
+generated: 2020-01-30T18:59:11.8051799-05:00

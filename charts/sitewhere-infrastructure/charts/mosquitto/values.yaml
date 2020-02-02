@@ -1,0 +1,44 @@
+# Default values for mosquitto.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image: smizy/mosquitto:1.4.15-alpine
+
+imagePullPolicy: IfNotPresent
+
+service:
+  enabled: true
+  type: "ClusterIP"
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 2Gi
+  storageClass: standard
+
+deployment:
+  hostNetwork: false
+  probes:
+    livenessProbe:
+      tcpSocket:
+        port: 9090
+      initialDelaySeconds: 5
+      periodSeconds: 1
+    readinessProbe:
+      tcpSocket:
+        port: 9090
+      initialDelaySeconds: 3
+      periodSeconds: 3
+  resources:
+    requests:
+      cpu: 50m
+      memory: 100Mi
+    limits:
+      cpu: 100m
+      memory: 256Mi
+
+config: |-
+  log_dest stdout
+  listener 1883
+  listener 9090
+  protocol websockets
