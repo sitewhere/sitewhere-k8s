@@ -1,8 +1,8 @@
 apiVersion: v1
-appVersion: "3.0.0"
+appVersion: 3.0.0
 description: SiteWhere 3.0.0 Helm chart for Kubernetes using Default configuration
 name: sitewhere
-version: 3.0.0
+version: 0.3.0
 description: SiteWhere is an industrial strength open-source application enablement platform for the Internet of Things (IoT). It provides a multi-tenant microservice-based infrastructure that includes device/asset management, data ingestion, big-data storage, and integration through a modern, scalable architecture.
 keywords:
   - sitewhere
@@ -25,12 +25,10 @@ keywords:
   - kafka
   - zookeeper
   - microservices
-home: http://www.sitewhere.org/
+home: https://sitewhere.io
 maintainers: 
   - name: Derek Adams
     email: derek.adams@sitewhere.com
   - name: Jorge Villaverde
     email: jorge.villaverde@sitewhere.com
-icon: http://sitewhere.io/docs/2.0.0/images/favicon.png
-
-
+icon: https://s3.amazonaws.com/sitewhere.org-web-media/tech-images/sitewhere-symbol.png

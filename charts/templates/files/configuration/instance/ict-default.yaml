@@ -1,0 +1,22 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: InstanceConfigurationTemplate
+metadata:
+  name: default
+spec:
+  configuration:
+    persistenceConfigurations:
+      rdbConfigurations:
+        default:
+          hostname: "${mongodb.host:mongodb}"
+          port: "${mongodb.port:27017}"
+          databaseName: "${mongodb.tenant.prefix:tenant-[[tenant.id]]}"
+      influxDbConfigurations:
+        default:
+          hostname: "${influxdb.host:influxdb}"
+          port: "${influxdb.port:8086}"
+          databaseName: "${influxdb.database:[[tenant.id]]}"
+      cassandraConfigurations:
+        default:
+          contactPoints: "${cassandra.contact.points:cassandra}"
+          keyspace: "${cassandra.keyspace:tenant_[[tenant.id]]}"
+            

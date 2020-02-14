@@ -1,0 +1,18 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-label-generation
+  labels:
+      sitewhere.io/functional-area: label-generation
+spec:
+  configuration:
+    manager: {}
+    generators:
+      - id: qrcode
+        name: "QR Code Generator"
+        type: qrCode
+        configuration:
+          width: 200
+          height: 200
+          foregroundColor: 0xff333333
+          backgroundColor: 0xffffffff

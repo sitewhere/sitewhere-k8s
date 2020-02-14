@@ -1,0 +1,13 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: TenantDatasetTemplate
+metadata:
+  name: construction
+spec:
+  name: Construction
+  description: Construction Site Example
+  tenantEngineTemplates:
+    deviceManagement: construction-device-model
+    eventManagement: construction-event-model
+    assetManagement: construction-asset-model
+    scheduleManagement: default-schedule-model
+    

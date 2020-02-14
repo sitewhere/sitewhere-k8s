@@ -1,0 +1,14 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-event-management
+  labels:
+    sitewhere.io/functional-area: event-management
+spec:
+  configuration:
+    datastore:
+      type: warp10
+      configuration:
+        hostname: "sitewhere-infrastructure-warp10.default"
+        application: "sitewhere"
+        tokenSecret: "sitewhere"

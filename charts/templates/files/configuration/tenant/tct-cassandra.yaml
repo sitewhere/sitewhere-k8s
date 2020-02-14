@@ -1,0 +1,23 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: TenantConfigurationTemplate
+metadata:
+  name: cassandra
+spec:
+  name: Cassandra
+  description: MongoDB device management + Cassandra event management
+  tenantEngineTemplates:
+    assetManagement: default-asset-management
+    batchOperations: default-batch-operations
+    commandDelivery: default-command-delivery
+    deviceManagement: default-device-management
+    deviceRegistration: default-device-registration
+    deviceState: default-device-state
+    eventManagement: cassandra-event-management
+    eventSearch: default-event-search
+    eventSources: default-event-sources
+    inboundProcessing: default-inbound-processing
+    labelGeneration: default-label-generation
+    outboundConnectors: default-outbound-connectors
+    scheduleManagement: default-schedule-management
+    streamingMedia: default-streaming-media
+    

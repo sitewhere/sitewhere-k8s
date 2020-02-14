@@ -1,0 +1,193 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: TenantEngineDatasetTemplate
+metadata:
+  name: construction-event-model
+  labels:
+      sitewhere.io/functional-area: event-management
+spec:
+  configuration: |
+    let System = Java.type('java.lang.System');
+    let JavaLong = Java.type('java.lang.Long');
+    let JavaMath = Java.type('java.lang.Math');
+    let JavaDate = Java.type('java.util.Date');
+    let ArrayList = Java.type('java.util.ArrayList');
+    let UUID = Java.type('java.util.UUID');
+    let GeoUtils = Java.type('com.sitewhere.microservice.api.event.GeoUtils');
+    let Polygon = Java.type('com.vividsolutions.jts.geom.Polygon');
+    let GeometryFactory = Java.type('com.vividsolutions.jts.geom.GeometryFactory');
+    let MinimumBoundingCircle = Java.type('com.vividsolutions.jts.algorithm.MinimumBoundingCircle');
+    let AffineTransformation = Java.type('com.vividsolutions.jts.geom.util.AffineTransformation');
+    let Coordinate = Java.type('com.vividsolutions.jts.geom.Coordinate');
+    
+    // ########### //
+    // Common Code //
+    // ########### //
+    let mxPerAssignment = 50
+    let locationsPerAssignment = 40
+    let minTemp = 80
+    let warnTemp = 160
+    let errorTemp = 180
+    let criticalTemp = 200
+    let maxTemp = 220
+    
+    function randomId() { 
+      UUID.randomUUID().toString() 
+    }
+    
+    function randomItem(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+    
+    // Get Java data for ms offset.
+    function dateFor(ms) {
+      let longVal = JavaLong.parseLong(`${ms}`);
+      return new JavaDate(longVal);
+    }
+    
+    // #################### //
+    // Create Device Events //
+    // #################### //
+    
+    // Function for creating measurement and alert events.
+    function createMeasurements(assn, start) {
+      let current = Math.floor(start.getTime() - (Math.random() * 60000.0));
+      let temp = minTemp
+      let fuel = 100
+      let delta = 4
+      let mult = 6
+        
+      let mxRequests = []
+      let alertRequests = []
+      
+      let mxCount = 0
+      let alertCount = 0
+      for (var i = 0; i < mxPerAssignment; i++) {
+        // Simulate temperature changes.
+        temp = temp + (delta + ((Math.random() * mult * 2) - mult));
+        temp = Math.round(temp * 100.0) / 100.0;
+        if ((temp > maxTemp) || (temp < minTemp)) {
+          delta = -delta;
+        }
+    
+        // Simulate fuel changes.
+        fuel -= (Math.random() * 2);
+        fuel = Math.round(fuel * 100.0) / 100.0;
+        if (fuel < 0) {
+          fuel = 0;
+        }
+        
+        let fuellevel = eventBuilder.newMeasurements().measurement('fuel.level', fuel).on(dateFor(current)).trackState();
+        mxRequests.push(fuellevel);
+        mxCount++;
+        
+        let engtemp = eventBuilder.newMeasurements().measurement('engine.temperature', temp).on(dateFor(current)).trackState();
+        mxRequests.push(engtemp);
+        mxCount++;
+        
+        if (temp > warnTemp) {
+          let alert = eventBuilder.newAlert('engine.overheat', 'Engine temperature is at top of operating range.').on(dateFor(current)).warning().trackState();
+          if (temp > errorTemp) {
+            alert = eventBuilder.newAlert('engine.overheat', 'Engine temperature is at a dangerous level.').on(dateFor(current)).error().trackState();
+          }
+          if (temp > criticalTemp) {
+            alert = eventBuilder.newAlert('engine.overheat', 'Engine shut down due to critical temperature of ' + temp + ' degrees').on(dateFor(current)).critical().trackState();
+          }
+          alertRequests.push(alert);
+          alertCount++;
+        }
+        
+        current += Math.floor(Math.random() * 30000.0);
+      }
+          
+      eventBuilder.forAssignment(assn.getToken()).persistMeasurements(mxRequests);
+      let alerts = eventBuilder.forAssignment(assn.getToken()).persistAlerts(alertRequests);
+          
+      // Create alarms for critical alerts.
+      for (var ialert = 0; ialert < alerts.size(); ialert++) {
+        let alert = alerts.get(ialert);
+        if (alert.getLevel().name() == 'Critical') {
+          let alarm = deviceBuilder.newDeviceAlarm(assn.getToken(), alert.getMessage()); 
+          alarm.withTriggeringEventId(alert.getId());
+          deviceBuilder.persist(alarm);
+        }
+      }
+          
+      logger.info(`[Create Events] ${mxCount} measurements. ${alertCount} alerts.`)
+    }
+    
+    // Closure for creating location events.
+    function createLocations(assn, startDate, zone) {
+      let current = Math.floor(startDate.getTime() - (Math.random() * 60000.0));
+      let polyZone = GeoUtils.createPolygonForLocations(zone.getBounds());
+      let centroid = polyZone.getCentroid();
+    
+      // Calculate length of steps between locations based on bounding circle.
+      let circle = new MinimumBoundingCircle(polyZone);
+      let step = circle.getRadius() / 10;
+    
+      let cx = centroid.getX();
+      let cy = centroid.getY();
+      let deltaX = (Math.sqrt(Math.random()) * step * 2) - step;
+      let deltaY = (Math.sqrt(Math.random()) * step * 2) - step;
+    
+      // Used to rotate deltas to turn path and stay inside polygon.
+      let xform = new AffineTransformation();
+      xform.rotate(JavaMath.toRadians(22.5));
+      
+      let locationRequests = []
+    
+      let locCount = 0
+      let factory = new GeometryFactory();
+      for (var i = 0; i < locationsPerAssignment; i++) {
+        let foundNext = false;
+    
+        // Add a little randomness to path.
+        let waver = ((Math.random() * 20) - 10.0);
+        let waverXform = new AffineTransformation();
+        waverXform.rotate(JavaMath.toRadians(waver));
+        let waverDelta = new Coordinate(deltaX, deltaY);
+        waverXform.transform(waverDelta, waverDelta);
+        deltaX = waverDelta.x;
+        deltaY = waverDelta.y;
+    
+        while (!foundNext) {
+          let start = new Coordinate(cx, cy);
+          let end = new Coordinate(cx + deltaX, cy + deltaY);
+          let lineCoords = new ArrayList();
+          lineCoords.add(start);
+          lineCoords.add(end);
+          let line = factory.createLineString(lineCoords);
+          if (polyZone.contains(line)) {
+            let newloc = eventBuilder.newLocation(end.y, end.x).on(dateFor(current)).trackState();
+            locationRequests.push(newloc);
+    
+            cx = cx + deltaX;
+            cy = cy + deltaY;
+            foundNext = true;
+          } else {
+            // Rotate deltas and try again.
+            let delta = new Coordinate(deltaX, deltaY);
+            xform.transform(delta, delta);
+            deltaX = delta.x;
+            deltaY = delta.y;
+          }
+        }
+        locCount++;
+        current += Math.floor(Math.random() * 30000.0);
+      }
+      eventBuilder.forAssignment(assn.getToken()).persistLocations(locationRequests);
+      logger.info(`[Create Events] ${locCount} locations.`);
+    }
+    
+    // ############################# //
+    // Create Events for Assignments //
+    // ############################# //
+    
+    let start = dateFor(System.currentTimeMillis() - (2 * 60 * 60 * 1000));
+    let allActiveAssn = deviceBuilder.allActiveAssignments();
+    let zone = deviceBuilder.zoneByToken('officepark');
+    for (var iassn = 0; iassn < allActiveAssn.size(); iassn++) {
+      let assn = allActiveAssn.get(iassn);
+      createMeasurements(assn, start);
+      createLocations(assn, start, zone);
+    }

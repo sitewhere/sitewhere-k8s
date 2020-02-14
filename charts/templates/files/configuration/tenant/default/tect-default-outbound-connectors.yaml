@@ -1,0 +1,15 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-outbound-connectors
+  labels:
+      sitewhere.io/functional-area: outbound-connectors
+spec:
+  configuration:
+    outboundConnectors:
+      - id: mqtt1
+        type: mqtt
+        configuration:
+          hostname: ${mqtt.host:sitewhere-infrastructure-mosquitto.default}
+          port: ${mqtt.port:1883}
+          topic: SiteWhere/${tenant.token}/output/mqtt

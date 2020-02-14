@@ -1,0 +1,17 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-device-registration
+  labels:
+      sitewhere.io/functional-area: device-registration
+spec:
+  configuration:
+    allowNewDevices: false
+    assignmentDefaults:
+      useDefaultDeviceType: true
+      defaultDeviceTypeToken: mega2560
+      useDefaultCustomer: true
+      defaultCustomerToken: acme
+      useDefaultArea: true
+      defaultAreaToken: southeast
+ 

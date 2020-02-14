@@ -1,0 +1,17 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-batch-operations
+  labels:
+      sitewhere.io/functional-area: batch-operations
+spec:
+  configuration:
+    datastore:
+      type: postgres95
+      configuration:
+        hostname: "sitewhere-postgresql.default"
+        port: 5432
+        username: "syncope"
+        password: "syncope"
+    batchOperationManager:
+      throttleDelayMs: 100

@@ -1,0 +1,15 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-device-management
+  labels:
+    sitewhere.io/functional-area: device-management
+spec:
+  configuration: 
+    datastore:
+      type: postgres95
+      configuration:
+        hostname: "sitewhere-postgresql.default"
+        port: 5432
+        username: "syncope"
+        password: "syncope"

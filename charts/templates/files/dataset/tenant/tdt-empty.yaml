@@ -1,0 +1,9 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: TenantDatasetTemplate
+metadata:
+  name: empty
+spec:
+  name: Empty
+  description: Empty Tenant
+  tenantEngineTemplates:
+    

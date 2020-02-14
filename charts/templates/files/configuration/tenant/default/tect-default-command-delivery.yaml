@@ -1,0 +1,18 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-command-delivery
+  labels:
+      sitewhere.io/functional-area: command-delivery
+spec:
+  configuration:
+    router:
+      type: deviceTypeMapping
+      configuration:
+        defaultDestination: default
+    commandDestinations:
+      - id: default
+        type: mqtt
+        configuration:
+          hostname: ${mqtt.host:localhost}
+          port: ${mqtt.port:1883}

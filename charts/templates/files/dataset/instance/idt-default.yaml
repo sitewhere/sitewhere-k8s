@@ -1,0 +1,68 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: InstanceDatasetTemplate
+metadata:
+  name: default
+spec:
+  datasets:
+    tenantManagement: |
+      // Create default tenant if does not exist.
+      let tenant = tenantBuilder.getTenantByToken('default')
+      if (tenant != null) {
+      	logger.info('Default tenant already exists.');
+      } else {
+        tenant = tenantBuilder.newTenant('default', 'Default Tenant', 'sitewhere1234567890',
+          'https://s3.amazonaws.com/sitewhere-demo/sitewhere-small.png', 'default', 'construction')
+        tenant.withAuthorizedUserId('admin' )
+        tenant.withAuthorizedUserId('noadmin')
+        tenant = tenantBuilder.persist(tenant)
+      
+        logger.info(`[Create Tenant] ${tenant.getToken()}`)
+      }
+    userManagement: |
+      let SiteWhereAuthority = Java.type('com.sitewhere.spi.user.SiteWhereAuthority')
+      let AccountStatus = Java.type('com.sitewhere.spi.user.AccountStatus')
+      
+      // Use default system authorities tree.
+      let authIds = [];
+      let allAuthorities = []
+      allAuthorities.push.apply(allAuthorities, SiteWhereAuthority.values());
+
+      allAuthorities.forEach(authority => {
+        // Add any authorities not already present.
+        if (!userBuilder.hasAuthority(authority.getName())) {
+          let newAuth = userBuilder.newGrantedAuthority(authority.getName())
+          newAuth.withDescription(authority.getDescription())
+          newAuth.withParent(authority.getParent())
+          newAuth.makeGroup(authority.isGroup())
+          newAuth = userBuilder.persist(newAuth)
+          logger.info(`[Create Authority] ${newAuth.getAuthority()}`)
+        }
+        if (!authority.isGroup()) {
+          authIds.push(authority.getName())
+        }
+      })
+      
+      // Only add users if no data in system.
+      if (!userBuilder.hasUsers()) {
+        // Create the primary admin user.
+        let adminUser = userBuilder.newUser('admin', 'password', 'Admin', 'User')
+        adminUser.withStatus(AccountStatus.Active) 
+        authIds.forEach(auth => adminUser.withAuthority(auth))
+        adminUser = userBuilder.persist(adminUser)
+        logger.info(`[Create User] ${adminUser.getUsername()}`)
+        
+        
+        // Create the default non-admin user.
+        let nonAdminUser = userBuilder.newUser('noadmin', 'noadmin', 'Non-Admin', 'User')
+        nonAdminUser.withStatus(AccountStatus.Active) 
+        authIds.forEach(auth => {
+        	if (auth != SiteWhereAuthority.ViewServerInfo.getName() &&
+        	    auth != SiteWhereAuthority.AdminTenants.getName() &&
+        	    auth != SiteWhereAuthority.AdminUsers.getName()) {
+        	  nonAdminUser.withAuthority(auth)
+        	}
+        })
+        nonAdminUser = userBuilder.persist(nonAdminUser)
+        logger.info(`[Create User] ${nonAdminUser.getUsername()}`)
+      }
+      

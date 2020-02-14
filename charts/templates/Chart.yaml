@@ -1,0 +1,17 @@
+apiVersion: v1
+name: sitewhere-templates
+version: 0.3.0
+tillerVersion: ">=2.7.2"
+description: Helm chart for deploying default resources such as templates
+keywords:
+  - sitewhere
+  - kubernetes
+sources:
+  - https://github.com/sitewhere/sitewhere-k8s-operator
+home: https://sitewhere.io
+maintainers: 
+  - name: Derek Adams
+    email: derek.adams@sitewhere.com
+  - name: Jorge Villaverde
+    email: jorge.villaverde@sitewhere.com
+icon: https://s3.amazonaws.com/sitewhere.org-web-media/tech-images/sitewhere-symbol.png
