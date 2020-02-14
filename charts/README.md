@@ -6,43 +6,41 @@ the infrastructure need to be scaled or reconfigured. The chart for microservice
 per instance deployed and may be deleted without shutting down the infrastructure chart.
 
 ## Prerequisites
-There are a few components which must be installed before deploying SiteWhere via Helm.
-
-### SiteWhere Operator
-SiteWhere 3.0 includes a Kubernetes operator/controller which operates on Custom Resource Definitions (CRDs)
-which provide metadata about the desired state of a SiteWhere instance. To install the SiteWhere operator,
-clone the repository using the following command:
+There are a few components which must be installed before deploying SiteWhere via Helm. Start
+by cloning the k8s charts repository using the following command:
 
 ```console
-git clone https://github.com/sitewhere/sitewhere-k8s-operator.git
+git clone https://github.com/sitewhere/sitewhere-k8s.git
 ```
 
-#### Install SiteWhere Custom Resource Definitions
-Before the operator may be used, the SiteWhere custom resource definitions must be installed. Install the
-CRDs via Helm using the following command:
+Make sure that Helm is installed and open a command line in the `charts` subfolder.
+
+### Install SiteWhere Custom Resource Definitions
+In order to prepare the system for running SiteWhere instances, the SiteWhere custom resource definitions 
+must be installed. Install the CRDs via Helm using the following command:
 
 ```console
-helm install --name sitewhere-crds installer/crds/.
+helm install --name sitewhere-crds crds/.
 ```
 
-#### Install Default Instance and Tenant Templates
+### Install Default Instance and Tenant Templates
 In order to bootstrap an instance, default instance and tenant templates must
 be installed. These templates determine the default system configuration and
 may be customized before/after installation. The command below will install the 
 default templates:
 
 ```console
-helm install --name sitewhere-templates installer/templates/.
+helm install --name sitewhere-templates templates/.
 ```
 
-#### Install SiteWhere Operator
+### Install SiteWhere Operator
 The SiteWhere operator is an orchestrator which uses the CRDs and templates to realize 
 SiteWhere instances at runtime. The operator translates SiteWhere CRDs into Kubernetes
 resources and monitors the runtime in order to match the desired state. Install the operator
 via Helm as shown below:
 
 ```console
-helm install --name sitewhere-operator installer/operator/.
+helm install --name sitewhere-operator operator/.
 ```
 ### Istio Service Mesh
 SiteWhere 3.0 requires [Istio](https://istio.io/), with 
@@ -69,20 +67,6 @@ If not, add the label to the namespace:
 
 ```console
 kubectl label namespace default istio-injection=enabled
-```
-
-## Add SiteWhere Helm Repository
-
-Before you deploy SiteWhere using Helm, you need to add SiteWhere Helm Repository.
-
-```console
-helm repo add sitewhere https://sitewhere.io/helm-charts
-helm repo update
-```
-You can also clone the SiteWhere Helm charts by executing:
-
-```console
-git clone https://github.com/sitewhere/sitewhere-k8s.git
 ```
 
 ## Deploy SiteWhere Infrastructure Components
