@@ -5,5 +5,8 @@ dependencies:
 - name: redis-ha
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 4.3.3
-digest: sha256:0505dddef548e3c8132f7409e5693323665d3c076d847d440204e1007d15ccaf
-generated: 2020-01-30T18:59:11.8051799-05:00
+- name: nifi
+  repository: https://cetic.github.io/helm-charts
+  version: 0.3.2
+digest: sha256:ee9db18920771f6af04d13d5a4a513e912295ee4f51260942ced4f4586278c64
+generated: 2020-02-11T09:25:53.193504-05:00

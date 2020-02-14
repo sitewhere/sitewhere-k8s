@@ -2,34 +2,29 @@ apiVersion: sitewhere.io/v1alpha3
 kind: SiteWhereMicroservice
 metadata:
   name: instance-management-microservice
+{{include "sitewhere.microservice.metadata" . | indent 2 }}
   labels:
-    sitewhere.io/instance: sitewhere
+{{include "sitewhere.microservice.labels" . | indent 4 }}
     sitewhere.io/functional-area: instance-management
 spec:
-  replicas: 1
+  replicas: {{ .Values.microservices.default.replicas | default 1 }}
   configuration:
     example: 234
-  helm:
-    chartName: sitewhere
-    releaseName: sitewhere
-    releaseService: Tiller
+{{include "sitewhere.helm.environment" . | indent 2 }}
   podSpec:
-    imageRegistry: docker.io
-    imageRepository: sitewhere
-    imageTag: 3.0.0.alpha1
-    imagePullPolicy: IfNotPresent
+{{include "sitewhere.docker.environment" . | indent 4 }}
     ports:
       - containerPort: 8080
       - containerPort: 9000
       - containerPort: 9090
     env:
-{{include "sitewhere.microservice.environment" . | indent 4 }}
+{{include "sitewhere.microservice.environment" . | indent 6 }}
       - name: "sitewhere.config.syncope.host"
         value: "sitewhere-syncope"
       - name: "sitewhere.config.syncope.port"
         value: "8080"
   serviceSpec:
-    type: LoadBalancer
+{{include "sitewhere.microservice.service" . | indent 4 }}
     ports:
       - port: 8080
         targetPort: 8080

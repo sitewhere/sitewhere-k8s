@@ -2,29 +2,23 @@ apiVersion: sitewhere.io/v1alpha3
 kind: SiteWhereMicroservice
 metadata:
   name: command-delivery-microservice
+{{include "sitewhere.microservice.metadata" . | indent 2 }}
   labels:
-    sitewhere.io/instance: sitewhere
+{{include "sitewhere.microservice.labels" . | indent 4 }}
     sitewhere.io/functional-area: command-delivery
 spec:
-  replicas: 1
-  multitenant: true
+{{include "sitewhere.microservice.spec" . | indent 2 }}
   configuration: {}
-  helm:
-    chartName: sitewhere
-    releaseName: sitewhere
-    releaseService: Tiller
+{{include "sitewhere.helm.environment" . | indent 2 }}
   podSpec:
-    imageRegistry: docker.io
-    imageRepository: sitewhere
-    imageTag: 3.0.0.alpha1
-    imagePullPolicy: IfNotPresent
+{{include "sitewhere.docker.environment" . | indent 4 }}
     ports:
       - containerPort: 9000
       - containerPort: 9090
     env:
-{{include "sitewhere.microservice.environment" . | indent 4 }}
+{{include "sitewhere.microservice.environment" . | indent 6 }}
   serviceSpec:
-    type: LoadBalancer
+{{include "sitewhere.microservice.service" . | indent 4 }}
     ports:
       - port: 9000
         targetPort: 9000

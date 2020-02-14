@@ -1,9 +1,9 @@
 apiVersion: sitewhere.io/v1alpha3
 kind: SiteWhereInstance
 metadata:
-  name: sitewhere1
+  name: {{ .Release.Name }}
 spec:
-  instanceNamespace: sitewhere
+  instanceNamespace: {{ .Release.Name }}
   configurationTemplate: default
   datasetTemplate: default
   
