@@ -1,11 +1,14 @@
-# SiteWhere Microservice Settings
-microservices:
-  default:
-    replicas: 1
-    service:
-      type: LoadBalancer
+# SiteWhere Instance Settings
+web:
+  http:
+    port: 8080
 docker:
   imageRegistry: docker.io
   imageRepository: sitewhere
   imageTag: 3.0.0.alpha1
   imagePullPolicy: IfNotPresent
+microservices:
+  default:
+    replicas: 1
+    service:
+      type: ClusterIP

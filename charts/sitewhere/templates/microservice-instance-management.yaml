@@ -9,7 +9,9 @@ metadata:
 spec:
   replicas: {{ .Values.microservices.default.replicas | default 1 }}
   configuration:
-    example: 234
+    userManagement:
+      syncopeHost: sitewhere-syncope.default
+      syncopePort: 8080
 {{include "sitewhere.helm.environment" . | indent 2 }}
   podSpec:
 {{include "sitewhere.docker.environment" . | indent 4 }}
@@ -19,10 +21,6 @@ spec:
       - containerPort: 9090
     env:
 {{include "sitewhere.microservice.environment" . | indent 6 }}
-      - name: "sitewhere.config.syncope.host"
-        value: "sitewhere-syncope"
-      - name: "sitewhere.config.syncope.port"
-        value: "8080"
   serviceSpec:
 {{include "sitewhere.microservice.service" . | indent 4 }}
     ports:
@@ -47,52 +45,19 @@ apiVersion: v1
 kind: Service
 metadata:
   name: sitewhere-rest-http
+  namespace: {{ .Release.Name }}
   labels:
-    app.kubernetes.io/name: sitewhere
-    helm.sh/chart: sitewhere
-    app.kubernetes.io/instance: sitewhere
-    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/name: {{ .Release.Name }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
-    - port: 8080
+    - port: {{ .Values.web.http.port | default 8080 }}
       targetPort: 8080
       protocol: TCP
       name: http-rest
   selector:
-    sitewhere.io/instance: sitewhere
-    sitewhere.io/functional-area: instance-management
----
-apiVersion: networking.istio.io/v1alpha3
-kind: Gateway
-metadata:
-  name: sitewhere-gateway
-spec:
-  selector:
-    istio: ingressgateway
-  servers:
-  - port:
-      number: 80
-      name: http-rest
-      protocol: HTTP
-    hosts:
-    - "*"
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: sitewhere-rest
-spec:
-  hosts:
-  - "*"
-  gateways:
-  - sitewhere-gateway
-  http:
-  - match:
-    - uri:
-        prefix: /
-    route:
-    - destination:
-        port:
-          number: 8080
-        host: sitewhere-rest-http
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    sitewhere.io/name: instance-management

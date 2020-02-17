@@ -40,7 +40,7 @@ resources and monitors the runtime in order to match the desired state. Install 
 via Helm as shown below:
 
 ```console
-helm install --name sitewhere-operator operator/.
+helm install --namespace sitewhere-system --name sitewhere-operator operator/.
 ```
 ### Istio Service Mesh
 SiteWhere 3.0 requires [Istio](https://istio.io/), with 
@@ -74,13 +74,13 @@ kubectl label namespace default istio-injection=enabled
 To start the infrastructure components with default settings, execute the following:
 
 ```console
-helm install --name sitewhere sitewhere/sitewhere-infrastructure
+helm install --namespace sitewhere-system --name sitewhere sitewhere/sitewhere-infrastructure
 ```
 or from a cloned repository execute:
 
 ```console
 cd sitewhere-k8s/charts/sitewhere-infrastructure
-helm install --name sitewhere-infrastructure .
+helm install --namespace sitewhere-system --name sitewhere-infrastructure .
 ```
 
 ## Deploy SiteWhere Microservices
