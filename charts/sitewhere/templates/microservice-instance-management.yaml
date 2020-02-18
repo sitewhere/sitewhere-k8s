@@ -10,7 +10,7 @@ spec:
   replicas: {{ .Values.microservices.default.replicas | default 1 }}
   configuration:
     userManagement:
-      syncopeHost: sitewhere-syncope.default
+      syncopeHost: sitewhere-syncope.sitewhere-system
       syncopePort: 8080
 {{include "sitewhere.helm.environment" . | indent 2 }}
   podSpec:

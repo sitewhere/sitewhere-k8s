@@ -9,7 +9,7 @@ spec:
     datastore:
       type: postgres95
       configuration:
-        hostname: "sitewhere-postgresql.default"
+        hostname: "sitewhere-postgresql.sitewhere-system"
         port: 5432
         username: "syncope"
         password: "syncope"

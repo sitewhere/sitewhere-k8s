@@ -4,19 +4,33 @@ metadata:
   name: default
 spec:
   configuration:
+    infrastructure:
+      namespace: sitewhere-system
+      redis:
+        hostname: sitewhere-infrastructure-redis-ha-announce
+        port: 26379
+        nodeCount: 3
+        masterGroupName: sitewhere
+      kafka:
+        hostname: sitewhere-kafka-kafka-bootstrap
+        port: 9092
+        defaultTopicPartitions: 8
+        defaultTopicReplicationFactor: 3
     persistenceConfigurations:
       rdbConfigurations:
         default:
-          hostname: "${mongodb.host:mongodb}"
-          port: "${mongodb.port:27017}"
-          databaseName: "${mongodb.tenant.prefix:tenant-[[tenant.id]]}"
+          type: postgres95
+          configuration:
+            hostname: "sitewhere-postgresql.sitewhere-system"
+            port: 5432
+            username: "syncope"
+            password: "syncope"      
       influxDbConfigurations:
         default:
-          hostname: "${influxdb.host:influxdb}"
-          port: "${influxdb.port:8086}"
-          databaseName: "${influxdb.database:[[tenant.id]]}"
+          hostname: sitewhere-influxdb
+          port: 8086
+          databaseName: tenant_${tenant.id}
       cassandraConfigurations:
         default:
-          contactPoints: "${cassandra.contact.points:cassandra}"
-          keyspace: "${cassandra.keyspace:tenant_[[tenant.id]]}"
-            
+          contactPoints: sitewhere-cassandra
+          keyspace: tenant_${tenant.id}
