@@ -16,15 +16,24 @@ spec:
         port: 9092
         defaultTopicPartitions: 8
         defaultTopicReplicationFactor: 3
+      metrics:
+        enabled: true
+        httpPort: 9090
+      grpc:
+        maxRetryCount: 6
+        initialBackoffSeconds: 10
+        maxBackoffSeconds: 600
+        backoffMultiplier: 1.5
+        resolveFQDN: false
     persistenceConfigurations:
       rdbConfigurations:
         default:
           type: postgres95
           configuration:
-            hostname: "sitewhere-postgresql.sitewhere-system"
+            hostname: sitewhere-postgresql.sitewhere-system
             port: 5432
-            username: "syncope"
-            password: "syncope"      
+            username: syncope
+            password: syncope   
       influxDbConfigurations:
         default:
           hostname: sitewhere-influxdb

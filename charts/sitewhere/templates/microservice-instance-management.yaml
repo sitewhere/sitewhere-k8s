@@ -12,6 +12,7 @@ spec:
     userManagement:
       syncopeHost: sitewhere-syncope.sitewhere-system
       syncopePort: 8080
+      jwtExpirationInMinutes: 60
 {{include "sitewhere.helm.environment" . | indent 2 }}
   podSpec:
 {{include "sitewhere.docker.environment" . | indent 4 }}
