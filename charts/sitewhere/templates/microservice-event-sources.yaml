@@ -8,6 +8,9 @@ metadata:
     sitewhere.io/functional-area: event-sources
 spec:
 {{include "sitewhere.microservice.spec" . | indent 2 }}
+  name: Event Sources
+  description: Handles inbound device data from various sources, protocols, and formats
+  icon: forward
   configuration: {}
 {{include "sitewhere.helm.environment" . | indent 2 }}
   podSpec:

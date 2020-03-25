@@ -7,6 +7,9 @@ metadata:
 {{include "sitewhere.microservice.labels" . | indent 4 }}
     sitewhere.io/functional-area: instance-management
 spec:
+  name: Instance Management
+  description: Handles APIs for managing global aspects of an instance
+  icon: language
   replicas: {{ .Values.microservices.default.replicas | default 1 }}
   configuration:
     userManagement:

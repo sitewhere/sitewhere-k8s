@@ -8,6 +8,9 @@ metadata:
     sitewhere.io/functional-area: asset-management
 spec:
 {{include "sitewhere.microservice.spec" . | indent 2 }}
+  name: Asset Management
+  description: Provides APIs for managing assets associated with device assignments
+  icon: devices_other
   configuration:
     test: 123
 {{include "sitewhere.helm.environment" . | indent 2 }}

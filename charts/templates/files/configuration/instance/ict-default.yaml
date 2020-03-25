@@ -32,8 +32,9 @@ spec:
           configuration:
             hostname: sitewhere-postgresql.sitewhere-system
             port: 5432
+            maxConnections: 5
             username: syncope
-            password: syncope   
+            password: syncope
       influxDbConfigurations:
         default:
           hostname: sitewhere-influxdb

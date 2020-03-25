@@ -8,6 +8,9 @@ metadata:
     sitewhere.io/functional-area: command-delivery
 spec:
 {{include "sitewhere.microservice.spec" . | indent 2 }}
+  name: Command Delivery
+  description: Manages delivery of commands in various formats based on invocation events
+  icon: call_made
   configuration: {}
 {{include "sitewhere.helm.environment" . | indent 2 }}
   podSpec:

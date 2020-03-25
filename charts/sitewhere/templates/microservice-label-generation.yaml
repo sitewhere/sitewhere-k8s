@@ -8,6 +8,9 @@ metadata:
     sitewhere.io/functional-area: label-generation
 spec:
 {{include "sitewhere.microservice.spec" . | indent 2 }}
+  name: Label Generation
+  description: Supports generating labels such as bar codes and QR codes for devices
+  icon: label
   configuration: {}
 {{include "sitewhere.helm.environment" . | indent 2 }}
   podSpec:
