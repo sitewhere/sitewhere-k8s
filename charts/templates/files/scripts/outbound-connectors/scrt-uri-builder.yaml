@@ -4,7 +4,7 @@ metadata:
   name: outbound-connectors-uri-builder
   labels:
     sitewhere.io/functional-area: outbound-connectors
-    scripting.sitewhere.io/function: uri-builder
+    scripting.sitewhere.io/category: outbound-connectors-uri-builder-category
 spec:
   name: URI Builder
   description: Implements a URI builder.

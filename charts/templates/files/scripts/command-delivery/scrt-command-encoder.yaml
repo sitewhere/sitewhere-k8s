@@ -4,7 +4,7 @@ metadata:
   name: command-delivery-command-encoder
   labels:
     sitewhere.io/functional-area: command-delivery
-    scripting.sitewhere.io/function: command-encoder
+    scripting.sitewhere.io/category: command-delivery-command-encoder-category
 spec:
   name: Command Encoder
   description: Performs custom device-specific command encoding.

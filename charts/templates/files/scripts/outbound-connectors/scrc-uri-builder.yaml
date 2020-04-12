@@ -1,0 +1,9 @@
+apiVersion: scripting.sitewhere.io/v1alpha3
+kind: SiteWhereScriptCategory
+metadata:
+  name: outbound-connectors-uri-builder-category
+  labels:
+    sitewhere.io/functional-area: outbound-connectors
+spec:
+  name: URI Builder
+  description: Builds a URI based on context information

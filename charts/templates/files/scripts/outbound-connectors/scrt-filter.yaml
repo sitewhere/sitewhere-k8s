@@ -4,7 +4,7 @@ metadata:
   name: outbound-connectors-filter
   labels:
     sitewhere.io/functional-area: outbound-connectors
-    scripting.sitewhere.io/function: filter
+    scripting.sitewhere.io/category: outbound-connectors-filter-category
 spec:
   name: Filter
   description: Implements an outbound connector event filter.

@@ -4,7 +4,7 @@ metadata:
   name: event-sources-binary-decoder
   labels:
     sitewhere.io/functional-area: event-sources
-    scripting.sitewhere.io/function: event-decoder
+    scripting.sitewhere.io/category: event-sources-event-decoder-category
 spec:
   name: Binary Event Decoder
   description: Decodes a binary payload into zero or more device events
