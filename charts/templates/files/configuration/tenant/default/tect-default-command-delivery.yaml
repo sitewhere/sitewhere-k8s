@@ -7,12 +7,18 @@ metadata:
 spec:
   configuration:
     router:
-      type: deviceTypeMapping
+      type: device-type-mapping
       configuration:
+        mappings: {}
         defaultDestination: default
     commandDestinations:
       - id: default
         type: mqtt
+        parameterExtractor:
+          type: mqtt-default
+          configuration:
+            commandTopicExpression: SiteWhere/${tenant.token}/command/${device.token}
+            systemTopicExpression: SiteWhere/${tenant.token}/system/${device.token}
         configuration:
-          hostname: ${mqtt.host:localhost}
-          port: ${mqtt.port:1883}
+          hostname: sitewhere-infrastructure-mosquitto.sitewhere-system
+          port: 1883

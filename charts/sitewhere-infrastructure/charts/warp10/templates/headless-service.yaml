@@ -5,10 +5,10 @@ metadata:
   annotations:
 {{ toYaml .Values.service.annotations | indent 4 }}
 {{- end }}
-  name: {{ template "wrap10.fullname" . }}-headless
+  name: {{ template "warp10.fullname" . }}-headless
   labels:
-    app.kubernetes.io/name: "{{ template "wrap10.name" . }}"
-    helm.sh/chart: "{{ template "wrap10.chart" . }}"
+    app.kubernetes.io/name: "{{ template "warp10.name" . }}"
+    helm.sh/chart: "{{ template "warp10.chart" . }}"
     app.kubernetes.io/instance: "{{ .Release.Name }}"
     app.kubernetes.io/managed-by: "{{ .Release.Service }}"
 spec:
@@ -25,5 +25,5 @@ spec:
   {{- end }}
   clusterIP: None
   selector:
-    app: {{ template "wrap10.name" . }}
+    app: {{ template "warp10.name" . }}
     release: {{ .Release.Name }}

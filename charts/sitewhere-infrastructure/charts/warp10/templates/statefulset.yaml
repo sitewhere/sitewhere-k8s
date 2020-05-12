@@ -1,22 +1,26 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: "{{ template "wrap10.fullname" . }}"
+  name: "{{ template "warp10.fullname" . }}"
   labels:
-    app: {{ include "wrap10.name" . }}
-    chart: {{ include "wrap10.chart" . }}
+    app: {{ include "warp10.name" . }}
+    chart: {{ include "warp10.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  serviceName: {{ template "wrap10.fullname" . }}-headless
+  serviceName: {{ template "warp10.fullname" . }}-headless
   podManagementPolicy: {{ .Values.podManagementPolicy }}
   replicas: {{ default 1 .Values.brokers }}
   updateStrategy:
     type: {{ .Values.updateStrategy }}
+  selector:
+    matchLabels:  
+      app: {{ template "warp10.name" . }}
+      release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "wrap10.name" . }}
+        app: {{ template "warp10.name" . }}
         release: {{ .Release.Name }}
       {{- if .Values.podAnnotations }}
       annotations:
@@ -35,7 +39,7 @@ spec:
                   - key: "app"
                     operator: In
                     values:
-                    - {{ template "wrap10.name" . }}
+                    - {{ template "warp10.name" . }}
                   - key: "release"
                     operator: In
                     values:
@@ -48,7 +52,7 @@ spec:
       {{- end}}
       {{- end }}
       containers:
-      - name: {{ template "wrap10.fullname" . }}
+      - name: {{ template "warp10.fullname" . }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         resources:

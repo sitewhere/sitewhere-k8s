@@ -1,12 +1,12 @@
 dependencies:
 - name: postgresql
   repository: https://kubernetes-charts.storage.googleapis.com
-  version: 8.1.0
+  version: 8.6.4
 - name: redis-ha
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 4.3.3
 - name: nifi
   repository: https://cetic.github.io/helm-charts
   version: 0.3.2
-digest: sha256:ee9db18920771f6af04d13d5a4a513e912295ee4f51260942ced4f4586278c64
-generated: 2020-02-11T09:25:53.193504-05:00
+digest: sha256:dd3a387d3ac3253c5550d0c058a808950c5f1dc77d9922a2e6ab829056a1689c
+generated: 2020-05-12T17:58:12.8967898-04:00

@@ -1,10 +1,17 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sitewhere-{{.Values.syncope.syncopeConsoleConfig.name}}
 spec:
   replicas: 1
   strategy: {}
+  selector:
+    matchLabels:  
+      name: "sitewhere-{{.Values.syncope.syncopeConsoleConfig.name}}"
+      app.kubernetes.io/name: "sitewhere-{{.Values.syncope.syncopeConsoleConfig.name}}"
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      sitewhere.io/role: "infrastructure"
+      sitewhere.io/name: "syncope-console"
   template:
     metadata:
       annotations:
