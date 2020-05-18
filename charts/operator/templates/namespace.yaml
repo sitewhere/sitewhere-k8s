@@ -3,5 +3,4 @@ kind: Namespace
 metadata:
   name: sitewhere-system
   labels:
-    name: sitewhere-system
     app: sitewhere
