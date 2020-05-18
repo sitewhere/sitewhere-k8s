@@ -55,6 +55,7 @@ rules:
   - persistentvolumeclaims
   - events
   - secrets
+  - namespaces
   verbs:
   - "*"
 - apiGroups:
