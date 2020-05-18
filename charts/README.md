@@ -97,3 +97,26 @@ or from a cloned repository execute:
 cd sitewhere-k8s/charts/sitewhere
 helm install --name sitewhere .
 ```
+
+## Steps to install from Repository (WIP)
+
+1 - Install Istio Service Mesh with Sidecar Injection Enabled
+
+2 - 
+
+```console
+kubectl create namespace sitewhere
+kubectl label namespace sitewhere istio-injection=enabled
+
+helm install --name sitewhere-crds crds/.
+helm install --name sitewhere-templates templates/.
+helm install --namespace sitewhere-system --name sitewhere-operator operator/.
+
+helm repo add cetic https://cetic.github.io/helm-charts
+helm repo update
+helm dep update sitewhere-infrastructure/
+
+helm install --namespace sitewhere-system --name sitewhere-infrastructure ./sitewhere-infrastructure
+
+helm install --name sitewhere ./sitewhere
+```
