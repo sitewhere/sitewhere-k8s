@@ -9,9 +9,11 @@ rules:
   - sitewhere.io
   resources:
   - instances
+  - instances/status
   - microservices
   - tenants
   - tenantengines
+  - tenantengines/status
   verbs:
   - "*"
 - apiGroups:
