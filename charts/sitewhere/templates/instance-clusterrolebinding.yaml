@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: sitewhere-instance-clusterrole-binding-{{ .Release.Namespace }}
+  labels:
+    app: sitewhere
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: sitewhere-instance-clusterrole-{{ .Release.Namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: sitewhere-instance-service-account-{{ .Release.Namespace }}
+    namespace: {{ .Release.Namespace }}
+    

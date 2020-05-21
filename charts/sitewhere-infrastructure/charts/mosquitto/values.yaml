@@ -14,7 +14,7 @@ persistence:
   enabled: true
   accessMode: ReadWriteOnce
   size: 2Gi
-  storageClass: standard
+  #storageClass: standard
 
 deployment:
   hostNetwork: false

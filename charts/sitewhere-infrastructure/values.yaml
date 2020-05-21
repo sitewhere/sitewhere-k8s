@@ -6,7 +6,6 @@ postgresql:
   enabled: true
   persistence:
     enabled: true
-    storageClass: rook-ceph-block
     size: 500Mi
   postgresqlUsername: syncope
   postgresqlDatabase: syncope
@@ -21,7 +20,6 @@ postgresql:
 # Mosquitto
 mosquitto:
   persistence:
-    storageClass: rook-ceph-block
     size: 500Mi
   service:
     type: LoadBalancer
@@ -34,7 +32,6 @@ redis-ha:
     masterGroupName: "sitewhere"
   persistentVolume:
     enabled: true
-    storageClass: rook-ceph-block
     size: 500Mi
 
 # Apache Nifi
@@ -47,7 +44,6 @@ nifi:
     httpsPort: 9443
   persistence:
     enabled: true
-    storageClass: rook-ceph-block
     flowfileRepoStorage:
       size: 1Gi
     contentRepoStorage:
