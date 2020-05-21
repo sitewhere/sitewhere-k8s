@@ -91,6 +91,7 @@ may be deployed by executing:
 ```console
 helm install --name sitewhere sitewhere/sitewhere
 ```
+
 or from a cloned repository execute:
 
 ```console
@@ -102,7 +103,13 @@ helm install --name sitewhere .
 
 1 - Install Istio Service Mesh with Sidecar Injection Enabled
 
-2 - 
+2 - Install SiteWhere
+
+```console
+helm repo add cetic https://cetic.github.io/helm-charts
+helm repo update
+helm dep update ./sitewhere-infrastructure/
+```
 
 ```console
 kubectl create namespace sitewhere
@@ -112,11 +119,26 @@ helm install --name sitewhere-crds crds/.
 helm install --name sitewhere-templates templates/.
 helm install --namespace sitewhere-system --name sitewhere-operator operator/.
 
-helm repo add cetic https://cetic.github.io/helm-charts
-helm repo update
-helm dep update sitewhere-infrastructure/
+# wait for the operator
+kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-operator --for condition=available
 
 helm install --namespace sitewhere-system --name sitewhere-infrastructure ./sitewhere-infrastructure
 
-helm install --name sitewhere ./sitewhere
+helm install --namespace sitewhere --name sitewhere ./sitewhere
+```
+
+## Clean up
+
+```console
+helm delete --purge sitewhere
+helm delete --purge sitewhere-infrastructure
+helm delete --purge sitewhere-operator
+helm delete --purge sitewhere-templates
+helm delete --purge sitewhere-crds
+```
+
+If you want to delete persistent data from the infrastructure.
+
+```console
+kubectl delete pvc -l release=sitewhere-infrastructure -n sitewhere-system
 ```
