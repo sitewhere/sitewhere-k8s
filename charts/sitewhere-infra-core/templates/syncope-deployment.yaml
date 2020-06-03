@@ -36,7 +36,10 @@ metadata:
   name: {{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeConfig.name}}
 spec:
   replicas: 1
-  strategy: {}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "{{ template "sitewhere-infra-core.relasename" . }}-{{ .Values.syncope.syncopeConfig.name }}"
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       annotations:
@@ -78,7 +81,6 @@ spec:
         configMap:
           name: {{ template "sitewhere-infra-core.relasename" . }}-syncope-environment-config
       restartPolicy: Always
-status: {}
 ---
 apiVersion: v1
 kind: Service
