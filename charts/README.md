@@ -113,7 +113,7 @@ helm dep update ./sitewhere-infrastructure/
 
 ```console
 kubectl create namespace sitewhere
-kubectl label namespace sitewhere istio-injection=enabled
+kubectl label namespace sitewhere istio-injection=enabled --overwrite
 
 helm install --name sitewhere-crds crds/.
 helm install --name sitewhere-templates templates/.
@@ -121,8 +121,15 @@ helm install --namespace sitewhere-system --name sitewhere-operator operator/.
 
 # wait for the operator
 kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-operator --for condition=available
+kubectl wait --timeout=5m -n sitewhere-system deploy/strimzi-cluster-operator --for condition=available
 
 helm install --namespace sitewhere-system --name sitewhere-infrastructure ./sitewhere-infrastructure
+
+kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-infrastructure-mosquitto --for condition=available
+kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-kafka-entity-operator  --for condition=available
+kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-syncope --for condition=available
+kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-syncope-console --for condition=available
+kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-syncope-enduser --for condition=available
 
 helm install --namespace sitewhere --name sitewhere ./sitewhere
 ```
@@ -137,8 +144,10 @@ helm delete --purge sitewhere-templates
 helm delete --purge sitewhere-crds
 ```
 
-If you want to delete persistent data from the infrastructure.
+If you want to delete persistent data from the infrastructure and namespaces.
 
 ```console
 kubectl delete pvc -l release=sitewhere-infrastructure -n sitewhere-system
+kubectl delete namespace sitewhere-system
+kubectl delete namespace sitewhere
 ```
