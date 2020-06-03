@@ -1,6 +1,6 @@
 # Backup Procedure and Restore Procedures
 
-This document provides SiteWhere 2.1 procedures for backup and restore of MongoDB.
+This document provides SiteWhere 2.2 procedures for backup and restore of MongoDB.
 
 ## Backup Procedure
 
