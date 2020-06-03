@@ -27,8 +27,7 @@
 				"instance_management",
 				"label_generation",
 				"outbound_connectors",
-				"schedule_management",
-				"web_rest"
+				"schedule_management"
 			]
 		}
 	],
@@ -521,14 +520,6 @@
 				"icon": "video",
 				"replicas": 0,
 				"enabled": false
-			},
-			{
-				"id": "web_rest",
-				"name": "Web/REST Gateway",
-				"description": "API gateway for accessing services via REST",
-				"icon": "globe",
-				"replicas": 1,
-				"enabled": true
 			}
 		]
 	}
