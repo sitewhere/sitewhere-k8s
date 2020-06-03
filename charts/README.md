@@ -1,4 +1,4 @@
-# Helm Charts for Running SiteWhere 2.1
+# Helm Charts for Running SiteWhere 2.2
 
 SiteWhere provides a comprehensive Helm chart which takes care of 
 orchestration of the many components that make up a SiteWhere
@@ -7,7 +7,7 @@ easily customized for specific application requirements.
 
 ## Prerequisties
 
-SiteWhere 2.1 requeries [Istio](https://istio.io/), with 
+SiteWhere 2.2 requeries [Istio](https://istio.io/), with 
 [Automatic sidecar injection](https://istio.io/docs/setup/kubernetes/additional-setup/sidecar-injection/#automatic-sidecar-injection),
 installed on a Kubernetes cluster before you deploy an instance of SiteWhere. You can install Istio
 [with](https://istio.io/docs/setup/kubernetes/install/helm/) or [without](https://istio.io/docs/setup/kubernetes/install/kubernetes/) Helm.

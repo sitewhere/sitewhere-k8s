@@ -1,4 +1,4 @@
-# SiteWhere 2.1 Infrastructure Helm Chart
+# SiteWhere 2.2 Infrastructure Helm Chart
 
 ## Installing on a developer machine
 
