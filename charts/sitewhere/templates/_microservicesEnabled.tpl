@@ -10,6 +10,7 @@
   | Outbound Connectors      | ✓              | ✓               |
   | Tenant Management        | ✓              | ✓               |
   | User Management          | ✓              | ✓               |
+  | Web Rest                 | ✓              | ✓               |
   | Batch Operations         | ✓              | ✗               |
   | Command Delivery         | ✓              | ✗               |
   | Device Registration      | ✓              | ✗               |
@@ -97,6 +98,15 @@ Returns true if User Management Microservice is enabled.
 */}}
 {{- define "microservices.user_management.enabled" -}}
 {{- if (or (eq .Values.services.profile "default") (.Values.services.user_management.enabled)) -}}
+-
+{{- end -}}
+{{- end -}}
+
+{{/*
+Returns true if Web REST Microservice is enabled.
+*/}}
+{{- define "microservices.web_rest.enabled" -}}
+{{- if (or (eq .Values.services.profile "default") (.Values.services.web_rest.enabled)) -}}
 -
 {{- end -}}
 {{- end -}}

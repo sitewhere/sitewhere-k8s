@@ -1,0 +1,150 @@
+{{- if include "microservices.web_rest.enabled" . }}
+{{$data := dict "Values" .Values.services.web_rest "Defaults" .Values.services }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sitewhere.fullname" . }}-web-rest
+  labels:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    sitewhere.io/role: "microservice"
+    sitewhere.io/name: "web-rest"
+spec:
+  replicas: {{ .Values.services.web_rest.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        sitewhere.io/role: "microservice"
+        sitewhere.io/name: "web-rest"
+      annotations:
+{{include "sitewhere.microservice.prometheus" . | indent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-web-rest
+{{- include "sitewhere.microservice.image" $data | indent 10 }}
+          imagePullPolicy: {{ .Values.services.image.pullPolicy }}
+          ports:
+            - containerPort: 9001
+            - containerPort: {{ .Values.services.web_rest.service.http.port }}
+            - containerPort: {{ .Values.services.metrics.port }}
+{{- if .Values.services.debug }}
+            - containerPort: 8010
+            - containerPort: 1110
+{{- end }}
+{{include "sitewhere.microservice.envValues" . | indent 10 }}
+{{include "sitewhere.microservice.resources" $data | indent 10 }}
+{{include "sitewhere.microservice.probes" . | indent 10 }}
+{{include "sitewhere.microservice.imagePullSecrets" . | indent 6 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sitewhere.fullname" . }}-web-rest-grpc
+  labels:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.services.web_rest.service.grpc.type }}
+  ports:
+    - port: 9001
+      targetPort: {{ .Values.services.web_rest.service.grpc.management.port }}
+      protocol: TCP
+      name: grpc-management
+    - port: {{ .Values.services.metrics.port }}
+      targetPort: {{ .Values.services.metrics.port }}
+      protocol: TCP
+      name: http-metrics
+  selector:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
+    app.kubernetes.io/instance: {{ .Release.Name }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sitewhere.fullname" . }}-web-rest-http
+  labels:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.services.web_rest.service.http.type }}
+  ports:
+    - port: {{ .Values.services.web_rest.service.http.port }}
+      targetPort: {{ .Values.services.web_rest.service.http.port }}
+      protocol: TCP
+      name: http-web-rest
+  selector:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- if .Values.services.debug }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sitewhere.fullname" . }}-web-rest-debug
+  labels:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8010
+      targetPort: 8010
+      protocol: TCP
+      name: tcp-jdwp
+    - port: 1110
+      targetPort: 1110
+      protocol: TCP
+      name: tcp-jmx
+  selector:
+    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-web-rest
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: {{ include "sitewhere.fullname" . }}-gateway
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+  - port:
+      number: 80
+      name: http-web-rest
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "sitewhere.name" . }}-web-rest
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - {{ include "sitewhere.fullname" . }}-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: {{ .Values.services.web_rest.service.http.port }}
+        host: {{ include "sitewhere.fullname" . }}-web-rest-http
+{{- end }}

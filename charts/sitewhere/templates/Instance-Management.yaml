@@ -37,7 +37,6 @@ spec:
             - containerPort: 9004
             - containerPort: 9005
             - containerPort: {{ .Values.services.metrics.port }}
-            - containerPort: {{ .Values.services.instance_management.service.http.port }}
 {{- if .Values.services.debug }}
             - containerPort: 8001
             - containerPort: 1101
@@ -54,7 +53,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "sitewhere.fullname" . }}-instance-management-grpc
+  name: {{ include "sitewhere.fullname" . }}-instance-management-svc
   labels:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}
     helm.sh/chart: {{ include "sitewhere.chart" . }}
@@ -86,26 +85,6 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-instance-management
     app.kubernetes.io/instance: {{ .Release.Name }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "sitewhere.fullname" . }}-instance-management-http
-  labels:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}
-    helm.sh/chart: {{ include "sitewhere.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-spec:
-  type: {{ .Values.services.instance_management.service.http.type }}
-  ports:
-    - port: {{ .Values.services.instance_management.service.http.port }}
-      targetPort: {{ .Values.services.instance_management.service.http.port }}
-      protocol: TCP
-      name: http-instance-management
-  selector:
-    app.kubernetes.io/name: {{ include "sitewhere.name" . }}-instance-management
-    app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if .Values.services.debug }}
 ---
 apiVersion: v1
@@ -132,38 +111,4 @@ spec:
     app.kubernetes.io/name: {{ include "sitewhere.name" . }}-instance-management
     app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
----
-apiVersion: networking.istio.io/v1alpha3
-kind: Gateway
-metadata:
-  name: {{ include "sitewhere.fullname" . }}-gateway
-spec:
-  selector:
-    istio: ingressgateway # use Istio default gateway implementation
-  servers:
-  - port:
-      number: 80
-      name: http-instance-management
-      protocol: HTTP
-    hosts:
-    - "*"
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: {{ include "sitewhere.name" . }}-instance-management
-spec:
-  hosts:
-  - "*"
-  gateways:
-  - {{ include "sitewhere.fullname" . }}-gateway
-  http:
-  - match:
-    - uri:
-        prefix: /
-    route:
-    - destination:
-        port:
-          number: {{ .Values.services.instance_management.service.http.port }}
-        host: {{ include "sitewhere.fullname" . }}-instance-management-http
 {{- end }}
