@@ -26,6 +26,7 @@ This chart will do the following:
   | Inbound Processing       | ✓              | ✓               |
   | Instance Management      | ✓              | ✓               |
   | Outbound Connectors      | ✓              | ✓               |
+  | Web Rest                 | ✓              | ✓               |
   | Batch Operations         | ✓              | ✗               |
   | Command Delivery         | ✓              | ✗               |
   | Device Registration      | ✓              | ✗               |
@@ -36,7 +37,7 @@ This chart will do the following:
   | Schedule Management      | ✓              | ✗               |
   | Streaming Media          | ✓              | ✗               |
   
-* Expose REST API port 80 on an external Istio Ingress.
+* Expose Web Rest port 80 on an external Istio Ingress.
 * Expose MQTT port 1886 on an external LoadBalancer.
 
 ## Installing the Chart
@@ -89,6 +90,7 @@ the port that each microservice will expose, so that you can connect a remote de
 | Event Sources            | `8007`           | `1107`            |
 | Inbound Processing       | `8008`           | `1108`            |
 | Label Generation         | `8009`           | `1109`            |
+| Web Rest                 | `8010`           | `1110`            |
 | Batch Operations         | `8011`           | `1111`            |
 | Command Delivery         | `8012`           | `1112`            |
 | Device Registration      | `8013`           | `1113`            |

@@ -27,7 +27,8 @@
 				"instance_management",
 				"label_generation",
 				"outbound_connectors",
-				"schedule_management"
+				"schedule_management",
+				"web_rest"
 			]
 		}
 	],
@@ -159,8 +160,7 @@
 			"icon": "chart-bar",
 			"enablement": "sitewhere-infra-core.prometheus.enabled",
 			"enabled": true,
-			"attributes": [
-			]
+			"attributes": []
 		},
 		{
 			"id": "syncope",
@@ -520,6 +520,14 @@
 				"icon": "video",
 				"replicas": 0,
 				"enabled": false
+			},
+			{
+				"id": "web_rest",
+				"name": "Web/REST Gateway",
+				"description": "API gateway for accessing services via REST",
+				"icon": "globe",
+				"replicas": 1,
+				"enabled": true
 			}
 		]
 	}
