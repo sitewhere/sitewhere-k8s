@@ -30,6 +30,9 @@ redis-ha:
   hardAntiAffinity: false
   redis:
     masterGroupName: "sitewhere"
+  sentinel:
+    config:
+      down-after-milliseconds: 45000
   persistentVolume:
     enabled: true
     size: 500Mi

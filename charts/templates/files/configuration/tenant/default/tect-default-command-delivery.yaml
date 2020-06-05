@@ -9,7 +9,7 @@ spec:
     router:
       type: device-type-mapping
       configuration:
-        mappings: {}
+        mappings: []
         defaultDestination: default
     commandDestinations:
       - id: default
