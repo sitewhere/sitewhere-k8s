@@ -8,10 +8,7 @@ spec:
   configuration:
     allowNewDevices: false
     assignmentDefaults:
-      useDefaultDeviceType: true
       defaultDeviceTypeToken: mega2560
-      useDefaultCustomer: true
       defaultCustomerToken: acme
-      useDefaultArea: true
       defaultAreaToken: southeast
  
