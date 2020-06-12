@@ -7,4 +7,4 @@ metadata:
 spec:
   configuration: 
     datastore:
-      reference: default
+      reference: postgres

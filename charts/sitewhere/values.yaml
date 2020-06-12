@@ -5,7 +5,7 @@ web:
 docker:
   imageRegistry: docker.io
   imageRepository: sitewhere
-  imageTag: 3.0.0.alpha1
+  imageTag: 3.0.0.beta1
   imagePullPolicy: IfNotPresent
 microservices:
   default:

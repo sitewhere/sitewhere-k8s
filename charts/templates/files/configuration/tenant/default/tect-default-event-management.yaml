@@ -7,9 +7,5 @@ metadata:
 spec:
   configuration:
     datastore:
-      type: warp10
-      configuration:
-        hostname: sitewhere-infrastructure-warp10.sitewhere-system
-        port: 8080
-        application: ${tenant.token}
-        tokenSecret: sitewhere
+      reference: warp10
+      

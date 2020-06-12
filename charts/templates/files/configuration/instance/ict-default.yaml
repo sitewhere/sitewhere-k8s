@@ -27,7 +27,7 @@ spec:
         resolveFQDN: false
     persistenceConfigurations:
       rdbConfigurations:
-        default:
+        postgres:
           type: postgres95
           configuration:
             hostname: sitewhere-postgresql.sitewhere-system
@@ -35,12 +35,18 @@ spec:
             maxConnections: 5
             username: syncope
             password: syncope
-      influxDbConfigurations:
-        default:
-          hostname: sitewhere-influxdb
-          port: 8086
-          databaseName: tenant_${tenant.id}
-      cassandraConfigurations:
-        default:
-          contactPoints: sitewhere-cassandra
-          keyspace: tenant_${tenant.id}
+      timeSeriesConfigurations:
+        warp10:
+          type: warp10
+          configuration:
+            hostname: sitewhere-infrastructure-warp10.sitewhere-system
+            port: 8080
+            application: ${tenant.id}
+            tokenSecret: sitewhere
+        influx:
+          type: influxdb
+          configuration:
+            hostname: sitewhere-influxdb.sitewhere-system
+            port: 8086
+            databaseName: tenant_${tenant.id}
+ 

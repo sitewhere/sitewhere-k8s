@@ -20,4 +20,4 @@ spec:
       serviceAccountName: sitewhere-operator-service-account
       containers:
       - name: operator
-        image: sitewhere/sitewhere-k8s-operator:3.0.0.alpha6
+        image: sitewhere/sitewhere-k8s-operator:3.0.0.beta1
