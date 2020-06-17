@@ -10,7 +10,7 @@ spec:
     generators:
       - id: qrcode
         name: "QR Code Generator"
-        type: qrCode
+        type: qr-code
         configuration:
           width: 200
           height: 200
