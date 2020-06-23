@@ -12,7 +12,7 @@ dependencies:
   repository: https://cetic.github.io/helm-charts
   condition: sitewhere-infrastructure.nifi.enabled, nifi.enabled
 - name: warp10
-  version: 0.2.1
+  version: 0.2.2
   repository: https://sitewhere.io/helm-charts
   condition: sitewhere-infrastructure.warp10.enabled, warp10.enabled
   
