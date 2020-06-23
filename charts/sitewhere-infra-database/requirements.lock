@@ -10,9 +10,9 @@ dependencies:
   version: 3.0.2
 - name: warp10
   repository: https://sitewhere.io/helm-charts
-  version: 0.2.2
+  version: 0.2.3
 - name: postgresql
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 8.6.4
-digest: sha256:bd673c99ab5d1d0e61ec0d5f351842d36e7a96cb2e7241b6b137125101cb206f
-generated: 2020-06-23T11:01:58.622776-03:00
+digest: sha256:7bde5b316b6df548ad7a7857f42373d6dec446230ec58b435b8c380a0084939d
+generated: 2020-06-23T11:43:56.607063-03:00
