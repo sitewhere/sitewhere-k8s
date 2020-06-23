@@ -1,0 +1,100 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: sitewhere-syncope-environment-config
+data:
+ DBMS: postgresql
+ DB_URL:  jdbc:postgresql://sitewhere-postgresql-headless:5432/syncope
+ DB_USER: {{.Values.syncope.syncopeEnvironment.dbUser}}
+ DB_POOL_MAX: "{{.Values.syncope.syncopeEnvironment.dbPoolMax}}"
+ DB_POOL_MIN: "{{.Values.syncope.syncopeEnvironment.dbPoolMin}}"
+ OPENJPA_REMOTE_COMMIT: sjvm
+ CORE_SCHEME: "{{.Values.syncope.syncopeEnvironment.coreScheme}}"
+ CORE_HOST: "sitewhere-{{.Values.syncope.syncopeEnvironment.coreHost}}"
+ CORE_PORT: "{{.Values.syncope.syncopeEnvironment.corePort}}"
+ security.properties: |
+  conf.directory=/etc/apache-syncope
+  adminUser=synadmin
+  adminPassword=DE088591C00CC98B36F5ADAAF7DA2B004CF7F2FE7BBB45B766B6409876E2F3DB13C7905C6AA59464
+  adminPasswordAlgorithm=SSHA256
+  anonymousUser=anonymous
+  anonymousKey=anonymousKey
+  secretKey=1abcdefghilmnopqrstuvz2!
+  jwtIssuer=ApacheSyncope
+  jwsAlgorithm=HS512
+  jwsKey=ZW7pRixehFuNUtnY5Se47IemgMryTzazPPJ9CGX5LTCmsOJpOgHAQEuPQeV9A28f
+  digester.saltIterations=1
+  digester.saltSizeBytes=8
+  digester.invertPositionOfPlainSaltInEncryptionResults=true
+  digester.invertPositionOfSaltInMessageBeforeDigesting=true
+  digester.useLenientSaltSizeCheck=true
+  passwordGenerator=org.apache.syncope.core.spring.security.DefaultPasswordGenerator
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sitewhere-{{.Values.syncope.syncopeConfig.name}}
+spec:
+  replicas: 1
+  strategy: {}
+  selector:
+    matchLabels:  
+      name: "sitewhere-{{.Values.syncope.syncopeConfig.name}}"
+      app.kubernetes.io/name: "sitewhere-{{ .Values.syncope.syncopeConfig.name }}"
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      sitewhere.io/role: "infrastructure"
+      sitewhere.io/name: "syncope"
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
+      labels:
+        name: "sitewhere-{{.Values.syncope.syncopeConfig.name}}"
+        app.kubernetes.io/name: "sitewhere-{{ .Values.syncope.syncopeConfig.name }}"
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        sitewhere.io/role: "infrastructure"
+        sitewhere.io/name: "syncope"
+    spec:
+      initContainers:
+      - name: check-db-ready
+        image: postgres:9.6.5
+        command: ['sh', '-c', 
+          'until pg_isready -h sitewhere-postgresql-headless -p 5432; 
+          do echo waiting for database; sleep 2; done;']
+      containers:
+      - name: {{.Values.syncope.syncopeConfig.name}}
+        envFrom:
+        - configMapRef:
+           name: sitewhere-syncope-environment-config
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: syncope
+              key: postgresql-password
+        image: "{{.Values.syncope.syncopeConfig.repository}}/{{.Values.syncope.syncopeConfig.container}}:{{.Values.syncope.syncopeConfig.tag}}"
+        ports:
+        - containerPort: {{.Values.syncope.syncopeConfig.containerPort}}
+        resources: {}
+        volumeMounts:
+          - name: config-volume
+            mountPath: /etc/apache-syncope/security.properties
+            subPath: security.properties
+      volumes:
+      - name: config-volume
+        configMap:
+          name: sitewhere-syncope-environment-config
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "sitewhere-{{.Values.syncope.syncopeConfig.name}}"
+spec:
+  type: "{{.Values.syncope.syncopeConfig.serviceType}}"
+  selector:
+    name: "sitewhere-{{.Values.syncope.syncopeConfig.name}}"
+  ports:
+  - port: {{.Values.syncope.syncopeConfig.containerPort}}
+    name: http-api
