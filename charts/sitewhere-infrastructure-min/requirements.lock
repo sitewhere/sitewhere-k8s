@@ -10,6 +10,6 @@ dependencies:
   version: 0.3.2
 - name: warp10
   repository: https://sitewhere.io/helm-charts
-  version: 0.2.2
-digest: sha256:601d98eb6b7f3ac3ad02ace2bfa654ebff54ccc877d054c8797f43a37b1d553c
-generated: 2020-06-23T11:22:46.912607-03:00
+  version: 0.2.3
+digest: sha256:d690fe4c44841c5f225c0860a60b7ef9f3f38312d99931c600146cfcb650e828
+generated: 2020-06-23T11:48:20.321227-03:00

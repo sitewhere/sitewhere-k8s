@@ -118,7 +118,7 @@ helm install --namespace sitewhere-system --name sitewhere-operator operator/.
 kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-operator --for condition=available
 kubectl wait --timeout=5m -n sitewhere-system deploy/strimzi-cluster-operator --for condition=available
 
-helm install --namespace sitewhere-system --name sitewhere-infrastructure ./sitewhere-infrastructure
+helm install --namespace sitewhere-system --name sitewhere-infrastructure ./sitewhere-infrastructure-min
 
 kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-infrastructure-mosquitto --for condition=available
 kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-kafka-entity-operator  --for condition=available
@@ -126,19 +126,12 @@ kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-syncope --for con
 kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-syncope-console --for condition=available
 kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-syncope-enduser --for condition=available
 
-helm install --namespace sitewhere --name sitewhere ./sitewhere
-```
-
-The last step can be replace with:
-
-```console
 swctl create instance sitewhere
 ```
 
 ## Clean up
 
 ```console
-helm delete --purge sitewhere
 helm delete --purge sitewhere-infrastructure
 helm delete --purge sitewhere-operator
 helm delete --purge sitewhere-templates
