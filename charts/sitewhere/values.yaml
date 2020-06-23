@@ -411,5 +411,3 @@ persistence:
     - ReadWriteOnce
   storage: 10Gi
   annotations: {}
-
-

@@ -1,5 +1,5 @@
 # Copyright 2019, SiteWhere LLC.
-# This script restores a backup of SiteWhere 2.1 Apache Zookeeper
+# This script restores a backup of SiteWhere 2.2 Apache Zookeeper
 # running on a Kubernetes cluster from and backup directory.
 # usage: restore-zookeeper.sh <BACKUP_DIR> <REPLICAS>
 
@@ -72,7 +72,7 @@ function restore_zookeeper () {
   if [[ $# != 2 ]]; then
     echo "Usage: restore-zookeeper.sh <BACKUP_DIR> <REPLICAS>" >&2
     echo "" >&2
-    echo "This script restores a backup of SiteWhere 2.1 Apache Zookeeper" >&2
+    echo "This script restores a backup of SiteWhere 2.2 Apache Zookeeper" >&2
     echo "running on a Kubernetes cluster from and backup directory." >&2
     return 1
   fi

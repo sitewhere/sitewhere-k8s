@@ -4,7 +4,10 @@ metadata:
   name: {{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeEndUserConfig.name}}
 spec:
   replicas: 1
-  strategy: {}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "{{ template "sitewhere-infra-core.relasename" . }}-{{.Values.syncope.syncopeEndUserConfig.name}}"
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       annotations:
@@ -26,7 +29,6 @@ spec:
         - containerPort: {{.Values.syncope.syncopeEndUserConfig.containerPort}}
         resources: {}
       restartPolicy: Always
-status: {}
 ---
 apiVersion: v1
 kind: Service
