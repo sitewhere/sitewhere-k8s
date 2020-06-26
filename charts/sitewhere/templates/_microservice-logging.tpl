@@ -1,4 +1,4 @@
-{{/* Common microservice labels */}}
+{{/* Common microservice logging */}}
 {{- define "sitewhere.microservice.logging" -}}
 logging:
   overrides:
