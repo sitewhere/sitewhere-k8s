@@ -35,3 +35,7 @@ spec:
     enabled: false
     jdwpPort: 8005
     jmxPort: 1105
+{{include "sitewhere.microservice.logging" . | indent 2 }}
+      - logger: com.sitewhere.event
+        level: debug
+    
