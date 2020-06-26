@@ -9,13 +9,13 @@ spec:
       redis:
         hostname: sitewhere-infrastructure-redis-ha-announce
         port: 26379
-        nodeCount: 3
+        nodeCount: 1
         masterGroupName: sitewhere
       kafka:
         hostname: sitewhere-kafka-kafka-bootstrap
         port: 9092
         defaultTopicPartitions: 8
-        defaultTopicReplicationFactor: 3
+        defaultTopicReplicationFactor: 1
       metrics:
         enabled: true
         httpPort: 9090

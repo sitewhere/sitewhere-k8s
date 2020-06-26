@@ -124,4 +124,4 @@ prometheus:
 
 # Warp10
 warp10:
-  enabled: false
+  enabled: true
