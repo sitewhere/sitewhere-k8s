@@ -15,13 +15,13 @@ spec:
         tenant.withAuthorizedUserId('admin' )
         tenant.withAuthorizedUserId('noadmin')
         tenant = tenantBuilder.persist(tenant)
-      
+
         logger.info(`[Create Tenant] ${tenant.getToken()}`)
       }
     userManagement: |
       let SiteWhereAuthority = Java.type('com.sitewhere.spi.user.SiteWhereAuthority')
       let AccountStatus = Java.type('com.sitewhere.spi.user.AccountStatus')
-      
+
       // Use default system authorities tree.
       let authIds = [];
       let allAuthorities = []
@@ -41,20 +41,43 @@ spec:
           authIds.push(authority.getName())
         }
       })
-      
+
+
+      //***********************Roles************************
+      // Use default system roles tree.
+      let roleIds = [];
+      let allRoles = []
+      allRoles.push.apply(allRoles, SiteWhereRole.values());
+
+      allRoles.forEach(role => {
+        // Add any authorities not already present.
+        if (!userBuilder.hasRole(role.getName())) {
+          let newRole = userBuilder.newRole(role.getRoleName())
+          newRole.withDescription(role.getDescription())
+          newRole = userBuilder.persist(newRole)
+          logger.info(`[Create Authority] ${newRole.getRole()}`)
+        }
+        roleIds.push(role.getRoleName())
+      })
+
+      //***********************Roles************************
+
+
       // Only add users if no data in system.
       if (!userBuilder.hasUsers()) {
         // Create the primary admin user.
         let adminUser = userBuilder.newUser('admin', 'password', 'Admin', 'User')
-        adminUser.withStatus(AccountStatus.Active) 
-        authIds.forEach(auth => adminUser.withAuthority(auth))
+        adminUser.withStatus(AccountStatus.Active)
+        roleIds.forEach(r => adminUser.withRole(r))
+
+
         adminUser = userBuilder.persist(adminUser)
         logger.info(`[Create User] ${adminUser.getUsername()}`)
-        
-        
+
+
         // Create the default non-admin user.
         let nonAdminUser = userBuilder.newUser('noadmin', 'noadmin', 'Non-Admin', 'User')
-        nonAdminUser.withStatus(AccountStatus.Active) 
+        nonAdminUser.withStatus(AccountStatus.Active)
         authIds.forEach(auth => {
         	if (auth != SiteWhereAuthority.ViewServerInfo.getName() &&
         	    auth != SiteWhereAuthority.AdminTenants.getName() &&
@@ -65,4 +88,3 @@ spec:
         nonAdminUser = userBuilder.persist(nonAdminUser)
         logger.info(`[Create User] ${nonAdminUser.getUsername()}`)
       }
-      
