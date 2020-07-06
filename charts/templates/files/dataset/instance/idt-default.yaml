@@ -20,6 +20,7 @@ spec:
       }
     userManagement: |
       let SiteWhereAuthority = Java.type('com.sitewhere.spi.user.SiteWhereAuthority')
+      let SiteWhereRole = Java.type('com.sitewhere.spi.user.SiteWhereRole')
       let AccountStatus = Java.type('com.sitewhere.spi.user.AccountStatus')
 
       // Use default system authorities tree.
@@ -51,11 +52,13 @@ spec:
 
       allRoles.forEach(role => {
         // Add any authorities not already present.
-        if (!userBuilder.hasRole(role.getName())) {
+        if (!userBuilder.hasRole(role.getRoleName())) {
           let newRole = userBuilder.newRole(role.getRoleName())
           newRole.withDescription(role.getDescription())
+          newRole.withAuthorities(role.getAuthoritiesAsStringList())
           newRole = userBuilder.persist(newRole)
-          logger.info(`[Create Authority] ${newRole.getRole()}`)
+
+          logger.info(`[Create Role] ${newRole.getRole()}`)
         }
         roleIds.push(role.getRoleName())
       })
@@ -78,11 +81,11 @@ spec:
         // Create the default non-admin user.
         let nonAdminUser = userBuilder.newUser('noadmin', 'noadmin', 'Non-Admin', 'User')
         nonAdminUser.withStatus(AccountStatus.Active)
-        authIds.forEach(auth => {
-        	if (auth != SiteWhereAuthority.ViewServerInfo.getName() &&
-        	    auth != SiteWhereAuthority.AdminTenants.getName() &&
-        	    auth != SiteWhereAuthority.AdminUsers.getName()) {
-        	  nonAdminUser.withAuthority(auth)
+        roleIds.forEach(r => {
+        	if (r != SiteWhereRole.VIEW_SERVER_INFO.getRoleName() &&
+        	    r != SiteWhereRole.ADMINISTER_TENANTS.getRoleName() &&
+        	    r != SiteWhereRole.ADMINISTER_USERS.getRoleName()) {
+        	  nonAdminUser.withRole(r)
         	}
         })
         nonAdminUser = userBuilder.persist(nonAdminUser)
