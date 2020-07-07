@@ -43,28 +43,22 @@ spec:
         }
       })
 
-
-      //***********************Roles************************
       // Use default system roles tree.
       let roleIds = [];
       let allRoles = []
       allRoles.push.apply(allRoles, SiteWhereRole.values());
 
       allRoles.forEach(role => {
-        // Add any authorities not already present.
+        // Add any roles not already present.
         if (!userBuilder.hasRole(role.getRoleName())) {
           let newRole = userBuilder.newRole(role.getRoleName())
           newRole.withDescription(role.getDescription())
           newRole.withAuthorities(role.getAuthoritiesAsStringList())
           newRole = userBuilder.persist(newRole)
-
           logger.info(`[Create Role] ${newRole.getRole()}`)
         }
         roleIds.push(role.getRoleName())
       })
-
-      //***********************Roles************************
-
 
       // Only add users if no data in system.
       if (!userBuilder.hasUsers()) {
@@ -72,11 +66,8 @@ spec:
         let adminUser = userBuilder.newUser('admin', 'password', 'Admin', 'User')
         adminUser.withStatus(AccountStatus.Active)
         roleIds.forEach(r => adminUser.withRole(r))
-
-
         adminUser = userBuilder.persist(adminUser)
         logger.info(`[Create User] ${adminUser.getUsername()}`)
-
 
         // Create the default non-admin user.
         let nonAdminUser = userBuilder.newUser('noadmin', 'noadmin', 'Non-Admin', 'User')
