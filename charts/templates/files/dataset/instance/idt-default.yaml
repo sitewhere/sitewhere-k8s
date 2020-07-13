@@ -56,8 +56,8 @@ spec:
           newRole.withAuthorities(role.getAuthoritiesAsStringList())
           newRole = userBuilder.persist(newRole)
           logger.info(`[Create Role] ${newRole.getRole()}`)
+          roleIds.push(newRole)
         }
-        roleIds.push(role.getRoleName())
       })
 
 
@@ -74,9 +74,9 @@ spec:
         let nonAdminUser = userBuilder.newUser('noadmin', 'noadmin', 'Non-Admin', 'User')
         nonAdminUser.withStatus(AccountStatus.Active)
         roleIds.forEach(r => {
-        	if (r != SiteWhereRole.VIEW_SERVER_INFO.getRoleName() &&
-        	    r != SiteWhereRole.ADMINISTER_TENANTS.getRoleName() &&
-        	    r != SiteWhereRole.ADMINISTER_USERS.getRoleName()) {
+        	if (r.getRole() != SiteWhereRole.VIEW_SERVER_INFO.getRoleName() &&
+        	    r.getRole() != SiteWhereRole.ADMINISTER_TENANTS.getRoleName() &&
+        	    r.getRole() != SiteWhereRole.ADMINISTER_USERS.getRoleName()) {
         	  nonAdminUser.withRole(r)
         	}
         })
