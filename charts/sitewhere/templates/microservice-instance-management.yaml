@@ -44,6 +44,11 @@ spec:
     enabled: false
     jdwpPort: 8001
     jmxPort: 1101
+{{include "sitewhere.microservice.logging" . | indent 2 }}
+      - logger: com.sitewhere.instance
+        level: info
+      - logger: com.sitewhere.web
+        level: info
 ---
 apiVersion: v1
 kind: Service

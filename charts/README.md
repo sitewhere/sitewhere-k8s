@@ -101,9 +101,7 @@ helm install --name sitewhere .
 
 ## Steps to install from Repository (WIP)
 
-1 - Install Istio Service Mesh with Sidecar Injection Enabled
-
-2 - Install SiteWhere
+1 - Install SiteWhere
 
 ```console
 helm repo add cetic https://cetic.github.io/helm-charts
@@ -112,9 +110,6 @@ helm dep update ./sitewhere-infrastructure/
 ```
 
 ```console
-kubectl create namespace sitewhere
-kubectl label namespace sitewhere istio-injection=enabled --overwrite
-
 helm install --name sitewhere-crds crds/.
 helm install --name sitewhere-templates templates/.
 helm install --namespace sitewhere-system --name sitewhere-operator operator/.
@@ -132,6 +127,12 @@ kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-syncope-console -
 kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-syncope-enduser --for condition=available
 
 helm install --namespace sitewhere --name sitewhere ./sitewhere
+```
+
+The last step can be replace with:
+
+```console
+swctl create instance sitewhere
 ```
 
 ## Clean up

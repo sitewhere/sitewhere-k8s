@@ -60,6 +60,7 @@ spec:
         roleIds.push(role.getRoleName())
       })
 
+
       // Only add users if no data in system.
       if (!userBuilder.hasUsers()) {
         // Create the primary admin user.
