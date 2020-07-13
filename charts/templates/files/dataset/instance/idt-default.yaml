@@ -47,7 +47,7 @@ spec:
         // Create the primary admin user.
         let adminUser = userBuilder.newUser('admin', 'password', 'Admin', 'User')
         adminUser.withStatus(AccountStatus.Active) 
-        authIds.forEach(auth => adminUser.withAuthority(auth))
+        // TODO: authIds.forEach(auth => adminUser.withAuthority(auth))
         adminUser = userBuilder.persist(adminUser)
         logger.info(`[Create User] ${adminUser.getUsername()}`)
         
@@ -59,7 +59,7 @@ spec:
         	if (auth != SiteWhereAuthority.ViewServerInfo.getName() &&
         	    auth != SiteWhereAuthority.AdminTenants.getName() &&
         	    auth != SiteWhereAuthority.AdminUsers.getName()) {
-        	  nonAdminUser.withAuthority(auth)
+        	  // TODO: nonAdminUser.withAuthority(auth)
         	}
         })
         nonAdminUser = userBuilder.persist(nonAdminUser)
