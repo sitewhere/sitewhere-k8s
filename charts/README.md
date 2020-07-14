@@ -114,41 +114,31 @@ helm install --name sitewhere-crds crds/.
 helm install --name sitewhere-templates templates/.
 helm install --namespace sitewhere-system --name sitewhere-operator operator/.
 
-# wait for the operator
 kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-operator --for condition=available
 kubectl wait --timeout=5m -n sitewhere-system deploy/strimzi-cluster-operator --for condition=available
 
-helm install --namespace sitewhere-system --name sitewhere-infrastructure ./sitewhere-infrastructure
+helm install --namespace sitewhere-system --name sitewhere-infrastructure ./sitewhere-infrastructure-min
 
 kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-infrastructure-mosquitto --for condition=available
 kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-kafka-entity-operator  --for condition=available
 kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-syncope --for condition=available
-kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-syncope-console --for condition=available
-kubectl wait --timeout=5m -n sitewhere-system deploy/sitewhere-syncope-enduser --for condition=available
+kubectl wait --timeout=5m -n sitewhere-system pod/sitewhere-infrastructure-zookeeper-0 --for condition=ready
+kubectl wait --timeout=5m -n sitewhere-system pod/sitewhere-kafka-kafka-0 --for condition=ready
+kubectl wait --timeout=5m -n sitewhere-system pod/sitewhere-postgresql-0 --for condition=ready
+kubectl wait --timeout=5m -n sitewhere-system pod/sitewhere-infrastructure-redis-ha-server-0 --for condition=ready
+kubectl wait --timeout=5m -n sitewhere-system pod/sitewhere-infrastructure-warp10-0 --for condition=ready
 
-helm install --namespace sitewhere --name sitewhere ./sitewhere
-```
-
-The last step can be replace with:
-
-```console
-swctl create instance sitewhere
+swctl create instance sitewhere -m
 ```
 
 ## Clean up
 
 ```console
-helm delete --purge sitewhere
+swctl delete instance sitewhere
 helm delete --purge sitewhere-infrastructure
 helm delete --purge sitewhere-operator
 helm delete --purge sitewhere-templates
 helm delete --purge sitewhere-crds
-```
-
-If you want to delete persistent data from the infrastructure and namespaces.
-
-```console
 kubectl delete pvc -l release=sitewhere-infrastructure -n sitewhere-system
 kubectl delete namespace sitewhere-system
-kubectl delete namespace sitewhere
 ```
