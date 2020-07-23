@@ -2,11 +2,14 @@ dependencies:
 - name: postgresql
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 8.6.4
+- name: influxdb
+  repository: https://influxdata.github.io/helm-charts
+  version: 4.8.1
 - name: redis-ha
   repository: https://kubernetes-charts.storage.googleapis.com
   version: 4.4.4
 - name: nifi
   repository: https://cetic.github.io/helm-charts
   version: 0.3.2
-digest: sha256:d0a5d08bd7d26b68a73201f75cc8fc1c7f8cfd34eae49384d4046ce0f52c3dd8
-generated: 2020-06-12T09:53:01.5237714-04:00
+digest: sha256:40f0577295eda66799173faa5aa67fa5c10cd46e83637bdea039a13a2ba36c2b
+generated: 2020-07-23T09:29:25.7907092-04:00

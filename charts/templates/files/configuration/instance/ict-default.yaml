@@ -36,16 +36,10 @@ spec:
             username: syncope
             password: syncope
       timeSeriesConfigurations:
-        warp10:
-          type: warp10
-          configuration:
-            hostname: sitewhere-infrastructure-warp10.sitewhere-system
-            port: 8080
-            application: ${tenant.id}
-            tokenSecret: sitewhere
-        influx:
+        influxdb:
           type: influxdb
           configuration:
-            hostname: sitewhere-influxdb.sitewhere-system
+            hostname: sitewhere-infrastructure-influxdb.sitewhere-system
             port: 8086
             databaseName: tenant_${tenant.id}
+            

@@ -7,5 +7,5 @@ metadata:
 spec:
   configuration:
     datastore:
-      reference: warp10
+      reference: influxdb
       
