@@ -16,7 +16,15 @@ postgresql:
   master:
     podAnnotations: 
       sidecar.istio.io/inject: "false"
-      
+
+# InfluxDB
+influxdb:
+  service:
+    type: LoadBalancer
+  persistence:
+    enabled: true
+    size: 1Gi
+
 # Mosquitto
 mosquitto:
   persistence:
