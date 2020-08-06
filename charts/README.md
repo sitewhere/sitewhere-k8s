@@ -106,7 +106,7 @@ helm install --name sitewhere .
 ```console
 helm repo add cetic https://cetic.github.io/helm-charts
 helm repo update
-helm dep update ./sitewhere-infrastructure/
+helm dep update ./sitewhere-infrastructure-min/
 ```
 
 ```console
@@ -128,7 +128,7 @@ kubectl wait --timeout=5m -n sitewhere-system pod/sitewhere-postgresql-0 --for c
 kubectl wait --timeout=5m -n sitewhere-system pod/sitewhere-infrastructure-redis-ha-server-0 --for condition=ready
 kubectl wait --timeout=5m -n sitewhere-system pod/sitewhere-infrastructure-warp10-0 --for condition=ready
 
-swctl create instance sitewhere -m
+helm install --namespace sitewhere --name sitewhere ./sitewhere
 ```
 
 ## Clean up
