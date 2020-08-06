@@ -11,8 +11,7 @@ spec:
   name: Batch Operations
   description: Handles processing of operations which affect a large number of devices
   icon: view_module
-  configuration:
-    test: 123
+  configuration: {}
 {{include "sitewhere.helm.environment" . | indent 2 }}
   podSpec:
 {{include "sitewhere.docker.environment" . | indent 4 }}
