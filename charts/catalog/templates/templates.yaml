@@ -1,0 +1,22 @@
+{{ .Files.Get "files/configuration/catalogs/default-catalog.yaml" }}
+---
+{{ .Files.Get "files/configuration/catalogitemgroups/distributed-caching.yaml" }}
+---
+{{ .Files.Get "files/configuration/catalogitemgroups/integration.yaml" }}
+---
+{{ .Files.Get "files/configuration/catalogitemgroups/messaging.yaml" }}
+---
+{{ .Files.Get "files/configuration/catalogitemgroups/relational-database.yaml" }}
+---
+{{ .Files.Get "files/configuration/catalogitemgroups/time-series-database.yaml" }}
+---
+{{ .Files.Get "files/configuration/catalogitems/apache-nifi.yaml" }}
+---
+{{ .Files.Get "files/configuration/catalogitems/influxdb.yaml" }}
+---
+{{ .Files.Get "files/configuration/catalogitems/mosquitto.yaml" }}
+---
+{{ .Files.Get "files/configuration/catalogitems/postgres.yaml" }}
+---
+{{ .Files.Get "files/configuration/catalogitems/redis.yaml" }}
+---

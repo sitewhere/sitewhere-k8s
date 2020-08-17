@@ -1,0 +1,9 @@
+apiVersion: infra.sitewhere.io/v1alpha3
+kind: InfraCatalogItemGroup
+metadata:
+  name: time-series-database
+  labels:
+    infra.sitewhere.io/catalog: default-catalog
+spec:
+  name: Time Series Database
+  description: Database for storing time series data

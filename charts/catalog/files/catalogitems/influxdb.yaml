@@ -1,0 +1,21 @@
+apiVersion: infra.sitewhere.io/v1alpha3
+kind: InfraCatalogItem
+metadata:
+  name: influxdb
+  labels:
+    infra.sitewhere.io/catalogitemgroup: time-series-database
+spec:
+  name: InfluxDB
+  description: InfluxDB instance for time series data persistence
+  helm:
+    repositoryUrl: https://influxdata.github.io/helm-charts
+    chartName: influxdb
+    chartVersion: 4.8.1
+  defaultConfiguration:
+    service:
+      type: LoadBalancer
+    persistence:
+      enabled: true
+      size: 1Gi
+  allowMultiple: true
+  
