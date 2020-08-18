@@ -7,3 +7,5 @@ metadata:
 spec:
   name: Time Series Database
   description: Database for storing time series data
+  parentCatalogItemGroupId: ~
+  

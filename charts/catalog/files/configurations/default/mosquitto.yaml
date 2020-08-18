@@ -4,7 +4,7 @@ metadata:
   name: default-mosquitto
   labels:
     infra.sitewhere.io/configuration: default
-    infra.sitewhere.io/catalogitem: mosquitto
 spec:
+  catalogItemId: mosquitto
   configuration: {}
   

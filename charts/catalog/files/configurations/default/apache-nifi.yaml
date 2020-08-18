@@ -4,7 +4,7 @@ metadata:
   name: default-apache-nifi
   labels:
     infra.sitewhere.io/configuration: default
-    infra.sitewhere.io/catalogitem: apache-nifi
 spec:
+  catalogItemId: apache-nifi
   configuration: {}
   

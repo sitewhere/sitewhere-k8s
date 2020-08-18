@@ -4,7 +4,7 @@ metadata:
   name: default-postgres
   labels:
     infra.sitewhere.io/configuration: default
-    infra.sitewhere.io/catalogitem: redis-ha
 spec:
+  catalogItemId: redis-ha
   configuration: {}
   

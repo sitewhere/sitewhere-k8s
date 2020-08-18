@@ -3,10 +3,11 @@ kind: InfraCatalogItem
 metadata:
   name: apache-nifi
   labels:
-    infra.sitewhere.io/catalogitemgroup: integration
+    infra.sitewhere.io/catalog: default-catalog
 spec:
   name: Apache Nifi
   description: Apache Nifi integration layer
+  parentCatalogItemGroupId: integration
   helm:
     repositoryUrl: https://influxdata.github.io/helm-charts
     chartName: influxdb

@@ -7,3 +7,5 @@ metadata:
 spec:
   name: Integrations
   description: Components for integrating SiteWhere data with other systems
+  parentCatalogItemGroupId: ~
+  

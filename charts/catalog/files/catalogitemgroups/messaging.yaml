@@ -7,3 +7,5 @@ metadata:
 spec:
   name: Messaging
   description: Technologies for delivering messages between components
+  parentCatalogItemGroupId: ~
+  

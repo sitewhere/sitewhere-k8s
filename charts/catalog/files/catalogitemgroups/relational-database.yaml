@@ -7,3 +7,5 @@ metadata:
 spec:
   name: Relational Database
   description: Database for storing relational data
+  parentCatalogItemGroupId: ~
+  

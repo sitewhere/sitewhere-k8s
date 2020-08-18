@@ -4,7 +4,7 @@ metadata:
   name: default-influxdb
   labels:
     infra.sitewhere.io/configuration: default
-    infra.sitewhere.io/catalogitem: influxdb
 spec:
+  catalogItemId: influxdb
   configuration: {}
   

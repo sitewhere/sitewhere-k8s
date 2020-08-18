@@ -3,10 +3,11 @@ kind: InfraCatalogItem
 metadata:
   name: postgres
   labels:
-    infra.sitewhere.io/catalogitemgroup: relational-database
+    infra.sitewhere.io/catalog: default-catalog
 spec:
   name: PostgreSQL
   description: PostgreSQL instance for relational database persistence
+  parentCatalogItemGroupId: relational-database
   helm:
     repositoryUrl: https://kubernetes-charts.storage.googleapis.com
     chartName: postgresql

@@ -3,10 +3,11 @@ kind: InfraCatalogItem
 metadata:
   name: redis-ha
   labels:
-    infra.sitewhere.io/catalogitemgroup: distributed-caching
+    infra.sitewhere.io/catalog: default-catalog
 spec:
   name: Redis HA
   description: Highly-available Redis cluster
+  parentCatalogItemGroupId: distributed-caching
   helm:
     repositoryUrl: https://kubernetes-charts.storage.googleapis.com
     chartName: redis-ha

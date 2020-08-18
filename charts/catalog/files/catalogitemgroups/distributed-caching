@@ -7,3 +7,5 @@ metadata:
 spec:
   name: Distributed Caching
   description: Provides caching shared across microservices
+  parentCatalogItemGroupId: ~
+  
