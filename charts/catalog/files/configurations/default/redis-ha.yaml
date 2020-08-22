@@ -1,7 +1,7 @@
 apiVersion: infra.sitewhere.io/v1alpha3
 kind: InfraComponent
 metadata:
-  name: default-postgres
+  name: default-redis-ha
   labels:
     infra.sitewhere.io/configuration: default
 spec:
