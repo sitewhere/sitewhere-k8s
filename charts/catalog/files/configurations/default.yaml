@@ -1,0 +1,9 @@
+apiVersion: infra.sitewhere.io/v1alpha3
+kind: InfraConfiguration
+metadata:
+  name: default
+  labels:
+    infra.sitewhere.io/catalog: default-catalog
+spec:
+  name: Default Configuration
+  description: Default configuration for SiteWhere CE

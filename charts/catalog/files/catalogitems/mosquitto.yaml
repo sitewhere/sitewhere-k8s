@@ -1,0 +1,17 @@
+apiVersion: infra.sitewhere.io/v1alpha3
+kind: InfraCatalogItem
+metadata:
+  name: mosquitto
+  labels:
+    infra.sitewhere.io/catalog: default-catalog
+spec:
+  name: Mosquitto
+  description: Mosquitto MQTT broker
+  parentCatalogItemGroupId: messaging
+  helm:
+    repositoryUrl: https://halkeye.github.io/helm-charts
+    chartName: mosquitto
+    chartVersion: 0.2.0
+  defaultConfiguration: {}
+  allowMultiple: true
+  

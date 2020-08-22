@@ -1,0 +1,10 @@
+apiVersion: infra.sitewhere.io/v1alpha3
+kind: InfraComponent
+metadata:
+  name: default-influxdb
+  labels:
+    infra.sitewhere.io/configuration: default
+spec:
+  catalogItemId: influxdb
+  configuration: {}
+  

@@ -1,0 +1,27 @@
+apiVersion: infra.sitewhere.io/v1alpha3
+kind: InfraCatalogItem
+metadata:
+  name: redis-ha
+  labels:
+    infra.sitewhere.io/catalog: default-catalog
+spec:
+  name: Redis HA
+  description: Highly-available Redis cluster
+  parentCatalogItemGroupId: distributed-caching
+  helm:
+    repositoryUrl: https://kubernetes-charts.storage.googleapis.com
+    chartName: redis-ha
+    chartVersion: 4.4.4
+  defaultConfiguration:
+    replicas: 3
+    hardAntiAffinity: false
+    redis:
+      masterGroupName: "sitewhere"
+    sentinel:
+      config:
+        down-after-milliseconds: 45000
+    persistentVolume:
+      enabled: true
+      size: 500Mi
+  allowMultiple: false
+  

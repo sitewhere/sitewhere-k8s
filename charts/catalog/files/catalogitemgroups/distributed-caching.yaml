@@ -1,0 +1,11 @@
+apiVersion: infra.sitewhere.io/v1alpha3
+kind: InfraCatalogItemGroup
+metadata:
+  name: distributed-caching
+  labels:
+    infra.sitewhere.io/catalog: default-catalog
+spec:
+  name: Distributed Caching
+  description: Provides caching shared across microservices
+  parentCatalogItemGroupId: ~
+  

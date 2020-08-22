@@ -1,0 +1,10 @@
+apiVersion: infra.sitewhere.io/v1alpha3
+kind: InfraComponent
+metadata:
+  name: default-redis-ha
+  labels:
+    infra.sitewhere.io/configuration: default
+spec:
+  catalogItemId: redis-ha
+  configuration: {}
+  
