@@ -519,6 +519,42 @@ spec:
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
+  name: infrastructures.infra.sitewhere.io
+  labels:
+    app: sitewhere
+spec:
+  group: infra.sitewhere.io
+  names:
+    kind: SiteWhereInfrastructure
+    listKind: SiteWhereInfrastructureList
+    plural: infrastructures
+    singular: infrastructure
+    shortNames:
+    - swinfra
+    categories:
+    - sitewhere-io
+    - infra-sitewhere-io
+  scope: Cluster
+  subresources:
+    status: {}
+  versions:
+    - name: v1alpha3
+      served: true
+      storage: true
+  validation:
+    openAPIV3Schema:
+      type: object
+      properties:
+        spec:
+          type: object
+          properties:
+            name:
+              activeConfiguration: string
+        status: {}
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
   name: configurations.infra.sitewhere.io
   labels:
     app: sitewhere
