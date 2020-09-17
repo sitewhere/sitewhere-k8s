@@ -1,3 +1,5 @@
+{{ .Files.Get "files/crds/crd-30.yaml" }}
+---
 {{ .Files.Get "files/infrastructures/default.yaml" }}
 ---
 {{ .Files.Get "files/catalogs/default-catalog.yaml" }}
