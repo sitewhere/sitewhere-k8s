@@ -1,6 +1,0 @@
-apiVersion: infra.sitewhere.io/v1alpha3
-kind: SiteWhereInfrastructure
-metadata:
-  name: default
-spec:
-  activeConfiguration: default

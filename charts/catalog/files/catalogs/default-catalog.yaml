@@ -1,7 +1,0 @@
-apiVersion: infra.sitewhere.io/v1alpha3
-kind: InfraCatalog
-metadata:
-  name: default-catalog
-spec:
-  name: Default Catalog
-  description: Default catalog for SiteWhere CE
