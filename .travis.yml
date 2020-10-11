@@ -1,8 +1,8 @@
 language: python
 env:
   global:
-  - HELM_URL=https://storage.googleapis.com/kubernetes-helm
-  - HELM_TGZ=helm-v2.4.1-linux-amd64.tar.gz
+  - HELM_URL=https://get.helm.sh
+  - HELM_TGZ=helm-v3.3.4-linux-amd64.tar.gz
   - TARGET_REPO_URL=https://github.com/sitewhere/sitewhere.github.io.git
   - TARGET_BR=master
   - REPO_DIR=/home/travis/build/sitewhere/sitewhere-k8s
