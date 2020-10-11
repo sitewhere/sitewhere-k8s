@@ -20,6 +20,11 @@ script:
   if [ $? != 0 ]; then
     travis_terminate 1
   fi
+  echo "Linting SiteWhere Infra Database"
+  helm lint ${REPO_DIR}/charts/sitewhere-infra-database
+  if [ $? != 0 ]; then
+    travis_terminate 1
+  fi
 after_success:
 - |
   if [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then
