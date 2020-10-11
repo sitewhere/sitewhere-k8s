@@ -13,17 +13,13 @@ install:
 - wget -q ${HELM_URL}/${HELM_TGZ}
 - tar xzfv ${HELM_TGZ}
 - PATH=`pwd`/linux-amd64/:$PATH
-- helm init --client-only
-- sudo pip install yamllint=="${YAMLLINT_VERSION}"
 script:
-- echo "No Linting for Now!"
-#helm lint ${REPO_DIR}/charts/sitewhere
-#if [ $? != 0 ]; then
-#  travis_terminate 1
-#fi
-#- yamllint -c .yamllint.yml -s .travis.yml .yamllint.yml
-#- yamllint -c .yamllint.yml -s $(find . -type f -name "Chart.yaml")
-#- yamllint -c .yamllint.yml -s $(find . -type f -name "values.yaml")
+- |
+  echo "Linting SiteWhere Infra Core"
+  helm lint ${REPO_DIR}/charts/sitewhere-infra-core
+  if [ $? != 0 ]; then
+    travis_terminate 1
+  fi
 after_success:
 - |
   if [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then
