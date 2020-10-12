@@ -1,9 +1,9 @@
-# SiteWhere 2.2 Infrastructure Helm Chart
+# SiteWhere 2.1 Infrastructure Helm Chart
 
 ## Installing on a developer machine
 
 ```console
-helm install --name sitewhere-infra \
+helm install  sitewhere-infra \
   --set kafka.persistence.storageClass=hostpath \
   --set kafka.zookeeper.persistence.storageClass=hostpath \
   --set kafka.replicas=1 \

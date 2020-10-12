@@ -1,5 +1,5 @@
 # Use this values to install SiteWhere on EKS
-# usage: helm install --name sitewhere -f values-eks.yaml sitewhere/sitewhere
+# usage: helm install  sitewhere -f values-eks.yaml sitewhere/sitewhere
 
 sitewhere-infra-core:
   kafka:

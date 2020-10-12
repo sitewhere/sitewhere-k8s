@@ -1,16 +1,16 @@
-# SiteWhere 2.2 Helm Chart
+# SiteWhere 2.1 Helm Chart
 
 ## Prerequisites Details
 
-* Kubernetes 1.8+
-* Rook v1.0+
+- Kubernetes 1.8+
+- Rook v1.0+
 
 ## Chart Details
 
 This chart will do the following:
 
-* Deploy SiteWhere 2.2 infrastructure
-* Deploy SiteWhere 2.2 microservices
+- Deploy SiteWhere 2.1 infrastructure
+- Deploy SiteWhere 2.1 microservices
 
 ## Installaing the Chart
 
@@ -33,13 +33,13 @@ helm repo update
 To install the chart with the release name `sitewhere` execute:
 
 ```console
-helm install --name sitewhere sitewhere/sitewhere
+helm install  sitewhere sitewhere/sitewhere
 ```
 
 ### Install in a Developer Machine
 
 ```console
-helm install --name sitewhere \
+helm install  sitewhere \
   -f ./sitewhere/values-dev.yaml \
   sitewhere
 ```
@@ -61,7 +61,7 @@ kubectl delete pvc -l release=sitewhere
 Assuming your sitewhere install name is `sitewhere`
 
 ```console
-helm install --name kafka-manager \
+helm install  kafka-manager \
   --set zkHosts=sitewhere-zookeeper:2181 stable/kafka-manager
 ```
 

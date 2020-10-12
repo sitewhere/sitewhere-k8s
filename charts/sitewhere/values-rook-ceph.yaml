@@ -1,5 +1,5 @@
 # Use this values to install SiteWhere using rook-ceph-block storageClass
-# usage: helm install --name sitewhere -f values-rook-ceph.values sitewhere/sitewhere
+# usage: helm install  sitewhere -f values-rook-ceph.values sitewhere/sitewhere
 
 sitewhere-infra-core:
   cp-kafka:

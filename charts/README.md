@@ -1,18 +1,18 @@
-# Helm Charts for Running SiteWhere 2.2
+# Helm Charts for Running SiteWhere 2.1
 
-SiteWhere provides a comprehensive Helm chart which takes care of 
+SiteWhere provides a comprehensive Helm chart which takes care of
 orchestration of the many components that make up a SiteWhere
-instance. By configuring chart parameters, the system may be 
+instance. By configuring chart parameters, the system may be
 easily customized for specific application requirements.
 
 ## Prerequisties
 
-SiteWhere 2.2 requeries [Istio](https://istio.io/), with 
+SiteWhere 2.1 requeries [Istio](https://istio.io/), with
 [Automatic sidecar injection](https://istio.io/docs/setup/kubernetes/additional-setup/sidecar-injection/#automatic-sidecar-injection),
 installed on a Kubernetes cluster before you deploy an instance of SiteWhere. You can install Istio
 [with](https://istio.io/docs/setup/kubernetes/install/helm/) or [without](https://istio.io/docs/setup/kubernetes/install/kubernetes/) Helm.
 
-Make sure that the namespace where you are deploying SiteWhere has the label `istio-injection=enabled`, 
+Make sure that the namespace where you are deploying SiteWhere has the label `istio-injection=enabled`,
 for example for the `default` namespace use:
 
 ```console
@@ -47,7 +47,7 @@ helm repo update
 To start default configuration run:
 
 ```console
-helm install --name sitewhere sitewhere/sitewhere
+helm install  sitewhere sitewhere/sitewhere
 ```
 
 ## Deploy SiteWhere using Rook
@@ -70,7 +70,7 @@ kubectl create -f ../rook/cluster-test.yaml
 ### Install SiteWhere with Rook
 
 ```console
-helm install --name sitewhere -f values-rook-ceph.yaml sitewhere/sitewhere
+helm install  sitewhere -f values-rook-ceph.yaml sitewhere/sitewhere
 ```
 
 ## Deploy SiteWhere using minimal configuration
@@ -79,22 +79,22 @@ Also, if you wish to run SiteWhere in a low resource cluster, use the
 minimal recipes and install this Helm Chart with the following command:
 
 ```console
-helm install --name sitewhere --set services.profile=minimal sitewhere/sitewhere
+helm install  sitewhere --set services.profile=minimal sitewhere/sitewhere
 ```
 
 You can use the `values-dev.yaml` for running on a developer machine:
 
 ```console
-helm install --name sitewhere -f values-dev.yaml sitewhere/sitewhere
+helm install  sitewhere -f values-dev.yaml sitewhere/sitewhere
 ```
 
 ## Deploy SiteWhere using a different storageClass
 
 If you need to use another `storageClass`, for example `<your-storage-class>`,
-the start SiteWhere using the following configuration:  
+the start SiteWhere using the following configuration:
 
 ```console
-helm install --name sitewhere \
+helm install  sitewhere \
 --set sitewhere-infra-core.cp-kafka.persistence.storageClass=<your-storage-class> \
 --set sitewhere-infra-core.cp-zookeeper.persistence.dataLogDirStorageClass=<your-storage-class> \
 --set sitewhere-infra-database.mongodb.persistence.storageClass=<your-storage-class> \
@@ -144,7 +144,7 @@ infrastructure, set `true` to `sitewhere-infra-database.warp10.enabled` when you
 or upgrade SiteWhere, for example:
 
 ```console
-helm install --name sitewhere \
+helm install  sitewhere \
   --set sitewhere-infra-database.warp10.enabled=true \
   sitewhere/sitewhere
 ```

@@ -1,9 +1,9 @@
-# SiteWhere 2.2 Databases Helm Chart
+# SiteWhere 2.1 Databases Helm Chart
 
 ## Installing on a developer machine
 
 ```console
-helm install --name sitewhere-database \
+helm install  sitewhere-database \
   --set mongodb.replicaSet.enabled=false \
   --set mongodb.persistence.storageClass=hostpath \
   sitewhere-infra-database
