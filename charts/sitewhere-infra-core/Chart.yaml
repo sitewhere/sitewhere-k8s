@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: "2.1.1"
 description: Helm chart for SiteWhere core infrastructure components
 name: sitewhere-infra-core
-version: 0.3.0
+version: 0.2.8
 keywords:
   - sitewhere
   - internet-of-things
