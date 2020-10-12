@@ -1,8 +1,8 @@
-apiVersion: v1
-appVersion: "2.2.0"
+apiVersion: v2
+appVersion: "2.1.1"
 description: Helm chart for SiteWhere core infrastructure components
 name: sitewhere-infra-core
-version: 0.2.7
+version: 0.2.8
 keywords:
   - sitewhere
   - internet-of-things
@@ -22,9 +22,14 @@ keywords:
   - kafka
   - zookeeper
 home: https://sitewhere.io/
-maintainers: 
+maintainers:
   - name: Derek Adams
     email: derek.adams@sitewhere.com
   - name: Jorge Villaverde
     email: jorge.villaverde@sitewhere.com
 icon: http://sitewhere.io/docs/2.0.0/images/favicon.png
+dependencies:
+  - name: postgresql
+    version: 8.6.4
+    repository: https://kubernetes-charts.storage.googleapis.com
+    condition: sitewhere-infra-core.postgresql.enabled, postgresql.enabled
