@@ -1,9 +1,0 @@
-apiVersion: scripting.sitewhere.io/v1alpha3
-kind: SiteWhereScriptCategory
-metadata:
-  name: event-sources-event-decoder-category
-  labels:
-    sitewhere.io/functional-area: event-sources
-spec:
-  name: Event Decoder
-  description: Templates for decoding payloads into SiteWhere events

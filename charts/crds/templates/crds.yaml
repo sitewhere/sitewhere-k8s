@@ -1,1 +1,0 @@
-{{ .Files.Get "files/core-30.yaml" }}

@@ -1,6 +1,6 @@
 # Helm Charts for Deploying SiteWhere 3.0
-SiteWhere provides two Helm charts which support deployment of both the infrastructure required
-to run SiteWhere and the microservices which take care of the actual processing. The infrastructure
+SiteWhere provides Helm charts which support deployment of both the infrastructure required
+to run SiteWhere and the instance/microservices which take care of the actual processing. The infrastructure
 chart is generally deployed once when a cluster is first created and only changed when components in
 the infrastructure need to be scaled or reconfigured. The chart for microservices is executed once
 per instance deployed and may be deleted without shutting down the infrastructure chart.
