@@ -1,0 +1,12 @@
+apiVersion: v2
+appVersion: "3.0"
+description: SiteWhere Keycloak Integration
+name: sitewhere-keycloak
+version: 0.3.0
+icon: http://sitewhere.io/docs/2.0.0/images/favicon.png
+home: http://www.sitewhere.io/
+maintainers:
+  - name: Derek Adams
+    email: derek.adams@sitewhere.com
+  - name: Jorge Villaverde
+    email: jorge.villaverde@sitewhere.com

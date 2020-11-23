@@ -1,0 +1,13 @@
+keycloak:
+  fullnameOverride: sitewhere-keycloak
+    
+  # Set up admin user
+  extraEnv: |
+    - name: KEYCLOAK_USER
+      value: sitewhere
+    - name: KEYCLOAK_PASSWORD
+      value: sitewhere
+  
+  # Expose admin interface.
+  service:
+    type: LoadBalancer
