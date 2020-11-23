@@ -1,16 +1,16 @@
 apiVersion: sitewhere.io/v1alpha3
 kind: SiteWhereMicroservice
 metadata:
-  name: event-sources-microservice
+  name: event-sources
 {{include "sitewhere.microservice.metadata" . | indent 2 }}
   labels:
 {{include "sitewhere.microservice.labels" . | indent 4 }}
-    sitewhere.io/functional-area: event-sources
 spec:
 {{include "sitewhere.microservice.spec" . | indent 2 }}
   name: Event Sources
   description: Handles inbound device data from various sources, protocols, and formats
   icon: forward
+  functionalArea: event-sources
   configuration: {}
 {{include "sitewhere.helm.environment" . | indent 2 }}
   podSpec:
@@ -20,6 +20,8 @@ spec:
       - containerPort: 9090
     env:
 {{include "sitewhere.microservice.environment" . | indent 6 }}
+      - name: "sitewhere.config.k8s.name"
+        value: "event-sources"
   serviceSpec:
 {{include "sitewhere.microservice.service" . | indent 4 }}
     ports:

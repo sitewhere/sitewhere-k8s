@@ -3,7 +3,6 @@ kind: SiteWhereInstance
 metadata:
   name: {{ .Release.Name }}
 spec:
-  instanceNamespace: {{ .Release.Namespace }}
   configurationTemplate: default
   datasetTemplate: default
   

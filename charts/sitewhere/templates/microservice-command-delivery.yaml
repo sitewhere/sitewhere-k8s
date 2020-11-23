@@ -1,16 +1,16 @@
 apiVersion: sitewhere.io/v1alpha3
 kind: SiteWhereMicroservice
 metadata:
-  name: command-delivery-microservice
+  name: command-delivery
 {{include "sitewhere.microservice.metadata" . | indent 2 }}
   labels:
 {{include "sitewhere.microservice.labels" . | indent 4 }}
-    sitewhere.io/functional-area: command-delivery
 spec:
 {{include "sitewhere.microservice.spec" . | indent 2 }}
   name: Command Delivery
   description: Manages delivery of commands in various formats based on invocation events
   icon: call_made
+  functionalArea: command-delivery
   configuration: {}
 {{include "sitewhere.helm.environment" . | indent 2 }}
   podSpec:
@@ -20,6 +20,8 @@ spec:
       - containerPort: 9090
     env:
 {{include "sitewhere.microservice.environment" . | indent 6 }}
+      - name: "sitewhere.config.k8s.name"
+        value: "command-delivery"
   serviceSpec:
 {{include "sitewhere.microservice.service" . | indent 4 }}
     ports:

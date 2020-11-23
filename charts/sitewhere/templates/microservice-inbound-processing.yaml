@@ -1,16 +1,16 @@
 apiVersion: sitewhere.io/v1alpha3
 kind: SiteWhereMicroservice
 metadata:
-  name: inbound-processing-microservice
+  name: inbound-processing
 {{include "sitewhere.microservice.metadata" . | indent 2 }}
   labels:
 {{include "sitewhere.microservice.labels" . | indent 4 }}
-    sitewhere.io/functional-area: inbound-processing
 spec:
 {{include "sitewhere.microservice.spec" . | indent 2 }}
   name: Inbound Processing
   description: Common processing logic applied to enrich and direct inbound events
   icon: input
+  functionalArea: inbound-processing
   configuration: {}
 {{include "sitewhere.helm.environment" . | indent 2 }}
   podSpec:
@@ -20,6 +20,8 @@ spec:
       - containerPort: 9090
     env:
 {{include "sitewhere.microservice.environment" . | indent 6 }}
+      - name: "sitewhere.config.k8s.name"
+        value: "inbound-processing"
   serviceSpec:
 {{include "sitewhere.microservice.service" . | indent 4 }}
     ports:

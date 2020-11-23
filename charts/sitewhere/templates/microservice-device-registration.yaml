@@ -1,16 +1,16 @@
 apiVersion: sitewhere.io/v1alpha3
 kind: SiteWhereMicroservice
 metadata:
-  name: device-registration-microservice
+  name: device-registration
 {{include "sitewhere.microservice.metadata" . | indent 2 }}
   labels:
 {{include "sitewhere.microservice.labels" . | indent 4 }}
-    sitewhere.io/functional-area: device-registration
 spec:
 {{include "sitewhere.microservice.spec" . | indent 2 }}
   name: Device Registration
   description: Handles registration of new devices with the system
   icon: add_box
+  functionalArea: device-registration
   configuration: {}
 {{include "sitewhere.helm.environment" . | indent 2 }}
   podSpec:
@@ -20,6 +20,8 @@ spec:
       - containerPort: 9090
     env:
 {{include "sitewhere.microservice.environment" . | indent 6 }}
+      - name: "sitewhere.config.k8s.name"
+        value: "device-registration"
   serviceSpec:
 {{include "sitewhere.microservice.service" . | indent 4 }}
     ports:

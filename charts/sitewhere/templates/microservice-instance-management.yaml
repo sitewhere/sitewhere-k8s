@@ -1,15 +1,15 @@
 apiVersion: sitewhere.io/v1alpha3
 kind: SiteWhereMicroservice
 metadata:
-  name: instance-management-microservice
+  name: instance-management
 {{include "sitewhere.microservice.metadata" . | indent 2 }}
   labels:
 {{include "sitewhere.microservice.labels" . | indent 4 }}
-    sitewhere.io/functional-area: instance-management
 spec:
   name: Instance Management
   description: Handles APIs for managing global aspects of an instance
   icon: language
+  functionalArea: instance-management
   replicas: {{ .Values.microservices.default.replicas | default 1 }}
   configuration:
     userManagement:
@@ -25,6 +25,8 @@ spec:
       - containerPort: 9090
     env:
 {{include "sitewhere.microservice.environment" . | indent 6 }}
+      - name: "sitewhere.config.k8s.name"
+        value: "instance-management"
   serviceSpec:
 {{include "sitewhere.microservice.service" . | indent 4 }}
     ports:
