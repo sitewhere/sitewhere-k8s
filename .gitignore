@@ -1,2 +1,4 @@
 /.project
 /charts/.gradle/*
+charts/sitewhere-infra-core/charts/*.tgz
+charts/sitewhere-infra-database/charts/*.tgz
