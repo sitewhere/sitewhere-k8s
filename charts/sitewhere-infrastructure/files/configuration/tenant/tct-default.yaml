@@ -1,0 +1,22 @@
+apiVersion: templates.sitewhere.io/v1alpha4
+kind: TenantConfigurationTemplate
+metadata:
+  name: default
+spec:
+  name: Default
+  description: Default with RDB persistence for master data and Warp 10 for time series data
+  tenantEngineTemplates:
+    assetManagement: default-asset-management
+    batchOperations: default-batch-operations
+    commandDelivery: default-command-delivery
+    deviceManagement: default-device-management
+    deviceRegistration: default-device-registration
+    deviceState: default-device-state
+    eventManagement: default-event-management
+    eventSearch: default-event-search
+    eventSources: default-event-sources
+    inboundProcessing: default-inbound-processing
+    labelGeneration: default-label-generation
+    outboundConnectors: default-outbound-connectors
+    scheduleManagement: default-schedule-management
+    streamingMedia: default-streaming-media

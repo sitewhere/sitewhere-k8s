@@ -1,0 +1,77 @@
+apiVersion: templates.sitewhere.io/v1alpha4
+kind: InstanceDatasetTemplate
+metadata:
+  name: default
+spec:
+  datasets:
+    tenantManagement: |
+      // Create default tenant if does not exist.
+      let tenant = tenantBuilder.getTenantByToken('default')
+      if (tenant != null) {
+      	logger.info('Default tenant already exists.');
+      } else {
+        tenant = tenantBuilder.newTenant('default', 'Default Tenant', 'sitewhere1234567890',
+          'https://s3.amazonaws.com/sitewhere-demo/sitewhere-small.png', 'default', 'construction')
+        tenant.withAuthorizedUserId('admin' )
+        tenant.withAuthorizedUserId('remote')
+        tenant = tenantBuilder.persist(tenant)
+
+        logger.info(`[Create Tenant] ${tenant.getToken()}`)
+      }
+    userManagement: |
+      let SiteWhereAuthority = Java.type('com.sitewhere.spi.user.SiteWhereAuthority')
+      let SiteWhereRole = Java.type('com.sitewhere.spi.user.SiteWhereRole')
+      let AccountStatus = Java.type('com.sitewhere.spi.user.AccountStatus')
+
+      // Use default system authorities tree.
+      let authIds = [];
+      let allAuthorities = []
+      allAuthorities.push.apply(allAuthorities, SiteWhereAuthority.values());
+
+      allAuthorities.forEach(authority => {
+        // Add any authorities not already present.
+        if (!userBuilder.hasAuthority(authority.getName())) {
+          let newAuth = userBuilder.newGrantedAuthority(authority.getName())
+          newAuth.withDescription(authority.getDescription())
+          newAuth.withParent(authority.getParent())
+          newAuth.makeGroup(authority.isGroup())
+          newAuth = userBuilder.persist(newAuth)
+          logger.info(`[Create Authority] ${newAuth.getAuthority()}`)
+        }
+        if (!authority.isGroup()) {
+          authIds.push(authority.getName())
+        }
+      })
+
+      // Use default system roles tree.
+      let addedRoles = [];
+      let allRoles = []
+      allRoles.push.apply(allRoles, SiteWhereRole.values());
+
+      allRoles.forEach(role => {
+        // Add any roles not already present.
+        if (!userBuilder.hasRole(role.getRoleName())) {
+          let newRole = userBuilder.newRole(role.getRoleName())
+          newRole.withDescription(role.getDescription())
+          newRole.withAuthorities(role.getAuthoritiesAsStringList())
+          newRole = userBuilder.persist(newRole)
+          logger.info(`[Create Role] ${newRole.getRole()}`)
+          addedRoles.push(newRole)
+        }
+      })
+
+
+      // Only add users if no data in system.
+      if (!userBuilder.hasUsers()) {
+        // Create the primary admin user.
+        let adminUser = userBuilder.newUser('admin', 'password', 'Admin', 'User')
+        adminUser.withRole("SystemAdministrator")
+        adminUser = userBuilder.persist(adminUser)
+        logger.info(`[Create User] ${adminUser.getUsername()}`)
+
+        // Create the default remote user.
+        let remoteUser = userBuilder.newUser('remote', 'remote', 'Remote', 'User')
+        remoteUser.withRole("RemoteAccessOnly")
+        remoteUser = userBuilder.persist(remoteUser)
+        logger.info(`[Create User] ${remoteUser.getUsername()}`)
+      }

@@ -1,19 +1,16 @@
-# SiteWhere 2.1 Infrastructure Helm Chart
+# SiteWhere Infrastructure Helm Chart
 
-## Installing on a developer machine
+This Chart installs SiteWhere 3.0 Infrastructure.
 
-```console
-helm install --name sitewhere-infra \
-  --set kafka.persistence.storageClass=hostpath \
-  --set kafka.zookeeper.persistence.storageClass=hostpath \
-  --set kafka.replicas=1 \
-  --set kafka.zookeeper.replicaCount=1 \
-  --set consul.Replicas=1 \
-  sitewhere-infra-core
-```
+## Prerequisites
 
-## Uninstalling the Helm Chart
+* Kubernetes cluster 1.10+
+* Helm 3.0.0+
+* PV provisioner support in the underlying infrastructure.
+
+## Installing the Chart
 
 ```console
-helm del sitewhere-infra --purge
+helm repo add sitewhere https://sitewhere.io/helm-charts
+helm install sitewhere -n sitewhere-system --create-namespace sitewhere/sitewhere-infrastructure
 ```

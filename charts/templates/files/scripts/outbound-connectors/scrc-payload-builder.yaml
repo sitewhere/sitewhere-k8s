@@ -1,9 +1,0 @@
-apiVersion: scripting.sitewhere.io/v1alpha3
-kind: SiteWhereScriptCategory
-metadata:
-  name: outbound-connectors-payload-builder-category
-  labels:
-    sitewhere.io/functional-area: outbound-connectors
-spec:
-  name: Payload Builder
-  description: Builds a payload which is delivered to an outbound connector

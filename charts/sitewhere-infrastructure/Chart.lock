@@ -1,0 +1,24 @@
+dependencies:
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 9.1.1
+- name: influxdb
+  repository: https://influxdata.github.io/helm-charts
+  version: 4.8.10
+- name: redis-ha
+  repository: https://dandydeveloper.github.io/charts
+  version: 4.10.11
+- name: nifi
+  repository: https://cetic.github.io/helm-charts
+  version: 0.3.2
+- name: mosquitto
+  repository: https://k8s-at-home.com/charts/
+  version: 0.7.0
+- name: strimzi-kafka-operator
+  repository: https://strimzi.io/charts/
+  version: 0.21.0
+- name: keycloak
+  repository: https://codecentric.github.io/helm-charts
+  version: 9.8.1
+digest: sha256:ac65c5ca7cbd27a52e6d633e2c2cdcfa9ab7b05d77c9e4de5a78dcce49d0dc5a
+generated: "2021-01-18T14:46:56.562486-03:00"

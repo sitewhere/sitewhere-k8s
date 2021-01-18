@@ -1,0 +1,9 @@
+apiVersion: scripting.sitewhere.io/v1alpha4
+kind: SiteWhereScriptCategory
+metadata:
+  name: command-delivery-command-encoder-category
+  labels:
+    sitewhere.io/functional-area: command-delivery
+spec:
+  name: Command Encoder
+  description: Templates for using scripts to encode commands for delivery

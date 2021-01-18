@@ -1,0 +1,24 @@
+apiVersion: templates.sitewhere.io/v1alpha4
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-command-delivery
+  labels:
+      sitewhere.io/functional-area: command-delivery
+spec:
+  configuration:
+    router:
+      type: device-type-mapping
+      configuration:
+        mappings: []
+        defaultDestination: default
+    commandDestinations:
+      - id: default
+        type: mqtt
+        parameterExtractor:
+          type: mqtt-default
+          configuration:
+            commandTopicExpression: SiteWhere/${tenant.token}/command/${device.token}
+            systemTopicExpression: SiteWhere/${tenant.token}/system/${device.token}
+        configuration:
+          hostname: sitewhere-mosquitto.sitewhere-system
+          port: 1883

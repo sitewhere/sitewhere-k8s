@@ -1,0 +1,10 @@
+apiVersion: templates.sitewhere.io/v1alpha4
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-schedule-management
+  labels:
+      sitewhere.io/functional-area: schedule-management
+spec:
+  configuration: 
+    datastore:
+      reference: postgres

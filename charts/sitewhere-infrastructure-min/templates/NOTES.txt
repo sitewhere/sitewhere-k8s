@@ -1,1 +1,0 @@
-The SiteWhere infrastructure components are starting.

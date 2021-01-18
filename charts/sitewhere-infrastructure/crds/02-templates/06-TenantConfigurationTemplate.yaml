@@ -1,0 +1,64 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.4.1
+  creationTimestamp: null
+  name: tenantconfigurations.templates.sitewhere.io
+spec:
+  group: templates.sitewhere.io
+  names:
+    categories:
+    - sitewhere-io
+    - core-sitewhere-io
+    kind: TenantConfigurationTemplate
+    listKind: TenantConfigurationTemplateList
+    plural: tenantconfigurations
+    shortNames:
+    - tct
+    singular: tenantconfiguration
+  scope: Cluster
+  versions:
+  - name: v1alpha4
+    schema:
+      openAPIV3Schema:
+        description: TenantConfigurationTemplate is the Schema for the tenantconfigurations API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: TenantConfigurationTemplateSpec defines the desired state of TenantConfigurationTemplate
+            properties:
+              description:
+                description: Description is the name of the tenant configuration template
+                type: string
+              name:
+                description: Name is the name of the tenant configuration template
+                type: string
+              tenantEngineTemplates:
+                additionalProperties:
+                  type: string
+                description: TenantEngineTemplates is the name of the tenant configuration template
+                type: object
+            type: object
+          status:
+            description: TenantConfigurationTemplateStatus defines the observed state of TenantConfigurationTemplate
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
