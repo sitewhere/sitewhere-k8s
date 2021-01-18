@@ -1,0 +1,41 @@
+apiVersion: sitewhere.io/v1alpha3
+kind: SiteWhereMicroservice
+metadata:
+  name: batch-operations-microservice
+{{include "sitewhere.microservice.metadata" . | indent 2 }}
+  labels:
+{{include "sitewhere.microservice.labels" . | indent 4 }}
+    sitewhere.io/functional-area: batch-operations
+spec:
+{{include "sitewhere.microservice.spec" . | indent 2 }}
+  name: Batch Operations
+  description: Handles processing of operations which affect a large number of devices
+  icon: view_module
+  configuration: {}
+{{include "sitewhere.helm.environment" . | indent 2 }}
+  podSpec:
+{{include "sitewhere.docker.environment" . | indent 4 }}
+    ports:
+      - containerPort: 9000
+      - containerPort: 9090
+    env:
+{{include "sitewhere.microservice.environment" . | indent 6 }}
+  serviceSpec:
+{{include "sitewhere.microservice.service" . | indent 4 }}
+    ports:
+      - port: 9000
+        targetPort: 9000
+        protocol: TCP
+        name: grpc-api
+      - port: 9090
+        targetPort: 9090
+        protocol: TCP
+        name: http-metrics
+  debug:
+    enabled: false
+    jdwpPort: 8011
+    jmxPort: 1111 
+{{include "sitewhere.microservice.logging" . | indent 2 }}
+      - logger: com.sitewhere.batch
+        level: info
+    

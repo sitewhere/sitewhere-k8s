@@ -1,8 +1,12 @@
 language: python
 env:
   global:
-  - HELM_URL=https://get.helm.sh
-  - HELM_TGZ=helm-v3.3.4-linux-amd64.tar.gz
+  - TARGET_BR=master
+  - REPO_DIR=/home/travis/build/sitewhere/sitewhere-k8s
+  - YAMLLINT_VERSION=1.25.0
+  - DESIRED_VERSION="v3.5.0"
+  - HELM_URL=https://storage.googleapis.com/kubernetes-helm
+  - HELM_TGZ=helm-v2.4.1-linux-amd64.tar.gz
   - TARGET_REPO_URL=https://github.com/sitewhere/sitewhere.github.io.git
   - TARGET_BR=master
   - REPO_DIR=/home/travis/build/sitewhere/sitewhere-k8s
@@ -10,21 +14,17 @@ env:
   - YAMLLINT_VERSION=1.8.1
   - secure: s6xy2omQv2PyXPAE5p7vxYgbKaZDLd+mXMAUz42zY6FAWvInLI9qxJ2ghPuuvvMe2Fwdrc9p+ubzfKB5fqpNrt8LctIrgXmEWkMI9kvZ/7L/e8GvSsXwglfE9OVLhMVIAWzhZlqClFVO1dKz5LEj+KnYlSqSRkkLkKvWIgmiX279eaU8FTksMQT6oFsD+VoEyj9vhNPBGedh+aXvdkE9hLEQJKD98pbszNKPeSau1H935N1ENCUjDyY5RPVZjp1eL1FkiklZ++ZvksBB4JlXbvDB9Af7zcvttdSZ4W0Ck/AplpGCszhbx/FJ9EdwEnA4cMVJjzL0FfTwHX5CJudM2R+o/kendsmFVP6PwrhXJwNPZzBLRylZcSzIvEhn8JWaDSZrY5OMGJGwT4pELVD1Qn+m5zxQ8O9VNkz4ftEt8+JAlTaeap46TeubBgTvdUWIdU+8zlhx/BZyhzuDNkvUrvNFclfAer6UPfnM5oFE0jgxdPop0XzLQPujAnwbeOilOywY9b4JLYg/zRb4T1Olh4AdxP87460m4SLkGSR1DcRcWnV/tqYo/EJIVLE7aMjuZajaWLEagUUpK/sVJcOLGbWpKlC0aHJRsrNPJcUOveyV6Ub6zMRWMpCFYFDrlfR3EDvh74jP9Tj8s+M2RPmWjnEhOVpW2mAWnW21ZpxeNZk=
 install:
-- wget -q ${HELM_URL}/${HELM_TGZ}
-- tar xzfv ${HELM_TGZ}
-- PATH=`pwd`/linux-amd64/:$PATH
+  - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+  - helm version --client
+  - sudo pip install yamllint=="${YAMLLINT_VERSION}"
+
 script:
 - |
-  echo "Linting SiteWhere Infra Core"
-  helm lint ${REPO_DIR}/charts/sitewhere-infra-core
+  helm lint ${REPO_DIR}/charts/sitewhere-infrastructure
   if [ $? != 0 ]; then
     travis_terminate 1
   fi
-  echo "Linting SiteWhere Infra Database"
-  helm lint ${REPO_DIR}/charts/sitewhere-infra-database
-  if [ $? != 0 ]; then
-    travis_terminate 1
-  fi
+
 after_success:
 - |
   if [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then
@@ -40,9 +40,14 @@ after_success:
     wget ${GH_URL}/index.yaml
 
     # Add Helm Repositories
-    helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com
-    # Add SiteWhere Repository
-    helm repo add sitewhere ${GH_URL}
+    helm repo add stable https://charts.helm.sh/stable
+    helm repo add bitnami https://charts.bitnami.com/bitnami
+    helm repo add sitewhere https://sitewhere.io/helm-charts  
+    helm repo add smizy	https://smizy.github.io/charts
+    helm repo add k8s-at-home https://k8s-at-home.com/charts
+    helm repo add strimzi https://strimzi.io/charts
+    helm repo add codecentric https://codecentric.github.io/helm-charts
+
     # Update Repositories
     helm repo update
 
@@ -51,17 +56,9 @@ after_success:
     #  helm dep update ${REPO_DIR}/charts/$dir
     #  helm package ${REPO_DIR}/charts/$dir
     #done
-    helm dep update ${REPO_DIR}/charts/warp10
-    helm package ${REPO_DIR}/charts/warp10
 
-    helm dep update ${REPO_DIR}/charts/sitewhere-infra-core
-    helm package ${REPO_DIR}/charts/sitewhere-infra-core
-
-    helm dep update ${REPO_DIR}/charts/sitewhere-infra-database
-    helm package ${REPO_DIR}/charts/sitewhere-infra-database
-
-    helm dep update ${REPO_DIR}/charts/sitewhere
-    helm package ${REPO_DIR}/charts/sitewhere
+    helm dep update ${REPO_DIR}/charts/sitewhere-infrastructure
+    helm package ${REPO_DIR}/charts/sitewhere-infrastructure
 
     # Indexing of charts
     if [ -f index.yaml ]; then

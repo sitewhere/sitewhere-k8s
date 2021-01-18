@@ -1,0 +1,80 @@
+apiVersion: v2
+name: sitewhere-infrastructure
+description: SiteWhere Infrastructure Helm Chart
+
+# A chart can be either an 'application' or a 'library' chart.
+#
+# Application charts are a collection of templates that can be packaged into versioned archives
+# to be deployed.
+#
+# Library charts provide useful utilities or functions for the chart developer. They're included as
+# a dependency of application charts to inject those utilities and functions into the rendering
+# pipeline. Library charts do not define any templates and therefore cannot be deployed.
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 0.1.0
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+appVersion: 3.0.0
+
+keywords:
+  - sitewhere
+  - internet-of-things
+  - open-source
+  - iot
+  - iot-framework
+  - iot-platform
+  - platform
+  - integration
+  - microservices
+  - device-management
+  - mqtt
+  - java
+  - arduino
+  - raspberry-pi
+  - android
+  - kafka
+  - zookeeper
+home: https://sitewhere.io/
+maintainers: 
+  - name: Derek Adams
+    email: derek.adams@sitewhere.com
+  - name: Jorge Villaverde
+    email: jorge.villaverde@sitewhere.com
+icon: http://sitewhere.io/docs/2.0.0/images/favicon.png
+
+# Chart depencies
+dependencies:
+- name: postgresql
+  version: 9.1.1
+  repository: https://charts.bitnami.com/bitnami
+  condition: postgresql.enabled
+- name: influxdb
+  version: 4.8.10
+  repository: https://influxdata.github.io/helm-charts
+  condition: influxdb.enabled
+- name: redis-ha
+  version: 4.10.11
+  repository: https://dandydeveloper.github.io/charts
+  condition: redis-ha.enabled
+- name: nifi
+  version: 0.3.2
+  repository: https://cetic.github.io/helm-charts
+  condition: nifi.enabled
+- name: mosquitto
+  version: 0.7.0
+  repository: https://k8s-at-home.com/charts/
+  condition: mosquitto.enabled
+- name: strimzi-kafka-operator
+  version: 0.21.0
+  repository: https://strimzi.io/charts/
+  condition: strimzi.enabled
+- name: keycloak
+  version: 9.8.1
+  repository: https://codecentric.github.io/helm-charts
+  condition: keycloak.enabled

@@ -1,0 +1,9 @@
+apiVersion: scripting.sitewhere.io/v1alpha4
+kind: SiteWhereScriptCategory
+metadata:
+  name: outbound-connectors-filter-category
+  labels:
+    sitewhere.io/functional-area: outbound-connectors
+spec:
+  name: Filter
+  description: Filters which events are passed to an outbound connector

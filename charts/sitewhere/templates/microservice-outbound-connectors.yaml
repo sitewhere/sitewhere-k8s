@@ -1,0 +1,41 @@
+apiVersion: sitewhere.io/v1alpha3
+kind: SiteWhereMicroservice
+metadata:
+  name: outbound-connectors-microservice
+{{include "sitewhere.microservice.metadata" . | indent 2 }}
+  labels:
+{{include "sitewhere.microservice.labels" . | indent 4 }}
+    sitewhere.io/functional-area: outbound-connectors
+spec:
+{{include "sitewhere.microservice.spec" . | indent 2 }}
+  name: Outbound Connectors
+  description: Allows event streams to be delivered to external systems for additional processing
+  icon: label
+  configuration: {}
+{{include "sitewhere.helm.environment" . | indent 2 }}
+  podSpec:
+{{include "sitewhere.docker.environment" . | indent 4 }}
+    ports:
+      - containerPort: 9000
+      - containerPort: 9090
+    env:
+{{include "sitewhere.microservice.environment" . | indent 6 }}
+  serviceSpec:
+{{include "sitewhere.microservice.service" . | indent 4 }}
+    ports:
+      - port: 9000
+        targetPort: 9000
+        protocol: TCP
+        name: grpc-api
+      - port: 9090
+        targetPort: 9090
+        protocol: TCP
+        name: http-metrics
+  debug:
+    enabled: false
+    jdwpPort: 8016
+    jmxPort: 1116
+{{include "sitewhere.microservice.logging" . | indent 2 }}
+      - logger: com.sitewhere.connectors
+        level: info
+    

@@ -1,0 +1,8 @@
+apiVersion: templates.sitewhere.io/v1alpha4
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-streaming-media
+  labels:
+    sitewhere.io/functional-area: streaming-media
+spec:
+  configuration:

@@ -1,0 +1,88 @@
+{{ .Files.Get "files/configuration/instance/ict-default.yaml" }}
+---
+{{ .Files.Get "files/configuration/instance/ict-minimal.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/tct-default.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-asset-management.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-batch-operations.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-command-delivery.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-device-management.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-device-registration.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-device-state.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-event-management.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-event-search.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-event-sources.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-inbound-processing.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-label-generation.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-outbound-connectors.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-rule-processing.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-schedule-management.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-streaming-media.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/tct-cassandra.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/cassandra/tect-cassandra-event-management.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/tct-influxdb.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/influxdb/tect-influxdb-event-management.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/tct-stomp.yaml" }}
+---
+{{ .Files.Get "files/configuration/tenant/stomp/tect-stomp-event-source.yaml" }}
+---
+{{ .Files.Get "files/dataset/instance/idt-default.yaml" }}
+---
+{{ .Files.Get "files/dataset/tenant/default/tedt-default-schedule-model.yaml" }}
+---
+{{ .Files.Get "files/dataset/tenant/tdt-construction.yaml" }}
+---
+{{ .Files.Get "files/dataset/tenant/construction/tedt-construction-asset-model.yaml" }}
+---
+{{ .Files.Get "files/dataset/tenant/construction/tedt-construction-device-model.yaml" }}
+---
+{{ .Files.Get "files/dataset/tenant/construction/tedt-construction-event-model.yaml" }}
+---
+{{ .Files.Get "files/dataset/tenant/tdt-airtraffic.yaml" }}
+---
+{{ .Files.Get "files/dataset/tenant/airtraffic/tedt-airtraffic-asset-model.yaml" }}
+---
+{{ .Files.Get "files/dataset/tenant/airtraffic/tedt-airtraffic-device-model.yaml" }}
+---
+{{ .Files.Get "files/dataset/tenant/tdt-empty.yaml" }}
+---
+{{ .Files.Get "files/scripts/command-delivery/scrc-command-encoder.yaml" }}
+---
+{{ .Files.Get "files/scripts/command-delivery/scrt-command-encoder.yaml" }}
+---
+{{ .Files.Get "files/scripts/event-sources/scrc-event-decoder.yaml" }}
+---
+{{ .Files.Get "files/scripts/event-sources/scrt-binary-decoder.yaml" }}
+---
+{{ .Files.Get "files/scripts/outbound-connectors/scrc-filter.yaml" }}
+---
+{{ .Files.Get "files/scripts/outbound-connectors/scrt-filter.yaml" }}
+---
+{{ .Files.Get "files/scripts/outbound-connectors/scrc-payload-builder.yaml" }}
+---
+{{ .Files.Get "files/scripts/outbound-connectors/scrt-payload-builder.yaml" }}
+---
+{{ .Files.Get "files/scripts/outbound-connectors/scrc-uri-builder.yaml" }}
+---
+{{ .Files.Get "files/scripts/outbound-connectors/scrt-uri-builder.yaml" }}
+

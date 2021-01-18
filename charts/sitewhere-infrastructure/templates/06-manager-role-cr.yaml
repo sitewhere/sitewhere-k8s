@@ -1,0 +1,114 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: sitewhere-manager-role
+  labels:
+    app: sitewhere
+    chart: {{ .Chart.Name | quote }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  - secrets
+  - serviceaccounts
+  - services
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - clusterroles
+  - clusterrolebindings
+  - roles
+  - rolebindings
+  verbs:
+  - "*"
+- apiGroups:
+  - sitewhere.io
+  resources:
+  - instances
+  - microservices
+  - tenants
+  - tenantengines
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - sitewhere.io
+  resources:
+  - instances/finalizers
+  - microservices/finalizers
+  - tenants/finalizers
+  - tenantengines/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - sitewhere.io
+  resources:
+  - instances/status
+  - microservices/status
+  - tenants/status
+  - tenantengines/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - templates.sitewhere.io
+  resources:
+  - instanceconfigurations
+  - instancedatasets
+  - tenantconfigurations
+  - tenantdatasets
+  - tenantengineconfigurations
+  - tenantenginedatasets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - scripting.sitewhere.io
+  resources:
+  - scripts
+  - scriptcategories
+  - scripttemplates
+  - scriptversions
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch

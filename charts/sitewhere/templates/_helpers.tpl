@@ -30,27 +30,3 @@ Create chart name and version as used by the chart label.
 {{- define "sitewhere.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
-
-{{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
-{{- define "sitewhere.mongodb.fullname" -}}
-{{- printf "%s-%s" .Release.Name "mongodb" | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
-{{- define "sitewhere.zookeeper.fullname" -}}
-{{- printf "%s-%s" .Release.Name "cp-zookeeper" | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
-{{- define "sitewhere.kafka.fullname" -}}
-{{- printf "%s-%s" .Release.Name "cp-kafka" | trunc 63 | trimSuffix "-" -}}
-{{- end -}}

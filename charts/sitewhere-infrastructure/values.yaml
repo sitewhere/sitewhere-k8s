@@ -1,0 +1,109 @@
+# Default values for sitewhere-infrastructure.
+
+# SiteWhere Operator
+operator:
+  image:
+    registry: docker.io
+    tag: 3.0.0.beta4
+
+# keycloak
+keycloak:
+  enabled: true
+  # Additional environment variables for Keycloak
+  extraEnv: |
+    - name: KEYCLOAK_USER
+      value: sitewhere
+    - name: KEYCLOAK_PASSWORD
+      value: sitewhere
+
+# Istio configuration
+istio:
+  host: "*"
+
+# PostgreSQL
+postgresql:
+  enabled: true
+  image:
+    debug: true
+  nameOverride: sitewhere-db-postgresql
+  fullnameOverride: sitewhere-db-postgresql
+  enabled: true
+  persistence:
+    enabled: true
+    size: 500Mi
+  postgresqlUsername: sitewhere
+  postgresqlDatabase: sitewhere
+  existingSecret: sitewhere
+  service:
+    type: ClusterIP
+    port: 5432
+
+# Strimzi Kafka Operator
+strimzi:
+  enabled: true
+  replicas: 3
+  fullnameOverride: sitewhere-strimzi-kafka-operator
+
+# Mosquitto
+mosquitto:
+  enabled: true
+  fullnameOverride: sitewhere-mosquitto
+  persistence:
+    size: 500Mi
+  service:
+    type: LoadBalancer
+
+# Redis HA
+redis-ha:
+  enabled: true
+  fullnameOverride: sitewhere-redis-ha
+  replicas: 3
+  hardAntiAffinity: false
+  redis:
+    masterGroupName: "sitewhere"
+  sentinel:
+    config:
+      down-after-milliseconds: 45000
+  persistentVolume:
+    enabled: true
+    size: 500Mi
+
+# InfluxDB
+influxdb:
+  enabled: false
+  fullnameOverride: sitewhere-influxdb
+  service:
+    type: ClusterIP
+  persistence:
+    enabled: true
+    size: 1Gi
+
+# Apache Nifi
+nifi:
+  enabled: false
+  fullnameOverride: sitewhere-nifi
+  service:
+    type: ClusterIP
+  image:
+    repository: sitewhere/sitewhere-nifi
+    tag: 3.0.0
+  service:
+    httpPort: 9090
+    httpsPort: 9443
+  zookeeper:
+    enabled: false
+    url: sitewhere-kafka-zookeeper-client
+    port: 2181
+  persistence:
+    enabled: true
+    flowfileRepoStorage:
+      size: 1Gi
+    contentRepoStorage:
+      size: 1Gi
+    provenanceRepoStorage:
+      size: 1Gi
+    logStorage:
+      size: 1Gi
+  zookeeper:
+    replicaCount: 1
+    terminationGracePeriodSeconds: 20

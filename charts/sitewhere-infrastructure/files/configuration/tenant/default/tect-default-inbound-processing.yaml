@@ -1,0 +1,10 @@
+apiVersion: templates.sitewhere.io/v1alpha4
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-inbound-processing
+  labels:
+      sitewhere.io/functional-area: inbound-processing
+spec:
+  configuration:
+    processingThreadCount: 10
+  

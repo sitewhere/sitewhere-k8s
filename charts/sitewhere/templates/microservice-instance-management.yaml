@@ -1,0 +1,72 @@
+apiVersion: sitewhere.io/v1alpha3
+kind: SiteWhereMicroservice
+metadata:
+  name: instance-management-microservice
+{{include "sitewhere.microservice.metadata" . | indent 2 }}
+  labels:
+{{include "sitewhere.microservice.labels" . | indent 4 }}
+    sitewhere.io/functional-area: instance-management
+spec:
+  name: Instance Management
+  description: Handles APIs for managing global aspects of an instance
+  icon: language
+  replicas: {{ .Values.microservices.default.replicas | default 1 }}
+  configuration:
+    userManagement:
+      syncopeHost: sitewhere-syncope.sitewhere-system
+      syncopePort: 8080
+      jwtExpirationInMinutes: 60
+{{include "sitewhere.helm.environment" . | indent 2 }}
+  podSpec:
+{{include "sitewhere.docker.environment" . | indent 4 }}
+    ports:
+      - containerPort: 8080
+      - containerPort: 9000
+      - containerPort: 9090
+    env:
+{{include "sitewhere.microservice.environment" . | indent 6 }}
+  serviceSpec:
+{{include "sitewhere.microservice.service" . | indent 4 }}
+    ports:
+      - port: 8080
+        targetPort: 8080
+        protocol: TCP
+        name: http-rest
+      - port: 9000
+        targetPort: 9000
+        protocol: TCP
+        name: grpc-api
+      - port: 9090
+        targetPort: 9090
+        protocol: TCP
+        name: http-metrics
+  debug:
+    enabled: false
+    jdwpPort: 8001
+    jmxPort: 1101
+{{include "sitewhere.microservice.logging" . | indent 2 }}
+      - logger: com.sitewhere.instance
+        level: info
+      - logger: com.sitewhere.web
+        level: info
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sitewhere-rest-http
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}
+    helm.sh/chart: {{ include "sitewhere.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: LoadBalancer
+  ports:
+    - port: {{ .Values.web.http.port | default 8080 }}
+      targetPort: 8080
+      protocol: TCP
+      name: http-rest
+  selector:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    sitewhere.io/name: instance-management

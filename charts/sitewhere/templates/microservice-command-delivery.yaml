@@ -1,0 +1,41 @@
+apiVersion: sitewhere.io/v1alpha3
+kind: SiteWhereMicroservice
+metadata:
+  name: command-delivery-microservice
+{{include "sitewhere.microservice.metadata" . | indent 2 }}
+  labels:
+{{include "sitewhere.microservice.labels" . | indent 4 }}
+    sitewhere.io/functional-area: command-delivery
+spec:
+{{include "sitewhere.microservice.spec" . | indent 2 }}
+  name: Command Delivery
+  description: Manages delivery of commands in various formats based on invocation events
+  icon: call_made
+  configuration: {}
+{{include "sitewhere.helm.environment" . | indent 2 }}
+  podSpec:
+{{include "sitewhere.docker.environment" . | indent 4 }}
+    ports:
+      - containerPort: 9000
+      - containerPort: 9090
+    env:
+{{include "sitewhere.microservice.environment" . | indent 6 }}
+  serviceSpec:
+{{include "sitewhere.microservice.service" . | indent 4 }}
+    ports:
+      - port: 9000
+        targetPort: 9000
+        protocol: TCP
+        name: grpc-api
+      - port: 9090
+        targetPort: 9090
+        protocol: TCP
+        name: http-metrics
+  debug:
+    enabled: false
+    jdwpPort: 8012
+    jmxPort: 1112 
+{{include "sitewhere.microservice.logging" . | indent 2 }}
+      - logger: com.sitewhere.commands
+        level: info
+    

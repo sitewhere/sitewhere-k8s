@@ -1,0 +1,35 @@
+{{- if .Values.strimzi.enabled -}}
+apiVersion: kafka.strimzi.io/v1beta1
+kind: Kafka
+metadata:
+  name: sitewhere-kafka
+  labels:
+    app: sitewhere
+    chart: {{ .Chart.Name | quote }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  kafka:
+    version: 2.7.0
+    replicas: {{ .Values.strimzi.replicas }}
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+    config:
+      offsets.topic.replication.factor: {{ .Values.strimzi.replicas }}
+      transaction.state.log.replication.factor: {{ .Values.strimzi.replicas }}
+      transaction.state.log.min.isr: 2
+      log.message.format.version: "2.7"
+      inter.broker.protocol.version: "2.7"
+    storage:
+      type: ephemeral
+  zookeeper:
+    replicas: {{ .Values.strimzi.replicas }}
+    storage:
+      type: ephemeral
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+{{- end }}
