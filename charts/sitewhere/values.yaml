@@ -12,3 +12,31 @@ microservices:
     replicas: 1
     service:
       type: ClusterIP
+<<<<<<< HEAD
+=======
+      grpc:
+        api:
+          port: 9000
+        management:
+          port: 9001
+    resources:
+      limits:
+        memory: 
+        cpu: 
+      requests:
+        memory: 
+        cpu: 
+
+persistence:
+  enabled: true
+  ## A manually managed Persistent Volume and Claim
+  ## Requires persistence.enabled: true
+  ## If defined, PVC must be created manually before volume will be bound
+  # existingClaim:
+
+  ## If defined, storageClassName: [rook-ceph-block|hostpath]
+  accessModes:
+    - ReadWriteOnce
+  storage: 10Gi
+  annotations: {}
+>>>>>>> master

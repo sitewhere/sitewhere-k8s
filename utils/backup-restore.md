@@ -16,9 +16,9 @@ If you plan to use an externa NFS Server, edit the file
 `utils/sitewhere-mongodb-dump-pvc-nfs.yaml`, set the NFS Server URL and Path.
 
 ```yaml
-  nfs:
-    server: <NFS_SERVER_IP>
-    path: "<NFS_SERVER_PATH>"
+nfs:
+  server: <NFS_SERVER_IP>
+  path: "<NFS_SERVER_PATH>"
 ```
 
 Save the file and apply it to the cluster.

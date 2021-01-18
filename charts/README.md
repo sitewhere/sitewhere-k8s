@@ -48,7 +48,7 @@ SiteWhere 3.0 requires [Istio](https://istio.io/), with
 installed on a Kubernetes cluster before you deploy an instance of SiteWhere. You can install Istio
 [with](https://istio.io/docs/setup/kubernetes/install/helm/) or [without](https://istio.io/docs/setup/kubernetes/install/kubernetes/) Helm.
 
-Make sure that the namespace where you are deploying SiteWhere has the label `istio-injection=enabled`, 
+Make sure that the namespace where you are deploying SiteWhere has the label `istio-injection=enabled`,
 for example for the `default` namespace use:
 
 ```console

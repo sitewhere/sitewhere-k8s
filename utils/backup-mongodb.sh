@@ -1,6 +1,6 @@
 #/bin/bash
 # Copyright 2019, SiteWhere LLC.
-# This script creates a backup of SiteWhere 2.1 MongoDB database
+# This script creates a backup of SiteWhere 2.2 MongoDB database
 # running on a Kubernetes cluster
 # usage: backup-mongodb.sh <BACKUP_DEST_DIR>
 
@@ -78,7 +78,7 @@ function backup_mongodb () {
   if [[ $# != 1 ]]; then
     echo "Usage: backup-mongodb.sh <BACKUP_DEST_DIR>" >&2
     echo "" >&2
-    echo "This script creates a backup of SiteWhere 2.1 MongoDB database running on a Kubernetes cluster." >&2
+    echo "This script creates a backup of SiteWhere 2.2 MongoDB database running on a Kubernetes cluster." >&2
 
     return 1
   fi

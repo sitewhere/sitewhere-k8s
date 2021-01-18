@@ -160,8 +160,7 @@
 			"icon": "chart-bar",
 			"enablement": "sitewhere-infra-core.prometheus.enabled",
 			"enabled": true,
-			"attributes": [
-			]
+			"attributes": []
 		},
 		{
 			"id": "syncope",

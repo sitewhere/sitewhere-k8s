@@ -22,7 +22,7 @@ If you are running on `minikube` you can skip using `Rook.io`
 and use the `values-dev.yaml`.
 
 ```console
-helm install --name sitewhere \
+helm install  sitewhere \
 -f ./sitewhere/values-dev.yaml \
 --set sitewhere-infra-database.mongodb.persistence.storageClass=standard \
 --set sitewhere-infra-core.cp-kafka.persistence.storageClass=standard \
@@ -33,14 +33,14 @@ sitewhere/sitewhere
 ### Running on GKE
 
 ```console
-helm install --name sitewhere \
+helm install  sitewhere \
 sitewhere/sitewhere
 ```
 
 ### Running on Amazon EKS
 
 ```console
-helm install --name sitewhere \
+helm install  sitewhere \
 -f values-eks.yaml \
 sitewhere/sitewhere
 ```
@@ -48,7 +48,7 @@ sitewhere/sitewhere
 ### Minimal evironment with `hostpath` storageClass
 
 ```console
-helm install --name sitewhere \
+helm install  sitewhere \
 --set services.profile=minimal \
 --set sitewhere-infra-core.cp-zookeeper.servers=1 \
 --set sitewhere-infra-database.mongodb.persistence.storageClass=hostpath \
@@ -60,7 +60,7 @@ sitewhere/sitewhere
 ### Developer evironment with `hostpath` storageClass
 
 ```console
-helm install --name sitewhere \
+helm install  sitewhere \
 -f ./sitewhere/values-dev.yaml \
 --set sitewhere-infra-database.mongodb.persistence.storageClass=hostpath \
 --set sitewhere-infra-core.cp-kafka.persistence.storageClass=hostpath \
