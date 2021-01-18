@@ -16,6 +16,10 @@ keycloak:
     - name: KEYCLOAK_PASSWORD
       value: sitewhere
 
+# Istio configuration
+istio:
+  host: "*"
+
 # PostgreSQL
 postgresql:
   enabled: true
