@@ -1,0 +1,44 @@
+apiVersion: templates.sitewhere.io/v1alpha4
+kind: InstanceConfigurationTemplate
+metadata:
+  name: minimal
+spec:
+  configuration:
+    infrastructure:
+      namespace: sitewhere-system
+      redis:
+        hostname: sitewhere-redis-ha-announce
+        port: 26379
+        nodeCount: 1
+        masterGroupName: sitewhere
+      kafka:
+        hostname: sitewhere-kafka-kafka-bootstrap
+        port: 9092
+        defaultTopicPartitions: 8
+        defaultTopicReplicationFactor: 1
+      metrics:
+        enabled: true
+        httpPort: 9090
+      grpc:
+        maxRetryCount: 6
+        initialBackoffSeconds: 10
+        maxBackoffSeconds: 600
+        backoffMultiplier: 1.5
+        resolveFQDN: false
+    persistenceConfigurations:
+      rdbConfigurations:
+        postgres:
+          type: postgres95
+          configuration:
+            hostname: sitewhere-db.postgresql.sitewhere-system
+            port: 5432
+            maxConnections: 5
+            username: sitewhere
+            password: sitewhere
+      timeSeriesConfigurations:
+        influxdb:
+          type: influxdb
+          configuration:
+            hostname: sitewhere-influxdb.sitewhere-system
+            port: 8086
+            databaseName: tenant_${tenant.id}

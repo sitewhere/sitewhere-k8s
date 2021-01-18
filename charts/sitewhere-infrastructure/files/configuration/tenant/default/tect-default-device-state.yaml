@@ -1,0 +1,10 @@
+apiVersion: templates.sitewhere.io/v1alpha4
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-device-state
+  labels:
+      sitewhere.io/functional-area: device-state
+spec:
+  configuration: 
+    datastore:
+      reference: postgres

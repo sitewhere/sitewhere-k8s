@@ -1,0 +1,11 @@
+apiVersion: templates.sitewhere.io/v1alpha4
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-asset-management
+  labels:
+    sitewhere.io/functional-area: asset-management
+spec:
+  configuration: 
+    datastore:
+      reference: postgres
+        

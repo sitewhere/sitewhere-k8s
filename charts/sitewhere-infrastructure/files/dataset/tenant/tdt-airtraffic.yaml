@@ -1,0 +1,11 @@
+apiVersion: templates.sitewhere.io/v1alpha4
+kind: TenantDatasetTemplate
+metadata:
+  name: airtraffic
+spec:
+  name: Air Traffic
+  description: Air Traffic Example
+  tenantEngineTemplates:
+    deviceManagement: airtraffic-device-model
+    assetManagement: airtraffic-asset-model
+    scheduleManagement: default-schedule-model

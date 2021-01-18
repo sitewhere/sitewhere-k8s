@@ -1,0 +1,11 @@
+apiVersion: templates.sitewhere.io/v1alpha4
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-event-management
+  labels:
+    sitewhere.io/functional-area: event-management
+spec:
+  configuration:
+    datastore:
+      reference: influxdb
+      
