@@ -30,7 +30,7 @@ spec:
         postgres:
           type: postgres95
           configuration:
-            hostname: sitewhere-db.postgresql.sitewhere-system
+            hostname: sitewhere-db-postgresql.sitewhere-system
             port: 5432
             maxConnections: 5
             username: sitewhere

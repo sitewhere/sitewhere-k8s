@@ -4,11 +4,11 @@ This Chart installs SiteWhere 3.0 Infrastructure.
 
 ## Prerequisites
 
-- Kubernetes cluster 1.10+
-- Helm 3.0.0+
-- PV provisioner support in the underlying infrastructure.
+* Kubernetes cluster 1.10+
+* Helm 3.0.0+
+* PV provisioner support in the underlying infrastructure.
 
-## TL;DR
+## Installing the Chart
 
 ```console
 helm repo add sitewhere https://sitewhere.io/helm-charts
