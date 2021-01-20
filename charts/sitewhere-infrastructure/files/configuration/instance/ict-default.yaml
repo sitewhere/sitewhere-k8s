@@ -7,10 +7,8 @@ spec:
     infrastructure:
       namespace: sitewhere-system
       redis:
-        hostname: sitewhere-redis-ha-announce
-        port: 26379
-        nodeCount: 3
-        masterGroupName: sitewhere
+        hostname: sitewhere-redis-headless.sitewhere-system
+        port: 6379
       kafka:
         hostname: sitewhere-kafka-kafka-bootstrap
         port: 9092
@@ -42,3 +40,4 @@ spec:
             hostname: sitewhere-influxdb.sitewhere-system
             port: 8086
             databaseName: tenant_${tenant.id}
+            
