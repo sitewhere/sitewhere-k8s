@@ -60,20 +60,16 @@ mosquitto:
   service:
     type: LoadBalancer
 
-# Redis HA
-redis-ha:
+# Redis
+redis:
   enabled: true
-  fullnameOverride: sitewhere-redis-ha
-  replicas: 3
-  hardAntiAffinity: false
-  redis:
-    masterGroupName: "sitewhere"
-  sentinel:
-    config:
-      down-after-milliseconds: 45000
-  persistentVolume:
-    enabled: true
-    size: 500Mi
+  fullnameOverride: sitewhere-redis
+  cluster:
+    enabled: false
+  master:
+    persistence:
+      enabled: true
+      size: 500Mi
 
 # InfluxDB
 influxdb:
