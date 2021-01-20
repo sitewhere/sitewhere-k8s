@@ -16,7 +16,6 @@ templates:
 # keycloak
 keycloak:
   enabled: true
-  fullnameOverride: sitewhere-keycloak
   # Additional environment variables for Keycloak
   extraEnv: |
     - name: KEYCLOAK_USER
