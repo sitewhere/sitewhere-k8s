@@ -7,6 +7,10 @@ operator:
     registry: docker.io
     tag: 3.0.0.beta4
 
+# SiteWhere Templates
+templates:
+  enabled: true
+
 # keycloak
 keycloak:
   enabled: true

@@ -1,3 +1,4 @@
+{{- if .Values.templates.enabled -}}
 {{ .Files.Get "files/configuration/instance/ict-default.yaml" }}
 ---
 {{ .Files.Get "files/configuration/instance/ict-minimal.yaml" }}
@@ -85,4 +86,4 @@
 {{ .Files.Get "files/scripts/outbound-connectors/scrc-uri-builder.yaml" }}
 ---
 {{ .Files.Get "files/scripts/outbound-connectors/scrt-uri-builder.yaml" }}
-
+{{- end }}
