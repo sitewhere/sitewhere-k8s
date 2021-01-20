@@ -13,11 +13,6 @@ templates:
   # If true, install the templates, otherwise skip install.
   enabled: true
 
-# SiteWhere Infrastructure
-infrastructure:
-  # If true, install the infrastructure, otherwise skip install.
-  enabled: true
-
 # keycloak
 keycloak:
   enabled: true
@@ -119,3 +114,8 @@ nifi:
   zookeeper:
     replicaCount: 1
     terminationGracePeriodSeconds: 20
+
+tags:
+  # SiteWhere Infrastructure
+  # If true, install the infrastructure, otherwise skip install.
+  infrastructure: true

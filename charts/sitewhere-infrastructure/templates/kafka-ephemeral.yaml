@@ -1,4 +1,4 @@
-{{- if and .Values.infrastructure.enabled .Values.strimzi.enabled -}}
+{{- if and .Values.tags.infrastructure .Values.strimzi.enabled -}}
 apiVersion: kafka.strimzi.io/v1beta1
 kind: Kafka
 metadata:
