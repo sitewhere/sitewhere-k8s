@@ -2,6 +2,7 @@
 
 # SiteWhere Operator
 operator:
+  # If true, install the operator, otherwise skip install.
   enabled: true
   image:
     registry: docker.io
@@ -9,6 +10,12 @@ operator:
 
 # SiteWhere Templates
 templates:
+  # If true, install the templates, otherwise skip install.
+  enabled: true
+
+# SiteWhere Infrastructure
+infrastructure:
+  # If true, install the infrastructure, otherwise skip install.
   enabled: true
 
 # keycloak

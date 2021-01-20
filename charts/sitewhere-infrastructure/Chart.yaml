@@ -53,28 +53,28 @@ dependencies:
 - name: postgresql
   version: 9.1.1
   repository: https://charts.bitnami.com/bitnami
-  condition: postgresql.enabled
+  condition: infrastructure.enabled,postgresql.enabled
 - name: influxdb
   version: 4.8.10
   repository: https://influxdata.github.io/helm-charts
-  condition: influxdb.enabled
+  condition: infrastructure.enabled,influxdb.enabled
 - name: redis-ha
   version: 4.10.11
   repository: https://dandydeveloper.github.io/charts
-  condition: redis-ha.enabled
+  condition: infrastructure.enabled,redis-ha.enabled
 - name: nifi
   version: 0.3.2
   repository: https://cetic.github.io/helm-charts
-  condition: nifi.enabled
+  condition: infrastructure.enabled,nifi.enabled
 - name: mosquitto
   version: 0.7.0
   repository: https://k8s-at-home.com/charts/
-  condition: mosquitto.enabled
+  condition: infrastructure.enabled,mosquitto.enabled
 - name: strimzi-kafka-operator
   version: 0.21.0
   repository: https://strimzi.io/charts/
-  condition: strimzi.enabled
+  condition: infrastructure.enabled,strimzi.enabled
 - name: keycloak
   version: 9.8.1
   repository: https://codecentric.github.io/helm-charts
-  condition: keycloak.enabled
+  condition: infrastructure.enabled,keycloak.enabled
