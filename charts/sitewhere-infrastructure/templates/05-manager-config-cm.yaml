@@ -1,3 +1,4 @@
+{{- if .Values.operator.enabled -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -21,3 +22,4 @@ data:
     leaderElection:
       leaderElect: true
       resourceName: d4bd861b.github.com/sitewhere/sitewhere-k8s-operator
+{{- end }}
