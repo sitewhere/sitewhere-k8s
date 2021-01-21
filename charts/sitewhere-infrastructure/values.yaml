@@ -71,6 +71,8 @@ redis:
     persistence:
       enabled: true
       size: 500Mi
+  existingSecret: sitewhere
+  existingSecretPasswordKey: redis-password
 
 # InfluxDB
 influxdb:
