@@ -49,6 +49,7 @@ postgresql:
 strimzi:
   enabled: true
   replicas: 3
+  isr: 2
   fullnameOverride: sitewhere-strimzi-kafka-operator
 
 # Mosquitto

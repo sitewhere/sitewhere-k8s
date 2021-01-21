@@ -20,7 +20,7 @@ spec:
     config:
       offsets.topic.replication.factor: {{ .Values.strimzi.replicas }}
       transaction.state.log.replication.factor: {{ .Values.strimzi.replicas }}
-      transaction.state.log.min.isr: 2
+      transaction.state.log.min.isr: {{ .Values.strimzi.isr }}
       log.message.format.version: "2.7"
       inter.broker.protocol.version: "2.7"
     storage:
