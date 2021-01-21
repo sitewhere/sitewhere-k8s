@@ -5,15 +5,13 @@ web:
 docker:
   imageRegistry: docker.io
   imageRepository: sitewhere
-  imageTag: 3.0.0.beta1
+  imageTag: 3.0.1
   imagePullPolicy: IfNotPresent
 microservices:
   default:
     replicas: 1
     service:
       type: ClusterIP
-<<<<<<< HEAD
-=======
       grpc:
         api:
           port: 9000
@@ -39,4 +37,3 @@ persistence:
     - ReadWriteOnce
   storage: 10Gi
   annotations: {}
->>>>>>> master
