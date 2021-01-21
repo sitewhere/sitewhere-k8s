@@ -40,4 +40,3 @@ spec:
             hostname: sitewhere-influxdb.sitewhere-system
             port: 8086
             databaseName: tenant_${tenant.id}
-            
