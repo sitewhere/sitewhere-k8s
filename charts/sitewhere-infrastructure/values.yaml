@@ -76,7 +76,7 @@ redis:
 
 # InfluxDB
 influxdb:
-  enabled: false
+  enabled: true
   fullnameOverride: sitewhere-influxdb
   service:
     type: ClusterIP
@@ -86,7 +86,7 @@ influxdb:
 
 # Apache Nifi
 nifi:
-  enabled: false
+  enabled: true
   fullnameOverride: sitewhere-nifi
   service:
     type: ClusterIP
