@@ -113,4 +113,37 @@ rules:
   - patch
   - update
   - watch
+- apiGroups:
+  - networking.istio.io
+  resources:
+  - destinationrules
+  - envoyfilters
+  - gateways
+  - serviceentries
+  - sidecars
+  - virtualservices
+  - workloadentries
+  - workloadgroups
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - security.istio.io
+  resources:
+  - authorizationpolicies
+  - peerauthentications
+  - requestauthentications
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
 {{- end }}
