@@ -6,7 +6,7 @@ operator:
   enabled: true
   image:
     registry: docker.io
-    tag: 3.0.1
+    tag: 3.0.2
 
 # SiteWhere Templates
 templates:
