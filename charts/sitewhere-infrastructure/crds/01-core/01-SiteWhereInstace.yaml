@@ -66,6 +66,9 @@ spec:
                 description: DatasetTemplate is the name of the dataset template of
                   the instance
                 type: string
+              description:
+                description: Description is the description of the instance
+                type: string
               dockerSpec:
                 description: DockerSpec is the
                 properties:
@@ -694,6 +697,9 @@ spec:
                       type: object
                   type: object
                 type: array
+              name:
+                description: Name is the name of the instance
+                type: string
             type: object
           status:
             description: SiteWhereInstanceStatus defines the observed state of SiteWhereInstance
