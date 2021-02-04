@@ -17,6 +17,7 @@ rules:
   - secrets
   - serviceaccounts
   - services
+  - events
   verbs:
   - create
   - delete
