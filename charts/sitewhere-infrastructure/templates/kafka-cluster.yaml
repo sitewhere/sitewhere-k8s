@@ -24,11 +24,25 @@ spec:
       log.message.format.version: "2.7"
       inter.broker.protocol.version: "2.7"
     storage:
-      type: ephemeral
+      type: {{ .Values.strimzi.storage.type | quote }}
+      {{- if (eq .Values.strimzi.storage.type "persistent-claim") }}
+      size: {{ .Values.strimzi.storage.size }}
+      deleteClaim: true
+      {{- if .Values.strimzi.storage.storageClass }}
+      class: {{ .Values.strimzi.storage.storageClass }}
+      {{- end }}
+      {{- end }}
   zookeeper:
     replicas: {{ .Values.strimzi.replicas }}
     storage:
-      type: ephemeral
+      type: {{ .Values.strimzi.storage.type | quote }}
+      {{- if (eq .Values.strimzi.storage.type "persistent-claim") }}
+      size: {{ .Values.strimzi.storage.size }}
+      deleteClaim: true
+      {{- if .Values.strimzi.storage.storageClass }}
+      class: {{ .Values.strimzi.storage.storageClass }}
+      {{- end }}
+      {{- end }}
   entityOperator:
     topicOperator: {}
     userOperator: {}

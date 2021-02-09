@@ -15,7 +15,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.8
+version: 0.1.9
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -41,7 +41,7 @@ keywords:
   - kafka
   - zookeeper
 home: https://sitewhere.io/
-maintainers: 
+maintainers:
   - name: Derek Adams
     email: derek.adams@sitewhere.com
   - name: Jorge Villaverde
@@ -50,45 +50,45 @@ icon: http://sitewhere.io/docs/2.0.0/images/favicon.png
 
 # Chart depencies
 dependencies:
-- name: postgresql
-  version: 9.1.1
-  repository: https://charts.bitnami.com/bitnami
-  condition: postgresql.enabled
-  tags:
-  - infrastructure
-- name: influxdb
-  version: 4.8.10
-  repository: https://influxdata.github.io/helm-charts
-  condition: infrastructure.enabled,influxdb.enabled
-  tags:
-  - infrastructure
-- name: redis
-  version: 12.6.2
-  repository: https://charts.bitnami.com/bitnami
-  condition: redis.enabled
-  tags:
-  - infrastructure
-- name: nifi
-  version: 0.3.2
-  repository: https://cetic.github.io/helm-charts
-  condition: nifi.enabled
-  tags:
-  - infrastructure
-- name: mosquitto
-  version: 0.7.0
-  repository: https://k8s-at-home.com/charts/
-  condition: mosquitto.enabled
-  tags:
-  - infrastructure
-- name: strimzi-kafka-operator
-  version: 0.21.0
-  repository: https://strimzi.io/charts/
-  condition: strimzi.enabled
-  tags:
-  - infrastructure
-- name: keycloak
-  version: 9.8.1
-  repository: https://codecentric.github.io/helm-charts
-  condition: keycloak.enabled
-  tags:
-  - infrastructure
+  - name: postgresql
+    version: 9.1.1
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+    tags:
+      - infrastructure
+  - name: influxdb
+    version: 4.8.10
+    repository: https://influxdata.github.io/helm-charts
+    condition: infrastructure.enabled,influxdb.enabled
+    tags:
+      - infrastructure
+  - name: redis
+    version: 12.6.2
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+    tags:
+      - infrastructure
+  - name: nifi
+    version: 0.3.2
+    repository: https://cetic.github.io/helm-charts
+    condition: nifi.enabled
+    tags:
+      - infrastructure
+  - name: mosquitto
+    version: 0.7.0
+    repository: https://k8s-at-home.com/charts/
+    condition: mosquitto.enabled
+    tags:
+      - infrastructure
+  - name: strimzi-kafka-operator
+    version: 0.21.0
+    repository: https://strimzi.io/charts/
+    condition: strimzi.enabled
+    tags:
+      - infrastructure
+  - name: keycloak
+    version: 9.8.1
+    repository: https://codecentric.github.io/helm-charts
+    condition: keycloak.enabled
+    tags:
+      - infrastructure
