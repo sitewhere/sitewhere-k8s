@@ -51,6 +51,13 @@ strimzi:
   replicas: 3
   isr: 2
   fullnameOverride: sitewhere-strimzi-kafka-operator
+  # Strimzi Kafka storage
+  storage:
+    size: 1Gi
+    # persistent-claim or ephimeral
+    type: persistent-claim
+    # Stora Class used
+    # storageClass: "-"
 
 # Mosquitto
 mosquitto:
