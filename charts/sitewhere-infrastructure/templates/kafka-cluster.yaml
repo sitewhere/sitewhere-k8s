@@ -21,6 +21,9 @@ spec:
       offsets.topic.replication.factor: {{ .Values.strimzi.replicas }}
       transaction.state.log.replication.factor: {{ .Values.strimzi.replicas }}
       transaction.state.log.min.isr: {{ .Values.strimzi.isr }}
+      log.retention.hours: {{ .Values.strimzi.log.retention.hours }}
+      log.segment.bytes: {{ .Values.strimzi.log.segment.bytes }}
+      log.retention.check.interval.ms: {{ .Values.strimzi.log.retention.check.interval.ms }}
       log.message.format.version: "2.7"
       inter.broker.protocol.version: "2.7"
     storage:

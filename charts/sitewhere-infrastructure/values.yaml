@@ -59,6 +59,17 @@ strimzi:
     # Stora Class used
     # storageClass: "-"
 
+  # Log Configuration
+  log:
+    retention:
+      # Retention in hours
+      hours: 1
+      check:
+        interval:
+          ms: 300000
+    segment:
+      bytes: 1073741824
+
 # Mosquitto
 mosquitto:
   enabled: true
