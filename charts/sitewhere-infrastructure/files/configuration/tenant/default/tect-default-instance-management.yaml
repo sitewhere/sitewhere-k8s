@@ -1,0 +1,10 @@
+apiVersion: templates.sitewhere.io/v1alpha4
+kind: TenantEngineConfigurationTemplate
+metadata:
+  name: default-instance-management
+  labels:
+      sitewhere.io/functional-area: instance-management
+spec:
+  configuration:
+    eventPipelineHistoryLength: 1000
+  

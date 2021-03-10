@@ -25,6 +25,8 @@
 ---
 {{ .Files.Get "files/configuration/tenant/default/tect-default-inbound-processing.yaml" }}
 ---
+{{ .Files.Get "files/configuration/tenant/default/tect-default-instance-management.yaml" }}
+---
 {{ .Files.Get "files/configuration/tenant/default/tect-default-label-generation.yaml" }}
 ---
 {{ .Files.Get "files/configuration/tenant/default/tect-default-outbound-connectors.yaml" }}

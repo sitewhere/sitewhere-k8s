@@ -4,7 +4,7 @@ metadata:
   name: default
 spec:
   name: Default
-  description: Default with RDB persistence for master data and Warp 10 for time series data
+  description: Default with RDB persistence for master data and InfluxDB for time series data
   tenantEngineTemplates:
     assetManagement: default-asset-management
     batchOperations: default-batch-operations
@@ -16,6 +16,7 @@ spec:
     eventSearch: default-event-search
     eventSources: default-event-sources
     inboundProcessing: default-inbound-processing
+    instanceManagement: default-instance-management
     labelGeneration: default-label-generation
     outboundConnectors: default-outbound-connectors
     scheduleManagement: default-schedule-management
