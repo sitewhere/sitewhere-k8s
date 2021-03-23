@@ -2,7 +2,7 @@ apiVersion: v2
 name: sitewhere-infrastructure
 description: SiteWhere Infrastructure Helm Chart
 type: application
-version: 0.1.11
+version: 0.1.12
 appVersion: 3.0.5
 
 keywords:
@@ -70,7 +70,7 @@ dependencies:
     tags:
       - infrastructure
   - name: keycloak
-    version: 9.8.1
+    version: 10.1.0
     repository: https://codecentric.github.io/helm-charts
     condition: keycloak.enabled
     tags:
