@@ -22,6 +22,14 @@ keycloak:
       value: sitewhere
     - name: KEYCLOAK_PASSWORD
       value: sitewhere
+  pgchecker:
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+      limits:
+        cpu: "50m"
+        memory: "64Mi"
 
 # Istio configuration
 istio:
