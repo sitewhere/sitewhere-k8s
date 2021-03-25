@@ -2,7 +2,7 @@ apiVersion: v2
 name: sitewhere-infrastructure
 description: SiteWhere Infrastructure Helm Chart
 type: application
-version: 0.1.12
+version: 0.1.13
 appVersion: 3.0.5
 
 keywords:
